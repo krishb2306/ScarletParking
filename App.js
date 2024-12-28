@@ -6,10 +6,11 @@ import MapView, { Marker } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useState, useEffect } from 'react';
 
 
 function ListScreen() {
-  const BuschCommuterPass = [
+  const currentPassInfo = [
     {
       campus: "Busch",
       lots: [
@@ -81,24 +82,25 @@ function ListScreen() {
     }
 ];
 
-
+  const [listInfo, setListInfo] = React.useState(currentPassInfo[0]);
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = React.useState("Busch");
   const [items, setItems] = React.useState([
-    {label: 'College Ave', value: 'college ave'},
-    {label: 'Busch', value: 'busch'},
-    {label: 'Cook/Douglass', value: 'cookdoug'},
-    {label: 'Livingston', value: 'livingston'}
+    {label: 'Busch', value: 'Busch'},
+    {label: 'College Ave', value: 'College Ave'},
+    {label: 'Cook/Douglass', value: 'Cook/Douglass'},
+    {label: 'Livingston', value: 'Livingston'},
+    {label: 'RBHS', value: 'RBHS'},
   ]);
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      <View style = {styles.listViewContainer}>
-        <View style = {styles.topListView}> 
-          <Text> Lot Information for "type of commuter pass" </Text>
+    <SafeAreaView style={listViewStyles.safeAreaContainer}>
+      <View style = {listViewStyles.container}>
+        <View style = {listViewStyles.topListView}> 
+          <Text style = {listViewStyles.headerText}> Info for Busch Commuter Pass </Text>
         </View>
 
-        <View style = {styles.middleListView}>
+        <View style = {listViewStyles.middleListView}>
           <Text> Pick what campus lots to view </Text>
           
           <DropDownPicker
@@ -108,20 +110,28 @@ function ListScreen() {
               setOpen={setOpen}
               setValue={setValue}
               setItems={setItems}
+              onChangeValue={(value) => {
+                for (let i = 0; i < 5; i++){
+                  if (currentPassInfo[i].campus.localeCompare(value)){
+                    setListInfo(currentPassInfo[i]);
+                    break;
+                  }
+                }
+              }}
               style = {{width: 150, minHeight: 40}}
               containerStyle = {{width: 150}}
             />
         </View>
 
-        <View style = {styles.bottomListView}> 
+        <View style = {listViewStyles.bottomListView}> 
           <FlatList
             horizontal={false}
-            data={BuschCommuterPass[0].lots}
+            data={listInfo.lots}
             renderItem={({ item }) => (
-              <View style={styles.lotBox}>
+              <View style={listViewStyles.lotBox}>
                 <Text> {item.name} </Text>
                 <Text> {item.timeslots[0]} </Text>
-                <Text> {item.timeslots[1]} </Text>
+                <Text> {item.timeslots[1]} {value} </Text>
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -309,6 +319,69 @@ export default function App() {
   );
 }
 
+
+const listViewStyles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1, 
+  },
+
+  container: {
+      flex: 1,
+      backgroundColor: '#27313F',
+      alignItems: "center",
+      justifyContent: "center",
+      opacity: 1
+  },
+
+  topListView:{
+    flex: 0.1,
+    //backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1,
+
+  },
+
+  headerText:{
+    fontSize: 30,
+    color: "white",
+    fontWeight: "bold",
+    paddingTop: 20
+  },
+
+  middleListView:{
+    flex: 0.1,
+    //backgroundColor: 'orange',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1,
+    flexDirection: "row"
+    
+  },
+
+  bottomListView:{
+    flex: 0.8,
+    //backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1
+  },
+
+  lotBox: {
+    flex: 0.5,
+    backgroundColor: "red",
+    width: "95%",
+    height: 150,
+    justifyContent: "center",
+    alignItems: "center", 
+    margin: 5,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 10
+
+  }
+})
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -323,33 +396,6 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
       opacity: 1
-  },
-
-  topListView:{
-    flex: 0.1,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1
-  },
-
-  middleListView:{
-    flex: 0.1,
-    backgroundColor: 'orange',
-    alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1,
-    flexDirection: "row"
-    
-  },
-
-
-  bottomListView:{
-    flex: 0.8,
-    backgroundColor: 'green',
-    alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1
   },
 
   mapStyle:{
@@ -406,13 +452,5 @@ const styles = StyleSheet.create({
     width: 25,  // Set the desired size for the image
     height: 25, // Set the desired size for the image
   },
-  lotBox: {
-    flex: 0.5,
-    backgroundColor: "red",
-    width: 200,
-    height: 200,
-    justifyContent: "center",
-    alignItems: "center", 
-  }
 
  });
