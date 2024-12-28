@@ -7,6 +7,78 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
 
 function ListScreen() {
+  const BuschCommuterPass = [
+    {
+      campus: "Busch",
+      lots: [
+        {
+          name: "Lot 613/Stadium West",
+          timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Gated Lot 55",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 67",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        }
+      ]
+    },
+    {
+      campus: "College Ave",
+      lots: [
+        {
+          name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/CAC Parking Deck",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 13",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 4PM - Monday, 8AM"]
+        }
+      ]
+    },
+    {
+      campus: "Cook/Douglass",
+      lots: [
+        {
+          name: "Lot 97, Lot 82",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        },
+        {
+          name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive, Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglass Deck, Lot 709/Corwin",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Gated Lot 79A",
+          timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    },
+    {
+      campus: "Livingston",
+      lots: [
+        {
+          name: "Lot 101",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        },
+        {
+          name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/Yellow Lot",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    },
+    {
+      campus: "RBHS-Piscataway",
+      lots: [
+        {
+          name: "Lot A, Lot B, Lot C",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    }
+  ];
+  
   return (
     <View>
       <Text>List Screen</Text>
