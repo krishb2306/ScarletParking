@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,StatusBar, Image, ImageBackground, FlatList,SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking } from 'react-native';
+import { StyleSheet,StatusBar, Image, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView, { Marker } from 'react-native-maps'; 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
+import DropDownPicker from 'react-native-dropdown-picker';
+
 
 function ListScreen() {
   const BuschCommuterPass = [
@@ -77,12 +79,56 @@ function ListScreen() {
         }
       ]
     }
-  ];
-  
+];
+
+
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(null);
+  const [items, setItems] = React.useState([
+    {label: 'College Ave', value: 'college ave'},
+    {label: 'Busch', value: 'busch'},
+    {label: 'Cook/Douglass', value: 'cookdoug'},
+    {label: 'Livingston', value: 'livingston'}
+  ]);
+
   return (
-    <View>
-      <Text>List Screen</Text>
-    </View>
+    <SafeAreaView style={styles.safeAreaContainer}>
+      <View style = {styles.listViewContainer}>
+        <View style = {styles.topListView}> 
+          <Text> Lot Information for "type of commuter pass" </Text>
+        </View>
+
+        <View style = {styles.middleListView}>
+          <Text> Pick what campus lots to view </Text>
+          
+          <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style = {{width: 150, minHeight: 40}}
+              containerStyle = {{width: 150}}
+            />
+        </View>
+
+        <View style = {styles.bottomListView}> 
+          <FlatList
+            horizontal={false}
+            data={BuschCommuterPass[0].lots}
+            renderItem={({ item }) => (
+              <View style={styles.lotBox}>
+                <Text> {item.name} </Text>
+                <Text> {item.timeslots[0]} </Text>
+                <Text> {item.timeslots[1]} </Text>
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -271,6 +317,41 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     opacity: 1
   },
+  listViewContainer: {
+      flex: 1,
+      backgroundColor: '#27313F',
+      alignItems: "center",
+      justifyContent: "center",
+      opacity: 1
+  },
+
+  topListView:{
+    flex: 0.1,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1
+  },
+
+  middleListView:{
+    flex: 0.1,
+    backgroundColor: 'orange',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1,
+    flexDirection: "row"
+    
+  },
+
+
+  bottomListView:{
+    flex: 0.8,
+    backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1
+  },
+
   mapStyle:{
     width: "100%",
     height: "120%",
@@ -324,5 +405,14 @@ const styles = StyleSheet.create({
   buttonImage: {
     width: 25,  // Set the desired size for the image
     height: 25, // Set the desired size for the image
-    },
+  },
+  lotBox: {
+    flex: 0.5,
+    backgroundColor: "red",
+    width: 200,
+    height: 200,
+    justifyContent: "center",
+    alignItems: "center", 
+  }
+
  });
