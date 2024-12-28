@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,StatusBar, Image, ImageBackground, FlatList,SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View } from 'react-native';
-import MapView, { MARKER } from 'react-native-maps'; 
+import { StyleSheet,StatusBar, Image, ImageBackground, FlatList,SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking } from 'react-native';
+import MapView, { Marker } from 'react-native-maps'; 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
 
@@ -88,6 +88,33 @@ function ListScreen() {
 
 function MapScreen() {
   const [modalVisible, setModalVisible] = React.useState(false);
+
+  const markers = [
+    {
+      id: '1',
+      title: 'Yellow Lot',
+      description: 'This is the first marker',
+      coordinate: { latitude: 40.52785148042749, longitude: -74.43821430107958 },
+    },
+    {
+      id: '2',
+      title: 'Lot 105',
+      description: 'This is the second marker',
+      coordinate: { latitude: 40.52397, longitude: -74.43439 },
+    },
+    {
+      id: '3',
+      title: 'Lot 103',
+      description: 'This is the third marker',
+      coordinate: { latitude: 40.52088112738152, longitude: -74.43243729118925 },
+    },
+  ];
+
+  const openDirections = (latitude, longitude) => {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    //Linking.openURL(url).catch((err) => console.error('An error occurred', err));
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
     <View style={styles.container}>
@@ -101,13 +128,26 @@ function MapScreen() {
         longitudeDelta: 0.05, 
       }}
      >
+      {markers.map((marker) => (
+            <Marker
+              key={marker.id}
+              coordinate={marker.coordinate}
+              title={marker.title}
+              description={openDirections(marker.coordinate.latitude, marker.coordinate.longitude)}
+            />
+          ))}
+
      </MapView>
 
      <TouchableOpacity
           style={styles.modalButton}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={styles.modalButtonText}>Open Modal</Text>
+          <Image 
+            source={require('./assets/legend2.png')}  // Add your image path here
+            style={styles.buttonImage}
+          />
+
     </TouchableOpacity>
 
 
@@ -244,22 +284,22 @@ const styles = StyleSheet.create({
   },
   modalButton: {
     position: 'absolute',
-    top: 50, // Adjust this to place it at the desired position
-    left: '50%',
+    top: 10, // Adjust this to place it at the desired position
+    left: '98%',
     marginLeft: -50, // Centers the button horizontally
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    padding: 15,
-    borderRadius: 10,
-  },
-  modalButtonText: {
-    color: 'white',
-    fontSize: 18,
+    backgroundColor: '#27313F',
+    padding: 10,
+    opacity: 0.9,
+    borderRadius: 25,
+    //borderColor: "red",
+    //borderWidth: 1,
   },
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    marginBottom: "95%"
+    //backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   modalContent: {
     backgroundColor: 'white',
@@ -281,4 +321,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
+  buttonImage: {
+    width: 25,  // Set the desired size for the image
+    height: 25, // Set the desired size for the image
+    },
  });
