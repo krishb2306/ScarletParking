@@ -128,10 +128,33 @@ function ListScreen() {
             horizontal={false}
             data={listInfo.lots}
             renderItem={({ item }) => (
-              <View style={listViewStyles.lotBox}>
+              <View style={listViewStyles.listViewBox}>
+                <View style = {listViewStyles.thirdListViewBox1}>
+                <Image
+                  style={{width: 35, height: 35, resizeMode: 'contain'}}
+                  source={require('./images/pinpoint.png')}
+                />
                 <Text> {item.name} </Text>
+                </View>
+
+                <View style = {listViewStyles.thirdListViewBox2}>
+                <Image
+                  style={{width: 30, height: 30, resizeMode: 'contain'}}
+                  source={require('./images/clock-icon.png')}
+                />
                 <Text> {item.timeslots[0]} </Text>
+                </View>
+
+                <View style = {listViewStyles.thirdListViewBox}>
+                <Image
+                  style={{width: 30, height: 30, resizeMode: 'contain'}}
+                  source={require('./images/clock-icon.png')}
+                />
                 <Text> {item.timeslots[1]} {value} </Text>
+                </View>
+                
+                
+                
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -506,22 +529,54 @@ const listViewStyles = StyleSheet.create({
     //backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: "center",
-    opacity: 1
+    opacity: 1,
   },
 
-  lotBox: {
+  listViewBox: {
     flex: 0.5,
-    backgroundColor: "red",
+    backgroundColor: "white",
     width: "95%",
     height: 150,
     justifyContent: "center",
     alignItems: "center", 
-    margin: 5,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 10
+    margin: 10,
+    // borderColor: "white",
+    // borderWidth: 2,
+    borderRadius: 10,
+    elevation: 20,
+    shadowColor: "black",
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.7,
+    shadowRadius: 3,
+  },
 
+  thirdListViewBox: {
+    flex: 0.33,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "95%",
+    backgroundColor: "red",
+  },
+
+  thirdListViewBox1: {
+    flex: 0.33,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "95%",
+    backgroundColor: "green"
+  },
+
+  thirdListViewBox2: {
+    flex: 0.33,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "95%",
+    backgroundColor: "blue"
   }
+
 })
 
 const styles = StyleSheet.create({
