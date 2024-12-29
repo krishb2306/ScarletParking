@@ -2,7 +2,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet,StatusBar, Image, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
-import MapView, { Marker } from 'react-native-maps'; 
+import MapView from "react-native-map-clustering";
+import { Marker } from "react-native-maps";
 import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -281,7 +282,57 @@ function MapScreen() {
       id: '22',
       title: 'Lot 13',
       coordinate: { latitude: 40.500747329811006, longitude: -74.4504658068558 },
-    }
+    },
+    {
+      id: 23,
+      title: 'Lot 98A',
+      coordinate: { latitude: 40.47921334521577, longitude: -74.43806375993194 },
+    },
+    {
+      id: 24,
+      title: 'Lot 98B',
+      coordinate: { latitude: 40.47759416788095, longitude: -74.43771472516389 },
+    },
+    {
+      id: 25,
+      title: 'Lot 99A',
+      coordinate: { latitude: 40.4773277902902, longitude: -74.43215838686945 },
+    },
+    {
+      id: 26,
+      title: 'Lot 99B',
+      coordinate: { latitude: 40.47743754368411, longitude: -74.42965612146868 },
+    },
+    {
+      id: 27,
+      title: 'Lot 99C',
+      coordinate: { latitude: 40.47776152523815, longitude: -74.42845700677829 },
+    },
+    {
+      id: 28,
+      title: 'Lot 99D',
+      coordinate: { latitude: 40.47632869046182, longitude: -74.42892158608329 },
+    },
+    {
+      id: 29,
+      title: 'Lot 97',
+      coordinate: { latitude: 40.47877062062995, longitude: -74.43598734574441 },
+    },
+    {
+      id: 30,
+      title: 'Lot 94',
+      coordinate: { latitude: 40.472290521942, longitude: -74.43665543406115 },
+    },
+    {
+      id: 31,
+      title: 'Lot 95',
+      coordinate: { latitude: 40.479743068645504, longitude: -74.44424221883541 },
+    },
+    {
+      id: 32,
+      title: 'Lipman Drive',
+      coordinate: { latitude: 40.48083720570153, longitude: -74.43804476053228 },
+    },
 
 
 
@@ -320,6 +371,9 @@ function MapScreen() {
     <SafeAreaView style={styles.safeAreaContainer}>
     <View style={styles.container}>
       <MapView
+      clusterColor='#D4301F'
+      minPoints={2}
+      minZoom = {1}
       userInterfaceStyle='dark'
        style={styles.mapStyle}
        initialRegion={{
