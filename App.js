@@ -3,11 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet,StatusBar, Image, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView, { Marker } from 'react-native-maps'; 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { BlurView } from '@react-native-community/blur';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
 
 
 function ListScreen() {
