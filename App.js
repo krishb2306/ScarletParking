@@ -152,21 +152,118 @@ function MapScreen() {
     {
       id: '1',
       title: 'Yellow Lot',
-      description: 'This is the first marker',
-      coordinate: { latitude: 40.52785148042749, longitude: -74.43821430107958 },
+      coordinate: { latitude: 40.527792210579, longitude: -74.43824939017959 },
     },
     {
       id: '2',
-      title: 'Lot 105',
-      description: 'This is the second marker',
-      coordinate: { latitude: 40.52397, longitude: -74.43439 },
+      title: 'Green Lot',
+      coordinate: { latitude: 40.52638955479005, longitude: -74.44016985173408 },
     },
     {
       id: '3',
-      title: 'Lot 103',
-      description: 'This is the third marker',
-      coordinate: { latitude: 40.52088112738152, longitude: -74.43243729118925 },
+      title: 'Scarlet Lot',
+      coordinate: { latitude: 40.52371335760811, longitude: -74.44107602151125 },
     },
+    {
+      id: '4',
+      title: 'Lot 112',
+      coordinate: { latitude: 40.525483164981274, longitude: -74.43590408916762 },
+    },
+    {
+      id: '5',
+      title: 'Lot 112A',
+      coordinate: { latitude: 40.52529724045274, longitude: -74.4352140723192 },
+    },
+    {
+      id: '6',
+      title: 'Lot 111',
+      coordinate: { latitude: 40.515928457671315, longitude: -74.43340354672391 },
+    },
+    {
+      id: '7',
+      title: 'Lot 105',
+      coordinate: { latitude: 40.52416238347117, longitude: -74.43413606891866 },
+    },
+    {
+      id: '8',
+      title: 'Lot 107',
+      coordinate: { latitude: 40.523191617283295, longitude: -74.43240182649996 },
+    },
+    {
+      id: '9',
+      title: 'Lot 106',
+      coordinate: { latitude: 40.52293458417464, longitude: -74.43456866469786 },
+    },
+    {
+      id: '10',
+      title: 'Lot 110',
+      coordinate: { latitude: 40.516016552504276, longitude: -74.43108461365142 },
+    },
+    {
+      id: '11',
+      title: 'Lot 103',
+      coordinate: { latitude: 40.52074513531362, longitude: -74.43242963301269 },
+    },
+    {
+      id: '12',
+      title: 'Lot 101',
+      coordinate: { latitude: 40.52137078628225, longitude: -74.4374916016938 },
+    },
+    {
+      id: '13',
+      title: 'College Ave Parking Deck',
+      coordinate: { latitude: 40.504396447586764, longitude: -74.45139639062025 },
+    },
+    {
+      id: '14',
+      title: 'Lot 510',
+      coordinate: { latitude: 40.50605038772015, longitude: -74.45421061519467 },
+    },
+    {
+      id: '15',
+      title: 'Lot 20',
+      coordinate: { latitude: 40.5051120838907, longitude: -74.45056886366555 },
+    },
+    {
+      id: '16',
+      title: 'Lot 26',
+      coordinate: { latitude: 40.50214001118832, longitude: -74.452725595762 },
+    },
+    {
+      id: '17',
+      title: 'Lot 30',
+      coordinate: { latitude: 40.50277930024196, longitude: -74.45346524427082 },
+    },
+    {
+      id: '18',
+      title: 'Lot 11 NB',
+      coordinate: { latitude: 40.50007465195431, longitude: -74.45013783068826 },
+    },
+    {
+      id: '19',
+      title: 'Lot 16 Gated',
+      coordinate: { latitude: 40.50122499066363, longitude: -74.44598133938614 },
+    },
+    {
+      id: '20',
+      title: 'Lot 33',
+      coordinate: { latitude: 40.505694240489774, longitude: -74.45340016463253 },
+    },
+    {
+      id: '21',
+      title: 'Lot 32',
+      coordinate: { latitude: 40.504219296972806, longitude: -74.453862199343 },
+    },
+    {
+      id: '22',
+      title: 'Lot 13',
+      coordinate: { latitude: 40.500747329811006, longitude: -74.4504658068558 },
+    }
+
+
+
+
+
     
   ];
 
