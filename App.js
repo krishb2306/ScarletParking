@@ -1,17 +1,151 @@
 //import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,StatusBar, Image, ImageBackground, FlatList,SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking } from 'react-native';
+import { StyleSheet,StatusBar, Image, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView, { Marker } from 'react-native-maps'; 
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { useState, useEffect } from 'react';
+
 
 function ListScreen() {
+  const currentPassInfo = [
+    {
+      campus: "Busch",
+      lots: [
+        {
+          name: "Lot 613/Stadium West",
+          timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Gated Lot 55",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 67",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        }
+      ]
+    },
+    {
+      campus: "College Ave",
+      lots: [
+        {
+          name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/CAC Parking Deck",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 13",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 4PM - Monday, 8AM"]
+        }
+      ]
+    },
+    {
+      campus: "Cook/Douglass",
+      lots: [
+        {
+          name: "Lot 97, Lot 82",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        },
+        {
+          name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive, Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglass Deck, Lot 709/Corwin",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Gated Lot 79A",
+          timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    },
+    {
+      campus: "Livingston",
+      lots: [
+        {
+          name: "Lot 101",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        },
+        {
+          name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/Yellow Lot",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    },
+    {
+      campus: "RBHS-Piscataway",
+      lots: [
+        {
+          name: "Lot A, Lot B, Lot C",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    }
+];
+
+  const [listInfo, setListInfo] = React.useState(currentPassInfo[0]);
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("Busch");
+  const [items, setItems] = React.useState([
+    {label: 'Busch', value: 'Busch'},
+    {label: 'College Ave', value: 'College Ave'},
+    {label: 'Cook/Douglass', value: 'Cook/Douglass'},
+    {label: 'Livingston', value: 'Livingston'},
+    {label: 'RBHS', value: 'RBHS'},
+  ]);
+
   return (
+<<<<<<< HEAD
     <View style = {styles.container}>
       <Text>List Screen</Text>
     </View>
+=======
+    <SafeAreaView style={listViewStyles.safeAreaContainer}>
+      <View style = {listViewStyles.container}>
+        <View style = {listViewStyles.topListView}> 
+          <Text style = {listViewStyles.headerText}> Info for Busch Commuter Pass </Text>
+        </View>
+
+        <View style = {listViewStyles.middleListView}>
+          <Text> Pick what campus lots to view </Text>
+          
+          <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              onChangeValue={(value) => {
+                for (let i = 0; i < 5; i++){
+                  if (currentPassInfo[i].campus.localeCompare(value)){
+                    setListInfo(currentPassInfo[i]);
+                    break;
+                  }
+                }
+              }}
+              style = {{width: 150, minHeight: 40}}
+              containerStyle = {{width: 150}}
+            />
+        </View>
+
+        <View style = {listViewStyles.bottomListView}> 
+          <FlatList
+            horizontal={false}
+            data={listInfo.lots}
+            renderItem={({ item }) => (
+              <View style={listViewStyles.lotBox}>
+                <Text> {item.name} </Text>
+                <Text> {item.timeslots[0]} </Text>
+                <Text> {item.timeslots[1]} {value} </Text>
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
+>>>>>>> c1a91bc99a8a007da9349d182516bd10a6265b58
   );
 }
 
@@ -237,6 +371,69 @@ export default function App() {
   );
 }
 
+
+const listViewStyles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1, 
+  },
+
+  container: {
+      flex: 1,
+      backgroundColor: '#27313F',
+      alignItems: "center",
+      justifyContent: "center",
+      opacity: 1
+  },
+
+  topListView:{
+    flex: 0.1,
+    //backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1,
+
+  },
+
+  headerText:{
+    fontSize: 30,
+    color: "white",
+    fontWeight: "bold",
+    paddingTop: 20
+  },
+
+  middleListView:{
+    flex: 0.1,
+    //backgroundColor: 'orange',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1,
+    flexDirection: "row"
+    
+  },
+
+  bottomListView:{
+    flex: 0.8,
+    //backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1
+  },
+
+  lotBox: {
+    flex: 0.5,
+    backgroundColor: "red",
+    width: "95%",
+    height: 150,
+    justifyContent: "center",
+    alignItems: "center", 
+    margin: 5,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 10
+
+  }
+})
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -245,6 +442,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     opacity: 1
   },
+  listViewContainer: {
+      flex: 1,
+      backgroundColor: '#27313F',
+      alignItems: "center",
+      justifyContent: "center",
+      opacity: 1
+  },
+
   mapStyle:{
     width: "100%",
     height: "120%",
@@ -300,6 +505,7 @@ const styles = StyleSheet.create({
   buttonImage: {
     width: 25,  // Set the desired size for the image
     height: 25, // Set the desired size for the image
+<<<<<<< HEAD
     },
     markerDetails: {
       position: 'absolute',
@@ -337,4 +543,8 @@ const styles = StyleSheet.create({
       fontFamily: 'SF-Pro',
       fontSize: 34
     }
+=======
+  },
+
+>>>>>>> c1a91bc99a8a007da9349d182516bd10a6265b58
  });
