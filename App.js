@@ -95,11 +95,6 @@ function ListScreen() {
   ]);
 
   return (
-<<<<<<< HEAD
-    <View style = {styles.container}>
-      <Text>List Screen</Text>
-    </View>
-=======
     <SafeAreaView style={listViewStyles.safeAreaContainer}>
       <View style = {listViewStyles.container}>
         <View style = {listViewStyles.topListView}> 
@@ -145,7 +140,6 @@ function ListScreen() {
         </View>
       </View>
     </SafeAreaView>
->>>>>>> c1a91bc99a8a007da9349d182516bd10a6265b58
   );
 }
 
@@ -505,7 +499,6 @@ const styles = StyleSheet.create({
   buttonImage: {
     width: 25,  // Set the desired size for the image
     height: 25, // Set the desired size for the image
-<<<<<<< HEAD
     },
     markerDetails: {
       position: 'absolute',
@@ -543,8 +536,4 @@ const styles = StyleSheet.create({
       fontFamily: 'SF-Pro',
       fontSize: 34
     }
-=======
-  },
-
->>>>>>> c1a91bc99a8a007da9349d182516bd10a6265b58
  });
