@@ -333,12 +333,28 @@ function MapScreen() {
       title: 'Lipman Drive',
       coordinate: { latitude: 40.48083720570153, longitude: -74.43804476053228 },
     },
-
-
-
-
-
-    
+  { id: 33, title: "Douglas Deck", coordinate: { latitude: 40.48382576675249, longitude: -74.43655861155173 } },
+  { id: 34, title: "Lot 70", coordinate: { latitude: 40.48402565153626, longitude: -74.43707948218135 } },
+  { id: 35, title: "Lot 71A", coordinate: { latitude: 40.4814177851611, longitude: -74.42902457119428 } },
+  { id: 36, title: "Lot 74", coordinate: { latitude: 40.48592791615516, longitude: -74.42956344068871 } },
+  { id: 37, title: "Lot 74A", coordinate: { latitude: 40.48597442749724, longitude: -74.43234697220979 } },
+  { id: 38, title: "Lot 75", coordinate: { latitude: 40.481672398275364, longitude: -74.43228333376484 } },
+  { id: 39, title: "Lot 76", coordinate: { latitude: 40.48055077832485, longitude: -74.43229395486843 } },
+  { id: 40, title: "Lot 79", coordinate: { latitude: 40.484421977914764, longitude: -74.43340731292356 } },
+  { id: 41, title: "Lot 80", coordinate: { latitude: 40.48124976141872, longitude: -74.42748707696603 } },
+  { id: 42, title: "Lot 81", coordinate: { latitude: 40.482271339047664, longitude: -74.43082715040767 } },
+  { id: 43, title: "Lot 82", coordinate: { latitude: 40.4834471516049, longitude: -74.4315663485119 } },
+  { id: 44, title: "Lot 83", coordinate: { latitude: 40.477241374408926, longitude: -74.42638611982184 } },
+  { id: 45, title: "Lot 84", coordinate: { latitude: 40.47815966400084, longitude: -74.42363420990544 } },
+  { id: 46, title: "Lot 86", coordinate: { latitude: 40.48300438304458, longitude: -74.43824388884791 } },
+  { id: 47, title: "Lot 88", coordinate: { latitude: 40.4798896865431, longitude: -74.42847104139618 } },
+  { id: 48, title: "Lot 94", coordinate: { latitude: 40.472316418544686, longitude: -74.43670429313615 } },
+  { id: 49, title: "Lot 95", coordinate: { latitude: 40.47945029678037, longitude: -74.44473313576026 } },
+  { id: 50, title: "Lot 96", coordinate: { latitude: 40.48030394273442, longitude: -74.4263702433818 } },
+  { id: 51, title: "Lot 96A", coordinate: { latitude: 40.48058189675893, longitude: -74.42631770818761 } },
+  { id: 52, title: "Lot 709", coordinate: { latitude: 40.48024009824762, longitude: -74.4422547528673 } },
+  { id: 53, title: "Gated Lot 79A", coordinate: { latitude: 40.484829613776455, longitude: -74.43340609827047 } },
+ 
   ];
 
   const openDirections = (latitude, longitude) => {
