@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet,StatusBar, Image, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
 import { Marker } from "react-native-maps";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
 //import { useState, useEffect } from 'react';
@@ -170,192 +170,31 @@ function MapScreen() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
+
+  const bccLots = require('./bccLots');
+  const allLots = require('./allLots');
+
+  const mapViewRef = useRef(null);
+
+  const markers = [];
+
+  allLots.forEach(lot => {
+    // Check if the current lot from allLots exists in bccLots
+    let foundLot = bccLots.find(bccLot => bccLot.name === lot.title);
+    
+    if (foundLot) {
+        markers.push({
+            id: lot.id,
+            title: lot.title,
+            coordinate: lot.coordinate,
+            description: foundLot.time  // Now you can access foundLot.time
+        });
+    }
+});
 
 
-  const markers = [
-    {
-      id: '1',
-      title: 'Yellow Lot',
-      coordinate: { latitude: 40.527792210579, longitude: -74.43824939017959 },
-    },
-    {
-      id: '2',
-      title: 'Green Lot',
-      coordinate: { latitude: 40.52638955479005, longitude: -74.44016985173408 },
-    },
-    {
-      id: '3',
-      title: 'Scarlet Lot',
-      coordinate: { latitude: 40.52371335760811, longitude: -74.44107602151125 },
-    },
-    {
-      id: '4',
-      title: 'Lot 112',
-      coordinate: { latitude: 40.525483164981274, longitude: -74.43590408916762 },
-    },
-    {
-      id: '5',
-      title: 'Lot 112A',
-      coordinate: { latitude: 40.52529724045274, longitude: -74.4352140723192 },
-    },
-    {
-      id: '6',
-      title: 'Lot 111',
-      coordinate: { latitude: 40.515928457671315, longitude: -74.43340354672391 },
-    },
-    {
-      id: '7',
-      title: 'Lot 105',
-      coordinate: { latitude: 40.52416238347117, longitude: -74.43413606891866 },
-    },
-    {
-      id: '8',
-      title: 'Lot 107',
-      coordinate: { latitude: 40.523191617283295, longitude: -74.43240182649996 },
-    },
-    {
-      id: '9',
-      title: 'Lot 106',
-      coordinate: { latitude: 40.52293458417464, longitude: -74.43456866469786 },
-    },
-    {
-      id: '10',
-      title: 'Lot 110',
-      coordinate: { latitude: 40.516016552504276, longitude: -74.43108461365142 },
-    },
-    {
-      id: '11',
-      title: 'Lot 103',
-      coordinate: { latitude: 40.52074513531362, longitude: -74.43242963301269 },
-    },
-    {
-      id: '12',
-      title: 'Lot 101',
-      coordinate: { latitude: 40.52137078628225, longitude: -74.4374916016938 },
-    },
-    {
-      id: '13',
-      title: 'College Ave Parking Deck',
-      coordinate: { latitude: 40.504396447586764, longitude: -74.45139639062025 },
-    },
-    {
-      id: '14',
-      title: 'Lot 510',
-      coordinate: { latitude: 40.50605038772015, longitude: -74.45421061519467 },
-    },
-    {
-      id: '15',
-      title: 'Lot 20',
-      coordinate: { latitude: 40.5051120838907, longitude: -74.45056886366555 },
-    },
-    {
-      id: '16',
-      title: 'Lot 26',
-      coordinate: { latitude: 40.50214001118832, longitude: -74.452725595762 },
-    },
-    {
-      id: '17',
-      title: 'Lot 30',
-      coordinate: { latitude: 40.50277930024196, longitude: -74.45346524427082 },
-    },
-    {
-      id: '18',
-      title: 'Lot 11 NB',
-      coordinate: { latitude: 40.50007465195431, longitude: -74.45013783068826 },
-    },
-    {
-      id: '19',
-      title: 'Lot 16 Gated',
-      coordinate: { latitude: 40.50122499066363, longitude: -74.44598133938614 },
-    },
-    {
-      id: '20',
-      title: 'Lot 33',
-      coordinate: { latitude: 40.505694240489774, longitude: -74.45340016463253 },
-    },
-    {
-      id: '21',
-      title: 'Lot 32',
-      coordinate: { latitude: 40.504219296972806, longitude: -74.453862199343 },
-    },
-    {
-      id: '22',
-      title: 'Lot 13',
-      coordinate: { latitude: 40.500747329811006, longitude: -74.4504658068558 },
-    },
-    {
-      id: 23,
-      title: 'Lot 98A',
-      coordinate: { latitude: 40.47921334521577, longitude: -74.43806375993194 },
-    },
-    {
-      id: 24,
-      title: 'Lot 98B',
-      coordinate: { latitude: 40.47759416788095, longitude: -74.43771472516389 },
-    },
-    {
-      id: 25,
-      title: 'Lot 99A',
-      coordinate: { latitude: 40.4773277902902, longitude: -74.43215838686945 },
-    },
-    {
-      id: 26,
-      title: 'Lot 99B',
-      coordinate: { latitude: 40.47743754368411, longitude: -74.42965612146868 },
-    },
-    {
-      id: 27,
-      title: 'Lot 99C',
-      coordinate: { latitude: 40.47776152523815, longitude: -74.42845700677829 },
-    },
-    {
-      id: 28,
-      title: 'Lot 99D',
-      coordinate: { latitude: 40.47632869046182, longitude: -74.42892158608329 },
-    },
-    {
-      id: 29,
-      title: 'Lot 97',
-      coordinate: { latitude: 40.47877062062995, longitude: -74.43598734574441 },
-    },
-    {
-      id: 30,
-      title: 'Lot 94',
-      coordinate: { latitude: 40.472290521942, longitude: -74.43665543406115 },
-    },
-    {
-      id: 31,
-      title: 'Lot 95',
-      coordinate: { latitude: 40.479743068645504, longitude: -74.44424221883541 },
-    },
-    {
-      id: 32,
-      title: 'Lipman Drive',
-      coordinate: { latitude: 40.48083720570153, longitude: -74.43804476053228 },
-    },
-  { id: 33, title: "Douglas Deck", coordinate: { latitude: 40.48382576675249, longitude: -74.43655861155173 } },
-  { id: 34, title: "Lot 70", coordinate: { latitude: 40.48402565153626, longitude: -74.43707948218135 } },
-  { id: 35, title: "Lot 71A", coordinate: { latitude: 40.4814177851611, longitude: -74.42902457119428 } },
-  { id: 36, title: "Lot 74", coordinate: { latitude: 40.48592791615516, longitude: -74.42956344068871 } },
-  { id: 37, title: "Lot 74A", coordinate: { latitude: 40.48597442749724, longitude: -74.43234697220979 } },
-  { id: 38, title: "Lot 75", coordinate: { latitude: 40.481672398275364, longitude: -74.43228333376484 } },
-  { id: 39, title: "Lot 76", coordinate: { latitude: 40.48055077832485, longitude: -74.43229395486843 } },
-  { id: 40, title: "Lot 79", coordinate: { latitude: 40.484421977914764, longitude: -74.43340731292356 } },
-  { id: 41, title: "Lot 80", coordinate: { latitude: 40.48124976141872, longitude: -74.42748707696603 } },
-  { id: 42, title: "Lot 81", coordinate: { latitude: 40.482271339047664, longitude: -74.43082715040767 } },
-  { id: 43, title: "Lot 82", coordinate: { latitude: 40.4834471516049, longitude: -74.4315663485119 } },
-  { id: 44, title: "Lot 83", coordinate: { latitude: 40.477241374408926, longitude: -74.42638611982184 } },
-  { id: 45, title: "Lot 84", coordinate: { latitude: 40.47815966400084, longitude: -74.42363420990544 } },
-  { id: 46, title: "Lot 86", coordinate: { latitude: 40.48300438304458, longitude: -74.43824388884791 } },
-  { id: 47, title: "Lot 88", coordinate: { latitude: 40.4798896865431, longitude: -74.42847104139618 } },
-  { id: 48, title: "Lot 94", coordinate: { latitude: 40.472316418544686, longitude: -74.43670429313615 } },
-  { id: 49, title: "Lot 95", coordinate: { latitude: 40.47945029678037, longitude: -74.44473313576026 } },
-  { id: 50, title: "Lot 96", coordinate: { latitude: 40.48030394273442, longitude: -74.4263702433818 } },
-  { id: 51, title: "Lot 96A", coordinate: { latitude: 40.48058189675893, longitude: -74.42631770818761 } },
-  { id: 52, title: "Lot 709", coordinate: { latitude: 40.48024009824762, longitude: -74.4422547528673 } },
-  { id: 53, title: "Gated Lot 79A", coordinate: { latitude: 40.484829613776455, longitude: -74.43340609827047 } },
- 
-  ];
+
 
   const openDirections = (latitude, longitude) => {
     const url = `maps://?daddr=${latitude},${longitude}`;
@@ -381,22 +220,63 @@ function MapScreen() {
     setHideTimeout(timeout);
   };
 
+  const handleSelection = (value) => {
+    setSelectedOption(value);
+  };
+
+  const [passName, setPassName] = useState("Busch Commuter (BCC)");
+
+  const zoomRegions = {
+    region1: {
+      latitude: 40.52273859070632,
+      longitude: -74.43672786988198,
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    },
+    region2: {
+      latitude: 40.52499903176381, 
+      longitude: -74.46390068728512, 
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    },
+    region3: {
+      latitude: 40.50267363651251,
+      longitude: -74.45068401965526, 
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    },
+    region4: {
+      latitude: 40.481393155087375,
+      longitude: -74.43496776734023, 
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    },
+  };
+
+  // Zoom to the selected region
+  const zoomToRegion = (region) => {
+    mapViewRef.current.animateToRegion(region, 1000); // 1000 ms for smooth zooming
+    setModalVisible(false); // Close the modal after zooming
+  };
+
+
 
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
     <View style={styles.container}>
       <MapView
+      ref={mapViewRef}
       clusterColor='#D4301F'
       minPoints={2}
       minZoom = {1}
       userInterfaceStyle='dark'
        style={styles.mapStyle}
        initialRegion={{
-        latitude: 40.50636845036389, 
-        longitude: -74.45282314766699, 
-        latitudeDelta: 0.05, 
-        longitudeDelta: 0.05, 
+        latitude: 40.504853287623135, 
+        longitude: -74.44761255910845, 
+        latitudeDelta: 0.057,
+        longitudeDelta: 0.057, 
       }}
       onPress={handleMapPress} // Reset the selected marker on map press
      >
@@ -418,7 +298,7 @@ function MapScreen() {
      {selectedMarker && (
           <View style={styles.markerDetails}>
             <Text style={styles.markerTitle}>{selectedMarker.title}</Text>
-            <Text style={styles.markerTitle}></Text>
+            <Text style={styles.markerSubTitle}>{selectedMarker.description}</Text>
             <TouchableOpacity
               style={styles.directionsButton}
               onPress={() => openDirections(
@@ -430,6 +310,14 @@ function MapScreen() {
             </TouchableOpacity>
           </View>
         )}
+
+      <TouchableOpacity
+                style={styles.passView}
+                disabled = {true}
+              >
+                <Text style = {styles.passViewText}>{passName}</Text>
+
+      </TouchableOpacity>
 
 
      <TouchableOpacity
@@ -444,7 +332,7 @@ function MapScreen() {
     </TouchableOpacity>
 
 
-        <Modal
+    <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
@@ -452,12 +340,73 @@ function MapScreen() {
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalText}>This is a modal!</Text>
+
+              <Text style={styles.modalText}></Text>
+
+              {/* Radio Button for Current Time */}
+              <TouchableOpacity
+                style={styles.radioButtonContainer}
+                onPress={() => handleSelection('current')}
+              >
+                <View
+                  style={[
+                    styles.radioButton,
+                    selectedOption === 'current' && styles.selectedRadioButton,
+                  ]}
+                />
+                <Text style = {styles.radioText}>Current Time</Text>
+              </TouchableOpacity>
+
+              {/* Radio Button for Set Time */}
+              <TouchableOpacity
+                style={styles.radioButtonContainer}
+                onPress={() => handleSelection('set')}
+              >
+                <View
+                  style={[
+                    styles.radioButton,
+                    selectedOption === 'set' && styles.selectedRadioButton,
+                  ]}
+                />
+                <Text style = {styles.radioText}>Set Time</Text>
+              </TouchableOpacity>
+
+
+              <View style={styles.zoomButtonContainer}>
+                <TouchableOpacity
+                  style={styles.zoomButton}
+                  onPress={() => zoomToRegion(zoomRegions.region1)}
+                >
+                  <Text style={styles.zoomButtonText}>Livingston</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.zoomButton}
+                  onPress={() => zoomToRegion(zoomRegions.region2)}
+                >
+                  <Text style={styles.zoomButtonText}>Busch</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.zoomButton}
+                  onPress={() => zoomToRegion(zoomRegions.region3)}
+                >
+                  <Text style={styles.zoomButtonText}>College Ave</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.zoomButton}
+                  onPress={() => zoomToRegion(zoomRegions.region4)}
+                >
+                  <Text style={styles.zoomButtonText}>Cook/Doug</Text>
+                </TouchableOpacity>
+              </View>
+
+
+              
+              {/* Close Button */}
               <TouchableOpacity
                 style={styles.closeButton}
                 onPress={() => setModalVisible(false)}
               >
-                <Text style={styles.closeButtonText}>Close</Text>
+                <Text style={styles.closeButtonText}>X</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -694,25 +643,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: "95%"
+    marginBottom: "50%"
     //backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: '#27313F',
     padding: 20,
-    borderRadius: 10,
-    width: '80%',
+    borderRadius: 25,
+    width: '85%',
     alignItems: 'center',
   },
   modalText: {
     fontSize: 18,
     marginBottom: 20,
+    color: "white"
   },
-  closeButton: {
-    backgroundColor: '#27313F',
-    padding: 10,
-    borderRadius: 5,
-  },
+  
   closeButtonText: {
     color: 'white',
     fontSize: 16,
@@ -740,6 +686,12 @@ const styles = StyleSheet.create({
       fontSize: 18,
       marginBottom: 10,
     },
+    markerSubTitle: {
+      color: 'white',
+      fontSize: 12,
+      textAlign: "center",
+      marginBottom: 10,
+    },
     directionsButton: {
       backgroundColor: '#27313F',
       padding: 12,
@@ -756,5 +708,81 @@ const styles = StyleSheet.create({
       color: 'white',
       fontFamily: 'SF-Pro',
       fontSize: 34
-    }
+    },
+    passView: {
+      position: 'absolute',
+      top: 10, // Adjust this to place it at the desired position
+      left: '15%',
+      width: "50%",
+      marginLeft: -50, // Centers the button horizontally
+      backgroundColor: '#27313F',
+      padding: 10,
+      opacity: 0.9,
+      borderRadius: 25,
+      //borderWidth: 1,
+      //borderColor: "white"
+      //borderColor: "red",
+      //borderWidth: 1,
+    },
+    passViewText: {
+      color: "white",
+      textAlign: "center",
+
+    },
+    radioButtonContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    radioButton: {
+      width: 20,
+      height: 20,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: 'white',
+      marginRight: 10,
+      backgroundColor: 'transparent',
+    },
+    selectedRadioButton: {
+      backgroundColor: 'red',
+    },
+    closeButton: {
+      //marginTop: 20,
+      //padding: 10,
+      left: "48.5%",
+      bottom: "94%",
+      backgroundColor: '#27313F',
+      borderColor: "white",
+      borderWidth: 1,
+      borderRadius: 100,
+      width: 30,
+      height: 30,
+      alignItems: "center",
+      justifyContent: "center",
+
+    },
+    closeButtonText: {
+      color: 'red',
+    },
+    radioText: {
+      color: "white"
+    },
+    zoomButtonContainer: {
+      marginTop: 20,
+      width: '100%',
+      alignItems: 'center',
+    },
+    zoomButton: {
+      padding: 10,
+      margin: 5,
+      backgroundColor: '#27313F',
+      borderRadius: 5,
+      borderColor: "white",
+      borderWidth: 1,
+      width: '80%',
+    },
+    zoomButtonText: {
+      color: 'white',
+      textAlign: 'center',
+    },
  });
