@@ -7,6 +7,7 @@ import { Marker } from "react-native-maps";
 import React, { useState, useEffect, useRef} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
+import moment from 'moment';
 //import { useState, useEffect } from 'react';
 
 
@@ -177,21 +178,10 @@ function MapScreen() {
 
   const mapViewRef = useRef(null);
 
+  const temp = [];
   const markers = [];
 
-  allLots.forEach(lot => {
-    // Check if the current lot from allLots exists in bccLots
-    let foundLot = bccLots.find(bccLot => bccLot.name === lot.title);
-    
-    if (foundLot) {
-        markers.push({
-            id: lot.id,
-            title: lot.title,
-            coordinate: lot.coordinate,
-            description: foundLot.time  // Now you can access foundLot.time
-        });
-    }
-});
+
 
 
 
@@ -259,8 +249,85 @@ function MapScreen() {
     setModalVisible(false); // Close the modal after zooming
   };
 
+  // const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
 
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setCurrentTime(new Date());
+  //   }, 1000); // Update every second
 
+  //   return () => clearInterval(intervalId); // Clear interval on unmount
+  // }, []);
+  
+  function isWithinSchedule(schedule, date) {
+    const timeZone = "America/New_York";
+  
+    // Convert UTC date to local time
+    //const options = { timeZone, weekday: "long", hour: "2-digit", minute: "2-digit" };
+    const localDate = moment().format('ddd MMM DD YYYY HH:mm:ss ZZ');
+
+const currentDay = new Date(localDate).toLocaleDateString("en-US", { weekday: "long" });
+
+// Extract hours and minutes from the localDate string
+const timeString = localDate.split(" ")[4]; // Extract the "HH:mm:ss" part
+const [hours, minutes] = timeString.split(":").map(Number);
+
+const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
+
+console.log("Local Date:", localDate);
+console.log("Current Day:", currentDay);
+console.log("Current Time (minutes):", currentTime);
+  
+    // Helper to parse time into minutes since midnight
+    function parseTime(time) {
+      const [hour, minute] = time
+        .toLowerCase()
+        .replace("am", "")
+        .replace("pm", "")
+        .split(":")
+        .map(Number);
+      const isPM = time.toLowerCase().includes("pm");
+      return (isPM && hour !== 12 ? hour + 12 : hour % 12) * 60 + (minute || 0);
+    }
+  
+    // Check if the current time is within any schedule range
+    return schedule.some(({ days, startTime, endTime }) => {
+      const start = parseTime(startTime);
+      const end = parseTime(endTime);
+      const dayMatches = days.includes(currentDay);
+  
+      console.log(`Checking schedule: Days = ${days.join(", ")}, Time = ${startTime} - ${endTime}`);
+      console.log(`Day Matches: ${dayMatches}`);
+  
+      if (!dayMatches) return false;
+  
+      // Handle time ranges crossing midnight
+      let timeMatches;
+      if (start > end) {
+        timeMatches = currentTime >= start || currentTime < end;
+      } else {
+        timeMatches = currentTime >= start && currentTime < end;
+      }
+      console.log(`Time Matches: ${timeMatches}`);
+      return timeMatches;
+    });
+  }
+  
+  allLots.forEach(lot => {
+    // Check if the current lot from allLots exists in bccLots
+    let foundLot = bccLots.find(bccLot => bccLot.name === lot.title);
+    
+    if (foundLot) {
+      const isScheduleValid = isWithinSchedule(foundLot.schedule, new Date());
+      if(isScheduleValid)
+        markers.push({
+            id: lot.id,
+            title: lot.title,
+            coordinate: lot.coordinate,
+            description: foundLot.time  
+        });
+    }
+});
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
@@ -360,7 +427,7 @@ function MapScreen() {
               {/* Radio Button for Set Time */}
               <TouchableOpacity
                 style={styles.radioButtonContainer}
-                onPress={() => handleSelection('set')}
+                onPress={() => {handleSelection('set'), console.log(new Date())}}
               >
                 <View
                   style={[
