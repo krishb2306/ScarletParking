@@ -112,7 +112,7 @@ function ListScreen() {
               setOpen={setOpen}
               setValue={setValue}
               setItems={setItems}
-              onChangeValue={(value) => {
+              onChangedValue={(value) => {
                 for (let i = 0; i < 5; i++){
                   if (currentPassInfo[i].campus.localeCompare(value)){
                     setListInfo(currentPassInfo[i]);
