@@ -19,7 +19,7 @@ function ListScreen() {
           timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
         },
         {
-          name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Gated Lot 55",
+          name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Gated Lot 55, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST,",
           timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
         },
         {
@@ -134,23 +134,23 @@ function ListScreen() {
                   style={{width: 35, height: 35, resizeMode: 'contain'}}
                   source={require('./images/pinpoint.png')}
                 />
-                <Text> {item.name} </Text>
+                <Text style = {{fontWeight: "bold"}}> {item.name} </Text>
                 </View>
 
                 <View style = {listViewStyles.thirdListViewBox2}>
                 <Image
-                  style={{width: 30, height: 30, resizeMode: 'contain'}}
+                  style={{width: 35, height: 35, resizeMode: 'contain'}}
                   source={require('./images/clock-icon.png')}
                 />
-                <Text> {item.timeslots[0]} </Text>
+                <Text style = {{fontWeight: "bold"}}> {item.timeslots[0]} </Text>
                 </View>
 
                 <View style = {listViewStyles.thirdListViewBox}>
                 <Image
-                  style={{width: 30, height: 30, resizeMode: 'contain'}}
+                  style={{width: 35, height: 35, resizeMode: 'contain'}}
                   source={require('./images/clock-icon.png')}
                 />
-                <Text> {item.timeslots[1]} {value} </Text>
+                <Text style = {{fontWeight: "bold"}}> {item.timeslots[1]} {value} </Text>
                 </View>
                 
                 
@@ -436,16 +436,16 @@ const listViewStyles = StyleSheet.create({
   },
 
   listViewBox: {
-    flex: 0.5,
+    flexDirection: "column",
     backgroundColor: "white",
-    width: "95%",
-    height: 150,
+    width: "93%",
     justifyContent: "center",
     alignItems: "center", 
     margin: 10,
+    borderRadius: 10,
     // borderColor: "white",
     // borderWidth: 2,
-    borderRadius: 10,
+
     elevation: 20,
     shadowColor: "black",
     shadowOffset: {width: -2, height: 4},
@@ -454,30 +454,36 @@ const listViewStyles = StyleSheet.create({
   },
 
   thirdListViewBox: {
-    flex: 0.33,
+    //flex: 0.33,
+    flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "row",
     width: "95%",
-    backgroundColor: "red",
+    //backgroundColor: "red",
   },
 
   thirdListViewBox1: {
-    flex: 0.33,
+    //flex: 0.33,
+    flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",
+    textAlign: "center",
+    textAlignVertical: "center",
     flexDirection: "row",
     width: "95%",
-    backgroundColor: "green"
+    paddingRight: "20%",
+    //backgroundColor: "green"
   },
 
   thirdListViewBox2: {
-    flex: 0.33,
+    //flex: 0.33,
+    flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "row",
     width: "95%",
-    backgroundColor: "blue"
+    //backgroundColor: "blue"
   }
 
 })
