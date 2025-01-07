@@ -2,10 +2,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet,StatusBar, Image, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
-import MapView, { Marker } from 'react-native-maps'; 
-import React, { useState, useEffect } from 'react';
+import MapView from "react-native-map-clustering";
+import { Marker } from "react-native-maps";
+import React, { useState, useEffect, useRef} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
+import moment from 'moment';
 //import { useState, useEffect } from 'react';
 
 
@@ -110,7 +112,7 @@ function ListScreen() {
               setOpen={setOpen}
               setValue={setValue}
               setItems={setItems}
-              onChangeValue={(value) => {
+              onChangedValue={(value) => {
                 for (let i = 0; i < 5; i++){
                   if (currentPassInfo[i].campus.localeCompare(value)){
                     setListInfo(currentPassInfo[i]);
@@ -169,29 +171,20 @@ function MapScreen() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
+
+  const bccLots = require('./bccLots');
+  const allLots = require('./allLots');
+
+  const mapViewRef = useRef(null);
+
+  const temp = [];
+  const markers = [];
 
 
-  const markers = [
-    {
-      id: '1',
-      title: 'Yellow Lot',
-      description: 'This is the first marker',
-      coordinate: { latitude: 40.52785148042749, longitude: -74.43821430107958 },
-    },
-    {
-      id: '2',
-      title: 'Lot 105',
-      description: 'This is the second marker',
-      coordinate: { latitude: 40.52397, longitude: -74.43439 },
-    },
-    {
-      id: '3',
-      title: 'Lot 103',
-      description: 'This is the third marker',
-      coordinate: { latitude: 40.52088112738152, longitude: -74.43243729118925 },
-    },
-    
-  ];
+
+
+
 
   const openDirections = (latitude, longitude) => {
     const url = `maps://?daddr=${latitude},${longitude}`;
@@ -217,19 +210,140 @@ function MapScreen() {
     setHideTimeout(timeout);
   };
 
+  const handleSelection = (value) => {
+    setSelectedOption(value);
+  };
 
+  const [passName, setPassName] = useState("Busch Commuter (BCC)");
+
+  const zoomRegions = {
+    region1: {
+      latitude: 40.52273859070632,
+      longitude: -74.43672786988198,
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    },
+    region2: {
+      latitude: 40.52499903176381, 
+      longitude: -74.46390068728512, 
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    },
+    region3: {
+      latitude: 40.50267363651251,
+      longitude: -74.45068401965526, 
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    },
+    region4: {
+      latitude: 40.481393155087375,
+      longitude: -74.43496776734023, 
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    },
+  };
+
+  // Zoom to the selected region
+  const zoomToRegion = (region) => {
+    mapViewRef.current.animateToRegion(region, 1000); // 1000 ms for smooth zooming
+    setModalVisible(false); // Close the modal after zooming
+  };
+
+  // const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setCurrentTime(new Date());
+  //   }, 1000); // Update every second
+
+  //   return () => clearInterval(intervalId); // Clear interval on unmount
+  // }, []);
+  
+  function isWithinSchedule(schedule, date) {
+    const timeZone = "America/New_York";
+  
+    // Convert UTC date to local time
+    //const options = { timeZone, weekday: "long", hour: "2-digit", minute: "2-digit" };
+    const localDate = moment().format('ddd MMM DD YYYY HH:mm:ss ZZ');
+
+const currentDay = new Date(localDate).toLocaleDateString("en-US", { weekday: "long" });
+
+// Extract hours and minutes from the localDate string
+const timeString = localDate.split(" ")[4]; // Extract the "HH:mm:ss" part
+const [hours, minutes] = timeString.split(":").map(Number);
+
+const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
+
+console.log("Local Date:", localDate);
+console.log("Current Day:", currentDay);
+console.log("Current Time (minutes):", currentTime);
+  
+    // Helper to parse time into minutes since midnight
+    function parseTime(time) {
+      const [hour, minute] = time
+        .toLowerCase()
+        .replace("am", "")
+        .replace("pm", "")
+        .split(":")
+        .map(Number);
+      const isPM = time.toLowerCase().includes("pm");
+      return (isPM && hour !== 12 ? hour + 12 : hour % 12) * 60 + (minute || 0);
+    }
+  
+    // Check if the current time is within any schedule range
+    return schedule.some(({ days, startTime, endTime }) => {
+      const start = parseTime(startTime);
+      const end = parseTime(endTime);
+      const dayMatches = days.includes(currentDay);
+  
+      console.log(`Checking schedule: Days = ${days.join(", ")}, Time = ${startTime} - ${endTime}`);
+      console.log(`Day Matches: ${dayMatches}`);
+  
+      if (!dayMatches) return false;
+  
+      // Handle time ranges crossing midnight
+      let timeMatches;
+      if (start > end) {
+        timeMatches = currentTime >= start || currentTime < end;
+      } else {
+        timeMatches = currentTime >= start && currentTime < end;
+      }
+      console.log(`Time Matches: ${timeMatches}`);
+      return timeMatches;
+    });
+  }
+  
+  allLots.forEach(lot => {
+    // Check if the current lot from allLots exists in bccLots
+    let foundLot = bccLots.find(bccLot => bccLot.name === lot.title);
+    
+    if (foundLot) {
+      const isScheduleValid = isWithinSchedule(foundLot.schedule, new Date());
+      if(isScheduleValid)
+        markers.push({
+            id: lot.id,
+            title: lot.title,
+            coordinate: lot.coordinate,
+            description: foundLot.time  
+        });
+    }
+});
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
     <View style={styles.container}>
       <MapView
+      ref={mapViewRef}
+      clusterColor='#D4301F'
+      minPoints={2}
+      minZoom = {1}
       userInterfaceStyle='dark'
        style={styles.mapStyle}
        initialRegion={{
-        latitude: 40.50636845036389, 
-        longitude: -74.45282314766699, 
-        latitudeDelta: 0.05, 
-        longitudeDelta: 0.05, 
+        latitude: 40.504853287623135, 
+        longitude: -74.44761255910845, 
+        latitudeDelta: 0.057,
+        longitudeDelta: 0.057, 
       }}
       onPress={handleMapPress} // Reset the selected marker on map press
      >
@@ -251,7 +365,7 @@ function MapScreen() {
      {selectedMarker && (
           <View style={styles.markerDetails}>
             <Text style={styles.markerTitle}>{selectedMarker.title}</Text>
-            <Text style={styles.markerTitle}></Text>
+            <Text style={styles.markerSubTitle}>{selectedMarker.description}</Text>
             <TouchableOpacity
               style={styles.directionsButton}
               onPress={() => openDirections(
@@ -263,6 +377,14 @@ function MapScreen() {
             </TouchableOpacity>
           </View>
         )}
+
+      <TouchableOpacity
+                style={styles.passView}
+                disabled = {true}
+              >
+                <Text style = {styles.passViewText}>{passName}</Text>
+
+      </TouchableOpacity>
 
 
      <TouchableOpacity
@@ -277,7 +399,7 @@ function MapScreen() {
     </TouchableOpacity>
 
 
-        <Modal
+    <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
@@ -285,12 +407,73 @@ function MapScreen() {
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalText}>This is a modal!</Text>
+
+              <Text style={styles.modalText}></Text>
+
+              {/* Radio Button for Current Time */}
+              <TouchableOpacity
+                style={styles.radioButtonContainer}
+                onPress={() => handleSelection('current')}
+              >
+                <View
+                  style={[
+                    styles.radioButton,
+                    selectedOption === 'current' && styles.selectedRadioButton,
+                  ]}
+                />
+                <Text style = {styles.radioText}>Current Time</Text>
+              </TouchableOpacity>
+
+              {/* Radio Button for Set Time */}
+              <TouchableOpacity
+                style={styles.radioButtonContainer}
+                onPress={() => {handleSelection('set'), console.log(new Date())}}
+              >
+                <View
+                  style={[
+                    styles.radioButton,
+                    selectedOption === 'set' && styles.selectedRadioButton,
+                  ]}
+                />
+                <Text style = {styles.radioText}>Set Time</Text>
+              </TouchableOpacity>
+
+
+              <View style={styles.zoomButtonContainer}>
+                <TouchableOpacity
+                  style={styles.zoomButton}
+                  onPress={() => zoomToRegion(zoomRegions.region1)}
+                >
+                  <Text style={styles.zoomButtonText}>Livingston</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.zoomButton}
+                  onPress={() => zoomToRegion(zoomRegions.region2)}
+                >
+                  <Text style={styles.zoomButtonText}>Busch</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.zoomButton}
+                  onPress={() => zoomToRegion(zoomRegions.region3)}
+                >
+                  <Text style={styles.zoomButtonText}>College Ave</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.zoomButton}
+                  onPress={() => zoomToRegion(zoomRegions.region4)}
+                >
+                  <Text style={styles.zoomButtonText}>Cook/Doug</Text>
+                </TouchableOpacity>
+              </View>
+
+
+              
+              {/* Close Button */}
               <TouchableOpacity
                 style={styles.closeButton}
                 onPress={() => setModalVisible(false)}
               >
-                <Text style={styles.closeButtonText}>Close</Text>
+                <Text style={styles.closeButtonText}>X</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -533,25 +716,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: "95%"
+    marginBottom: "50%"
     //backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: '#27313F',
     padding: 20,
-    borderRadius: 10,
-    width: '80%',
+    borderRadius: 25,
+    width: '85%',
     alignItems: 'center',
   },
   modalText: {
     fontSize: 18,
     marginBottom: 20,
+    color: "white"
   },
-  closeButton: {
-    backgroundColor: '#27313F',
-    padding: 10,
-    borderRadius: 5,
-  },
+  
   closeButtonText: {
     color: 'white',
     fontSize: 16,
@@ -579,6 +759,12 @@ const styles = StyleSheet.create({
       fontSize: 18,
       marginBottom: 10,
     },
+    markerSubTitle: {
+      color: 'white',
+      fontSize: 12,
+      textAlign: "center",
+      marginBottom: 10,
+    },
     directionsButton: {
       backgroundColor: '#27313F',
       padding: 12,
@@ -595,5 +781,81 @@ const styles = StyleSheet.create({
       color: 'white',
       fontFamily: 'SF-Pro',
       fontSize: 34
-    }
+    },
+    passView: {
+      position: 'absolute',
+      top: 10, // Adjust this to place it at the desired position
+      left: '15%',
+      width: "50%",
+      marginLeft: -50, // Centers the button horizontally
+      backgroundColor: '#27313F',
+      padding: 10,
+      opacity: 0.9,
+      borderRadius: 25,
+      //borderWidth: 1,
+      //borderColor: "white"
+      //borderColor: "red",
+      //borderWidth: 1,
+    },
+    passViewText: {
+      color: "white",
+      textAlign: "center",
+
+    },
+    radioButtonContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    radioButton: {
+      width: 20,
+      height: 20,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: 'white',
+      marginRight: 10,
+      backgroundColor: 'transparent',
+    },
+    selectedRadioButton: {
+      backgroundColor: 'red',
+    },
+    closeButton: {
+      //marginTop: 20,
+      //padding: 10,
+      left: "48.5%",
+      bottom: "94%",
+      backgroundColor: '#27313F',
+      borderColor: "white",
+      borderWidth: 1,
+      borderRadius: 100,
+      width: 30,
+      height: 30,
+      alignItems: "center",
+      justifyContent: "center",
+
+    },
+    closeButtonText: {
+      color: 'red',
+    },
+    radioText: {
+      color: "white"
+    },
+    zoomButtonContainer: {
+      marginTop: 20,
+      width: '100%',
+      alignItems: 'center',
+    },
+    zoomButton: {
+      padding: 10,
+      margin: 5,
+      backgroundColor: '#27313F',
+      borderRadius: 5,
+      borderColor: "white",
+      borderWidth: 1,
+      width: '80%',
+    },
+    zoomButtonText: {
+      color: 'white',
+      textAlign: 'center',
+    },
  });
