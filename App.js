@@ -21,7 +21,7 @@ function ListScreen() {
           timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
         },
         {
-          name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Gated Lot 55, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST, TEST,",
+          name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Gated Lot 55",
           timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
         },
         {
@@ -112,13 +112,14 @@ function ListScreen() {
               setOpen={setOpen}
               setValue={setValue}
               setItems={setItems}
-              onChangedValue={(value) => {
+              onSelectItem={(value) => {
                 for (let i = 0; i < 5; i++){
-                  if (currentPassInfo[i].campus.localeCompare(value)){
+                  if (currentPassInfo[i].campus.localeCompare(String(value.value))){
                     setListInfo(currentPassInfo[i]);
                     break;
                   }
                 }
+                console.log(listInfo);
               }}
               style = {{width: 150, minHeight: 40}}
               containerStyle = {{width: 150}}
