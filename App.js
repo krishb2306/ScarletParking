@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { useState, useEffect } from 'react';
 
 
@@ -112,14 +113,13 @@ function ListScreen() {
               setOpen={setOpen}
               setValue={setValue}
               setItems={setItems}
-              onSelectItem={(value) => {
-                for (let i = 0; i < 5; i++){
-                  if (currentPassInfo[i].campus.localeCompare(String(value.value))){
-                    setListInfo(currentPassInfo[i]);
-                    break;
-                  }
+              onSelectItem={(selectedItem) => {
+                const selectedCampus = selectedItem.value;
+                const selectedInfo = currentPassInfo.find(info => info.campus === selectedCampus);
+              
+                if (selectedInfo) {
+                  setListInfo(selectedInfo);
                 }
-                console.log(listInfo);
               }}
               style = {{width: 150, minHeight: 40}}
               containerStyle = {{width: 150}}
@@ -485,9 +485,64 @@ console.log("Current Time (minutes):", currentTime);
 }
 
 function SettingsScreen() {
+
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("Busch");
+  const [items, setItems] = React.useState([
+    {label: 'Busch', value: 'Busch'},
+    {label: 'College Ave', value: 'College Ave'},
+    {label: 'Cook/Douglass', value: 'Cook/Douglass'},
+    {label: 'Livingston', value: 'Livingston'},
+    {label: 'RBHS', value: 'RBHS'},
+  ]);
+
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('campus', value);
+    } 
+    catch (e) {
+      // saving error
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('campus');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } 
+    catch (e) {
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getData();
+        setValue(data);
+      } catch (e) {
+        console.error("Error fetching data:", e);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
   return (
-    <View style = {styles.container}>
-      <Text style = {styles.sText}>Settings</Text>
+    <View style = {settingsPageStyles.container}>
+      <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              onSelectItem={(selectedItem) => {
+                storeData(selectedItem?.toString())
+              }}
+              style = {{width: 150, minHeight: 40}}
+              containerStyle = {{width: 150}}
+            />
+      <Text style = {styles.sText}>current campus: {value} </Text>
     </View>
   );
 }
@@ -859,4 +914,15 @@ const styles = StyleSheet.create({
       color: 'white',
       textAlign: 'center',
     },
+ });
+
+ const settingsPageStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: "center",
+    opacity: 1
+  },
+
  });
