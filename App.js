@@ -486,63 +486,58 @@ console.log("Current Time (minutes):", currentTime);
 
 function SettingsScreen() {
 
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("Busch");
-  const [items, setItems] = React.useState([
-    {label: 'Busch', value: 'Busch'},
-    {label: 'College Ave', value: 'College Ave'},
-    {label: 'Cook/Douglass', value: 'Cook/Douglass'},
-    {label: 'Livingston', value: 'Livingston'},
-    {label: 'RBHS', value: 'RBHS'},
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("Busch");
+  const [items, setItems] = useState([
+    { label: 'Busch', value: 'Busch' },
+    { label: 'College Ave', value: 'College Ave' },
+    { label: 'Cook/Douglass', value: 'Cook/Douglass' },
+    { label: 'Livingston', value: 'Livingston' },
+    { label: 'RBHS', value: 'RBHS' },
   ]);
 
-  const storeData = async (value) => {
+  // Store selected campus in AsyncStorage
+  const storeData = async (selectedValue) => {
     try {
-      await AsyncStorage.setItem('campus', value);
-    } 
-    catch (e) {
-      // saving error
+      await AsyncStorage.setItem('campus', selectedValue);
+      setValue(selectedValue); // Update state after storing data
+    } catch (e) {
+      console.error("Error saving campus:", e);
     }
   };
 
+  // Retrieve stored campus from AsyncStorage
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('campus');
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } 
-    catch (e) {
+      const storedValue = await AsyncStorage.getItem('campus');
+      if (storedValue !== null) {
+        setValue(storedValue);
+      }
+    } catch (e) {
+      console.error("Error retrieving campus:", e);
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getData();
-        setValue(data);
-      } catch (e) {
-        console.error("Error fetching data:", e);
-      }
-    };
-  
-    fetchData();
+    getData();
   }, []);
 
   return (
-    <View style = {settingsPageStyles.container}>
+    <View style={settingsPageStyles.container}>
       <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-              onSelectItem={(selectedItem) => {
-                storeData(selectedItem?.toString())
-              }}
-              style = {{width: 150, minHeight: 40}}
-              containerStyle = {{width: 150}}
-            />
-      <Text style = {styles.sText}>current campus: {value} </Text>
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setItems}
+        onSelectItem={(selectedItem) => {
+          storeData(selectedItem.value)
+        }}
+        style={{ width: 150, minHeight: 40 }}
+        containerStyle={{ width: 150 }}
+      />
+      <Text style={styles.sText}>Current campus: {value}</Text>
     </View>
   );
 }
