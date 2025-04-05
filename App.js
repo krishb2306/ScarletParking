@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DateTimePicker from '@react-native-community/datetimepicker';
 //import { useState, useEffect } from 'react';
 
 
@@ -174,16 +175,16 @@ function MapScreen() {
   const [hideTimeout, setHideTimeout] = useState(null);
   const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
 
-  const bccLots = require('./bccLots');
+  const bccLots = require('./LotTimes/bccLots');
   const allLots = require('./allLots');
 
   const mapViewRef = useRef(null);
 
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
   const temp = [];
   const markers = [];
-
-
-
 
 
 
@@ -213,6 +214,12 @@ function MapScreen() {
 
   const handleSelection = (value) => {
     setSelectedOption(value);
+    if (value === 'set') {
+      setShowTimePicker(true);
+    }
+    else{
+      setShowTimePicker(false);
+    }
   };
 
   const [passName, setPassName] = useState("Busch Commuter (BCC)");
@@ -243,6 +250,17 @@ function MapScreen() {
       longitudeDelta: 0.02,
     },
   };
+
+  const onTimeChange = (event, selectedDate) => {
+    setShowTimePicker(false); // Hide the picker after selection
+    if (selectedDate) {
+      setSelectedTime(selectedDate);
+      console.log("Selected Time:", selectedDate.toLocaleTimeString());
+    }
+  };
+
+  
+
 
   // Zoom to the selected region
   const zoomToRegion = (region) => {
@@ -437,9 +455,18 @@ console.log("Current Time (minutes):", currentTime);
                   ]}
                 />
                 <Text style = {styles.radioText}>Set Time</Text>
+
               </TouchableOpacity>
-
-
+                {showTimePicker && (
+                 <DateTimePicker
+                value={selectedTime}
+                mode="time"
+                display="spinner"
+                onChange={onTimeChange}
+                
+              />
+                )}
+          
               <View style={styles.zoomButtonContainer}>
                 <TouchableOpacity
                   style={styles.zoomButton}
