@@ -434,13 +434,16 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
     </TouchableOpacity>
 
     <TouchableOpacity
-        style={styles.resetButton}  // Define a new style for the reset button
-        onPress={() => zoomToRegion({
-          latitude: 40.504853287623135, 
-          longitude: -74.44761255910845, 
-          latitudeDelta: 0.057,
-          longitudeDelta: 0.057, 
-        })}
+        style={styles.resetButton}
+        onPress={() => {
+          zoomToRegion({
+            latitude: 40.504853287623135, 
+            longitude: -74.44761255910845, 
+            latitudeDelta: 0.057,
+            longitudeDelta: 0.057, 
+          });
+          setSelectedMarker(null); // Reset the selected marker
+        }}
       >
         <Image 
             source={require('./assets/target.png')}  // Add your image path here
