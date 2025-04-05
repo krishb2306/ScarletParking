@@ -610,11 +610,7 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["24 hours, 7 days a week"]
             },
             {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
-              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 70, Lot 71A, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
+              name: "Lot 70, Lot 71A, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             },
             {
@@ -762,11 +758,7 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["24 hours, 7 days a week"]
             },
             {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
-              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             },
             {
@@ -836,11 +828,7 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["24 hours, 7 days a week"]
             },
             {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
-              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             },
             {
@@ -910,11 +898,7 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["24 hours, 7 days a week"]
             },
             {
-              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
-              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             },
             {
@@ -984,11 +968,7 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["24 hours, 7 days a week"]
             },
             {
-              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
-              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             },
             {
@@ -1097,19 +1077,11 @@ export const ParkingPassProvider = ({ children }) => {
           campus: "Cook/Douglass",
           lots: [
             {
-              name: "Lot 97",
+              name: "Lot 82, Lot 97",
               timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
             },
             {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
-              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 82",
-              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
-            },
-            {
-              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             },
             {
@@ -1179,19 +1151,11 @@ export const ParkingPassProvider = ({ children }) => {
           campus: "Cook/Douglass",
           lots: [
             {
-              name: "Lot 97",
+              name: "Lot 82, Lot 97",
               timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
             },
             {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
-              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 82",
-              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
-            },
-            {
-              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck",
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             },
             {
@@ -1265,11 +1229,7 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
             },
             {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
-              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck",
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             },
             {
@@ -1330,20 +1290,12 @@ export const ParkingPassProvider = ({ children }) => {
           campus: "Cook/Douglass",
           lots: [
             {
-              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
-              timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 97",
+              name: "Lot 82, Lot 97",
               timeslots: ["Monday - Thursday, 4PM - 8AM", "Friday 4PM - Monday 8AM"]
             },
             {
-              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
               timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
-            },
-            {
-              name: "Lot 82",
-              timeslots: ["Monday - Thursday, 4PM - 8AM", "Friday 4PM - Monday 8AM"]
             },
             {
               name: "Gated Lot 79A",
