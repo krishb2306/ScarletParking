@@ -35,6 +35,11 @@ const allLots = [
       coordinate: { latitude: 40.52416238347117, longitude: -74.43413606891866 },
     },
     {
+      id: '99',
+      title: 'Lot 108',
+      coordinate: { latitude: 40.51465440107032, longitude: -74.4350910376892 },
+    },
+    {
       id: '8',
       title: 'Lot 107',
       coordinate: { latitude: 40.523191617283295, longitude: -74.43240182649996 },
@@ -91,7 +96,7 @@ const allLots = [
     },
     {
       id: '19',
-      title: 'Lot 16 Gated',
+      title: 'Gated Lot 16',
       coordinate: { latitude: 40.50122499066363, longitude: -74.44598133938614 },
     },
     {
@@ -148,11 +153,6 @@ const allLots = [
       id: 30,
       title: 'Lot 94',
       coordinate: { latitude: 40.472290521942, longitude: -74.43665543406115 },
-    },
-    {
-      id: 31,
-      title: 'Lot 95',
-      coordinate: { latitude: 40.479743068645504, longitude: -74.44424221883541 },
     },
     {
       id: 32,

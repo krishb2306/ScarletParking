@@ -236,7 +236,7 @@ const bccLots = [
             endTime: "2:00 AM"
         }
     ] },
-    { name: "Lot 67", time: "Monday - Thursday, 6PM - 8AM; Friday 6PM - Monday 8AM", //double check this one
+    { name: "Lot 67", time: "Monday - Thursday, 6PM - 8AM; Friday 6PM - Monday 8AM", 
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
@@ -244,9 +244,19 @@ const bccLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
     
@@ -363,9 +373,19 @@ const bccLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday", "Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
 
@@ -378,9 +398,19 @@ const bccLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday", "Saturday", "Sunday", "Monday"],
+            days: ["Friday"],
             startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
     { name: "Lot 94", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
@@ -458,9 +488,19 @@ const bccLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday", "Saturday", "Sunday", "Monday"],
+            days: ["Friday"],
             startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
     { name: "Lot 70", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
@@ -662,7 +702,7 @@ const bccLots = [
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            startTime: "6:00 PM",
+            startTime: "7:30 PM",
             endTime: "2:00 AM"
         },
         {
@@ -681,9 +721,19 @@ const bccLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday", "Saturday", "Sunday", "Monday"],
+            days: ["Friday"],
             startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
     { name: "Lot 107", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",

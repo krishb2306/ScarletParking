@@ -10,12 +10,11 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
-<<<<<<< HEAD
-import DateTimePicker from '@react-native-community/datetimepicker';
+
 //import { useState, useEffect } from 'react';
-=======
+
 import { ParkingPassProvider, ParkingPassContext } from './ParkingPassContext';
->>>>>>> 0b1bb5a03cc6de870293c1403b38a4ef187ace7b
+
 
 
 function ListScreen() {
@@ -284,6 +283,7 @@ function MapScreen() {
 
   //   return () => clearInterval(intervalId); // Clear interval on unmount
   // }, []);
+ 
   
   function isWithinSchedule(schedule, date) {
     const timeZone = "America/New_York";
@@ -342,7 +342,14 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
   allLots.forEach(lot => {
     // Check if the current lot from allLots exists in bccLots
     let foundLot = bccLots.find(bccLot => bccLot.name === lot.title);
-    
+    // if (foundLot) {
+    //   markers.push({
+    //     id: lot.id,
+    //     title: lot.title,
+    //     coordinate: lot.coordinate,
+    //     description: foundLot.time
+    //   });
+    // }
     if (foundLot) {
       const isScheduleValid = isWithinSchedule(foundLot.schedule, new Date());
       if(isScheduleValid)
