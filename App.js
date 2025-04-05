@@ -4,13 +4,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet,StatusBar, Image, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
 import { Marker } from "react-native-maps";
-import React, { useState, useEffect, useRef} from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
+<<<<<<< HEAD
+import DateTimePicker from '@react-native-community/datetimepicker';
 //import { useState, useEffect } from 'react';
+=======
+import { ParkingPassProvider, ParkingPassContext } from './ParkingPassContext';
+>>>>>>> 0b1bb5a03cc6de870293c1403b38a4ef187ace7b
 
 
 function ListScreen() {
@@ -86,6 +91,7 @@ function ListScreen() {
     }
 ];
 
+  const { currPass } = useContext(ParkingPassContext);
   const [listInfo, setListInfo] = React.useState(currentPassInfo[0]);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("Busch");
@@ -101,7 +107,7 @@ function ListScreen() {
     <SafeAreaView style={listViewStyles.safeAreaContainer}>
       <View style = {listViewStyles.container}>
         <View style = {listViewStyles.topListView}> 
-          <Text style = {listViewStyles.headerText}> Info for Busch Commuter Pass </Text>
+          <Text style = {listViewStyles.headerText}> Info for {currPass} </Text>
         </View>
 
         <View style = {listViewStyles.middleListView}>
@@ -170,6 +176,7 @@ function ListScreen() {
 }
 
 function MapScreen() {
+  const { currPass } = useContext(ParkingPassContext);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
@@ -293,9 +300,9 @@ const [hours, minutes] = timeString.split(":").map(Number);
 
 const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
 
-console.log("Local Date:", localDate);
-console.log("Current Day:", currentDay);
-console.log("Current Time (minutes):", currentTime);
+//console.log("Local Date:", localDate);
+//console.log("Current Day:", currentDay);
+//console.log("Current Time (minutes):", currentTime);
   
     // Helper to parse time into minutes since midnight
     function parseTime(time) {
@@ -315,8 +322,8 @@ console.log("Current Time (minutes):", currentTime);
       const end = parseTime(endTime);
       const dayMatches = days.includes(currentDay);
   
-      console.log(`Checking schedule: Days = ${days.join(", ")}, Time = ${startTime} - ${endTime}`);
-      console.log(`Day Matches: ${dayMatches}`);
+      //console.log(`Checking schedule: Days = ${days.join(", ")}, Time = ${startTime} - ${endTime}`);
+      //console.log(`Day Matches: ${dayMatches}`);
   
       if (!dayMatches) return false;
   
@@ -327,7 +334,7 @@ console.log("Current Time (minutes):", currentTime);
       } else {
         timeMatches = currentTime >= start && currentTime < end;
       }
-      console.log(`Time Matches: ${timeMatches}`);
+      //console.log(`Time Matches: ${timeMatches}`);
       return timeMatches;
     });
   }
@@ -401,7 +408,7 @@ console.log("Current Time (minutes):", currentTime);
                 style={styles.passView}
                 disabled = {true}
               >
-                <Text style = {styles.passViewText}>{passName}</Text>
+                <Text style = {styles.passViewText}>{currPass}</Text>
 
       </TouchableOpacity>
 
@@ -446,7 +453,7 @@ console.log("Current Time (minutes):", currentTime);
               {/* Radio Button for Set Time */}
               <TouchableOpacity
                 style={styles.radioButtonContainer}
-                onPress={() => {handleSelection('set'), console.log(new Date())}}
+                onPress={() => {handleSelection('set') /*console.log(new Date())*/ }}
               >
                 <View
                   style={[
@@ -512,59 +519,77 @@ console.log("Current Time (minutes):", currentTime);
 }
 
 function SettingsScreen() {
+  const { currPass, updateParkingPass } = useContext(ParkingPassContext);
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("Busch");
-  const [items, setItems] = useState([
-    { label: 'Busch', value: 'Busch' },
-    { label: 'College Ave', value: 'College Ave' },
-    { label: 'Cook/Douglass', value: 'Cook/Douglass' },
-    { label: 'Livingston', value: 'Livingston' },
-    { label: 'RBHS', value: 'RBHS' },
-  ]);
+  const [allParkingPasses, setAllParkingPasses] = useState([
+    { label: 'Busch Commuter', value: 'Busch Commuter' },
+    { label: 'Busch Off-Campus Living', value: 'Busch Off-Campus Living' },
+    { label: 'Busch Resident', value: 'Busch Resident' },
+    { label: 'College Ave Commuter', value: 'College Ave Commuter' },
+    { label: 'Cook Commuter', value: 'Cook Commuter' },
+    { label: 'Cook Off-Campus Living', value: 'Cook Off-Campus Living' },
+    { label: 'Cook Resident', value: 'Cook Resident' },
+    { label: 'Douglass Commuter', value: 'Douglass Commuter' },
+    { label: 'Gibbons Resident', value: 'Gibbons Resident' },
+    { label: 'Henderson Resident', value: 'Henderson Resident' },
+    { label: 'Jameson Resident', value: 'Jameson Resident' },
+    { label: 'Katzenbach Resident', value: 'Katzenbach Resident' },
+    { label: 'Lippincott Resident', value: 'Lippincott Resident' },
+    { label: 'Livingston Commuter', value: 'Livingston Commuter' },
+    { label: 'Livingston Off-Campus Living', value: 'Livingston Off-Campus Living' },
+    { label: 'Livingston Resident', value: 'Livingston Resident' },
+    { label: 'New Brunswick Night Commuter', value: 'New Brunswick Night Commuter' },
+    { label: 'Nicholas Resident', value: 'Nicholas Resident' },
+    { label: 'Woodbury Resident', value: 'Woodbury Resident' },
+]);
 
-  // Store selected campus in AsyncStorage
-  const storeData = async (selectedValue) => {
-    try {
-      await AsyncStorage.setItem('campus', selectedValue);
-      setValue(selectedValue); // Update state after storing data
-    } catch (e) {
-      console.error("Error saving campus:", e);
-    }
-  };
 
-  // Retrieve stored campus from AsyncStorage
-  const getData = async () => {
-    try {
-      const storedValue = await AsyncStorage.getItem('campus');
-      if (storedValue !== null) {
-        setValue(storedValue);
-      }
-    } catch (e) {
-      console.error("Error retrieving campus:", e);
-    }
-  };
+  // // Store selected campus in AsyncStorage
+  // const storeData = async (selectedValue) => {
+  //   try {
+  //     await AsyncStorage.setItem('parkingPass', selectedValue);
+  //     setCurrPass(selectedValue); // Update state after storing data
+  //   } 
+  //   catch (e) {
+  //     console.error("Error getting parking pass:", e);
+  //   }
+  // };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // // Retrieve stored campus from AsyncStorage
+  // const getData = async () => {
+  //   try {
+  //     const storedValue = await AsyncStorage.getItem('parkingPass');
+  //     if (storedValue !== null) {
+  //       setCurrPass(storedValue);
+  //     }
+  //   } 
+  //   catch (e) {
+  //     console.error("Error getting parking pass:", e);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
     <View style={settingsPageStyles.container}>
       <DropDownPicker
         open={open}
-        value={value}
-        items={items}
+        value={currPass}
+        items={allParkingPasses}
         setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
-        onSelectItem={(selectedItem) => {
-          storeData(selectedItem.value)
+        //setValue={(value) => updateParkingPass(value)}
+        onSelectItem={(item) => {
+          updateParkingPass(item.value);
         }}
+        
+        setItems={setAllParkingPasses}
         style={{ width: 150, minHeight: 40 }}
         containerStyle={{ width: 150 }}
       />
-      <Text style={styles.sText}>Current campus: {value}</Text>
+      <Text style={styles.sText}>Current campus: {currPass}</Text>
     </View>
   );
 }
@@ -573,78 +598,80 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator
-      initialRouteName="Map"
-      screenOptions={({ route }) => ({
-        tabBarShowLabel: true, // Show tab labels
-        tabBarStyle: { 
-          backgroundColor: route.name === 'List' || route.name === 'Settings' ? 'black' : '#2B333E', // Change background color based on route
-          opacity: 1,
-          borderTopWidth: 0,
-        }, 
-        tabBarActiveTintColor: 'red', // Active icon/text color
-      })}
-    >
-      <Tab.Screen
-        name="List"
-        component={ListScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="list" color={color} size={size} />
-          ),
-          headerTitle: '',
-          headerStyle: {
-            height: 60,
-            backgroundColor: 'black', 
-            opacity: 1// Header background color
-          },
-          headerTintColor: 'white', // Text color in the header
-        }}
-      />
+      <Tab.Navigator
+        initialRouteName="Map"
+        screenOptions={({ route }) => ({
+          tabBarShowLabel: true, // Show tab labels
+          tabBarStyle: { 
+            backgroundColor: route.name === 'List' || route.name === 'Settings' ? 'black' : '#2B333E', // Change background color based on route
+            opacity: 1,
+            borderTopWidth: 0,
+          }, 
+          tabBarActiveTintColor: 'red', // Active icon/text color
+        })}
+      >
+        <Tab.Screen
+          name="List"
+          component={ListScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="list" color={color} size={size} />
+            ),
+            headerTitle: '',
+            headerStyle: {
+              height: 60,
+              backgroundColor: 'black', 
+              opacity: 1// Header background color
+            },
+            headerTintColor: 'white', // Text color in the header
+          }}
+        />
 
-      <Tab.Screen
-        name="Map"
-        component={MapScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="map" color={color} size={size} />
-          ),
-          headerTitle: '',
-          headerStyle: {
-            height: 60,
-            backgroundColor: '#2B333E', 
-            opacity: 0.95,
-           
-          },
-          headerTintColor: 'white', // Text color in the header
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="settings" color={color} size={size} />
-          ),
-          headerTitle: '',
-          headerStyle: {
-            height: 60,
-            backgroundColor: 'black', 
-            opacity: 1// Header background color
-          },
-          headerTintColor: 'white', // Text color in the header
-        }}
-      />
-    </Tab.Navigator>
+        <Tab.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="map" color={color} size={size} />
+            ),
+            headerTitle: '',
+            headerStyle: {
+              height: 60,
+              backgroundColor: '#2B333E', 
+              opacity: 0.95,
+            
+            },
+            headerTintColor: 'white', // Text color in the header
+          }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="settings" color={color} size={size} />
+            ),
+            headerTitle: '',
+            headerStyle: {
+              height: 60,
+              backgroundColor: 'black', 
+              opacity: 1// Header background color
+            },
+            headerTintColor: 'white', // Text color in the header
+          }}
+        />
+      </Tab.Navigator>
   );
 }
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <StatusBar barStyle="light-content" backgroundColor="black" />
-      <MyTabs />
-    </NavigationContainer>
+    <ParkingPassProvider>
+      <NavigationContainer>
+        <StatusBar barStyle="light-content" backgroundColor="black" />
+        <MyTabs />
+      </NavigationContainer>
+    </ParkingPassProvider>
   );
 }
 

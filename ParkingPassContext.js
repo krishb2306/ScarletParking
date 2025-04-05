@@ -1,0 +1,1553 @@
+import React, { createContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Create the Context
+export const ParkingPassContext = createContext();
+
+export const ParkingPassProvider = ({ children }) => {
+  const [currPass, setCurrPass] = useState("Busch Commuter");
+  const [lotInfo, setLotInfo] = useState([
+    {
+      pass: "Busch Commuter",
+      campuses: [
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 613/Stadium West",
+              timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Gated Lot 55",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97, Lot 82",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Busch Off-Campus Living",
+      campuses: [
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 51, Lot 58B, Lot 58C, Lot 58d, Lot 62, Lot 65A, Lot 65D, Lot 66A, Lot 67, Lot 67A, Johnson Apartment Lot 603, Johnson Apartment Lot 604, Johnson Apartment Lot 605, Johnson Apartment Lot 606, Lot 623/Marvin Apts",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 50, Lot 51B, Lot 53A, Lot 54, Gated Lot 55, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 613/Stadium West",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive, Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97, Lot 82",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Busch Resident",
+      campuses: [
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 51, Lot 58B, Lot 58C, Lot 58d, Lot 62, Lot 65A, Lot 65D, Lot 66A, Lot 67, Lot 67A, Johnson Apartment Lot 603, Johnson Apartment Lot 604, Johnson Apartment Lot 605, Johnson Apartment Lot 606, Lot 623/Marvin Apts",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 50, Lot 51B, Lot 53A, Lot 54, Gated Lot 55, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive, Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97, Lot 82",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "College Ave Commuter",
+      campuses: [
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 20, Lot 26, Lot 30, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 32, Lot 33",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 97, Lot 82",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive, Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Cook Commuter",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 98A, Lot 98B, Lot 99C, Lot 99D",
+              timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Thursday, 6PM - 2AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 805/Lipman Drive, Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 82",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Cook Off-Campus Living",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 99A, Lot 99B, Lot 99C, Lot 99D",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 98A, Lot 98B, Lot 805/Lipman Drive, Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM"]
+            },
+            {
+              name: "Lot 82, Lot 13",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 8PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51B, Lot 53A, Lot 54, Gated Lot 55, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 613/Stadium West",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Cook Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 99A, Lot 99B, Lot 99C, Lot 99D",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM"]
+            },
+            {
+              name: "Lot 82, Lot 13",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 8PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Douglass Commuter",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 79, Douglas Deck",
+              timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Lot 709/Corwin, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 82, Lot 97",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Gibbons Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 99C, Lot 99D, Lot 74A",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 8PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Helyar Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Helyar House Lot",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 82",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 8PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Henderson Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 99C, Lot 99D",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Jameson Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 99C, Lot 99D",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Katzenbach Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 712/Katzenbach, Lot 76",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Lippincott Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 711/Lippincott, Lot 76",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Livingston Commuter",
+      campuses: [
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 915/ Yellow Lot",
+              timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 82",
+              timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Livingston Off-Campus Living",
+      campuses: [
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 103, Lot 105",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 8PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51B, Lot 53A, Lot 54, Gated Lot 55, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 613/Stadium West",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 82",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Livingston Resident",
+      campuses: [
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 103, Lot 105",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 8PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 82",
+              timeslots: ["Monday - Friday, 8PM - 8AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "New Brunswick Night Commuter",
+      campuses: [
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 4PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55, Rodkin Center Lot",
+              timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 50",
+              timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 13",
+              timeslots: ["Monday - Thursday, 4PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Thursday, 4PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglas Deck, Lot 709/Corwin",
+              timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 82",
+              timeslots: ["Monday - Thursday, 4PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Gated Lot 79A",
+              timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 4PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/Yellow Lot",
+              timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Nicholas Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 76, Lot 99C, Lot 99D",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 109, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      pass: "Woodbury Resident",
+      campuses: [
+        {
+          campus: "Cook/Douglass",
+          lots: [
+            {
+              name: "Lot 76, Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive",
+              timeslots: ["24 hours, 7 days a week"]
+            },
+            {
+              name: "Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 79, Gated Lot 79A, Lot 81, Lot 82, Lot 83, Lot 84, Lot 86, Lot 88, Lot 94, Lot 95, Lot 96, Lot 96A, Douglas Deck, Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 97",
+              timeslots: ["Monday - Friday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Busch",
+          lots: [
+            {
+              name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 613/Stadium West, Gated Lot 55",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 67",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "College Ave",
+          lots: [
+            {
+              name: "Lot 11 NB, Gated Lot 16, Lot 26, Lot 30, Lot 33",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 13, Lot 20, Lot 505/ CAC Parking Deck",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 6PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Livingston",
+          lots: [
+            {
+              name: "Lot 101",
+              timeslots: ["Monday - Thursday, 8PM - 8AM", "Friday 4PM - Monday 8AM"]
+            },
+            {
+              name: "Lot 107, Lot 108, Lot 109, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/Yellow Lot",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Health - Piscataway",
+          lots: [
+            {
+              name: "Lot A, Lot B, Lot C",
+              timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        }
+      ]
+    }
+  ]);
+  
+
+  const getData = async () => {
+    try {
+      const storedValue = await AsyncStorage.getItem('parkingPass');
+      if (storedValue !== null) {
+        setCurrPass(storedValue);
+      }
+    } 
+    catch (e) {
+      console.error("Error retrieving parking pass:", e);
+    }
+  };
+
+  // Function to update the parking pass and store it in AsyncStorage
+  const updateParkingPass = async (newPass) => {
+    try {
+      await AsyncStorage.setItem('parkingPass', newPass);
+      setCurrPass(newPass);
+    } catch (e) {
+      console.error("Error saving parking pass:", e);
+    }
+  };
+
+    // Retrieve parking pass from AsyncStorage when the app loads
+    useEffect(() => {
+        getData();
+      }, []);
+
+  return (
+    <ParkingPassContext.Provider value={{ currPass, updateParkingPass }}>
+      {children}
+    </ParkingPassContext.Provider>
+  );
+};
