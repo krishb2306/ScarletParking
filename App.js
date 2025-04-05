@@ -364,6 +364,7 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
     <View style={styles.container}>
+    
       <MapView
       ref={mapViewRef}
       clusterColor='#D4301F'
@@ -379,6 +380,7 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
       }}
       onPress={handleMapPress} // Reset the selected marker on map press
      >
+      
       {markers.map((marker) => (
             <Marker
               key={marker.id}
@@ -418,6 +420,7 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
 
       </TouchableOpacity>
 
+  
 
      <TouchableOpacity
           style={styles.modalButton}
@@ -429,6 +432,21 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
           />
 
     </TouchableOpacity>
+
+    <TouchableOpacity
+        style={styles.resetButton}  // Define a new style for the reset button
+        onPress={() => zoomToRegion({
+          latitude: 40.504853287623135, 
+          longitude: -74.44761255910845, 
+          latitudeDelta: 0.057,
+          longitudeDelta: 0.057, 
+        })}
+      >
+        <Image 
+            source={require('./assets/target.png')}  // Add your image path here
+            style={styles.targetImage}
+          />
+      </TouchableOpacity>
 
 
     <Modal
@@ -518,6 +536,7 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
             </View>
           </View>
         </Modal>
+
     </View>
     </SafeAreaView>
   );
@@ -968,6 +987,29 @@ const styles = StyleSheet.create({
       color: 'white',
       textAlign: 'center',
     },
+    resetButton: {
+      position: 'absolute',
+      bottom: 15, // Adjust this to place it at the desired position
+      right: '5%',
+      //marginLeft: 100, // Centers the button horizontally
+      backgroundColor: '#27313F',
+      padding: 10,
+      opacity: 0.9,
+      borderRadius: 25,
+      borderWidth: 1,
+      borderColor: "white"
+      //borderColor: "red",
+      //borderWidth: 1,
+    },
+    resetButtonText: {
+      color: 'white',
+      fontSize: 16,
+      textAlign: 'center',
+    },
+    targetImage: {
+      width: 25,  // Set the desired size for the image
+      height: 25, // Set the desired size for the image
+      },
  });
 
  const settingsPageStyles = StyleSheet.create({
@@ -978,5 +1020,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     opacity: 1
   },
+
 
  });
