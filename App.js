@@ -258,7 +258,7 @@ function MapScreen() {
   };
 
   const onTimeChange = (event, selectedDate) => {
-    setShowTimePicker(false); // Hide the picker after selection
+    //setShowTimePicker(false); // Hide the picker after selection
     if (selectedDate) {
       setSelectedTime(selectedDate);
       console.log("Selected Time:", selectedDate.toLocaleTimeString());
@@ -287,12 +287,11 @@ function MapScreen() {
   
   function isWithinSchedule(schedule, date) {
     const timeZone = "America/New_York";
-  
+    const currentDate = selectedOption === 'current' ? new Date() : selectedTime;
     // Convert UTC date to local time
     //const options = { timeZone, weekday: "long", hour: "2-digit", minute: "2-digit" };
-    const localDate = moment().format('ddd MMM DD YYYY HH:mm:ss ZZ');
-
-const currentDay = new Date(localDate).toLocaleDateString("en-US", { weekday: "long" });
+    const localDate = moment(currentDate).format('ddd MMM DD YYYY HH:mm:ss ZZ');
+    const currentDay = new Date(localDate).toLocaleDateString("en-US", { weekday: "long" });
 
 // Extract hours and minutes from the localDate string
 const timeString = localDate.split(" ")[4]; // Extract the "HH:mm:ss" part
@@ -471,15 +470,14 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
                 <Text style = {styles.radioText}>Set Time</Text>
 
               </TouchableOpacity>
-                {showTimePicker && (
-                 <DateTimePicker
-                value={selectedTime}
-                mode="time"
-                display="spinner"
-                onChange={onTimeChange}
-                
-              />
-                )}
+              {showTimePicker && (
+                <DateTimePicker
+                  value={selectedTime}
+                  mode="datetime"
+                  display="compact"
+                  onChange={onTimeChange}
+                />
+              )}
           
               <View style={styles.zoomButtonContainer}>
                 <TouchableOpacity
@@ -828,7 +826,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: "50%"
+    marginBottom: "10%"
     //backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   modalContent: {
