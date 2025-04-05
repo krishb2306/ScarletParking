@@ -10,6 +10,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import * as Location from 'expo-location'; // For Expo Location
 
 //import { useState, useEffect } from 'react';
 
@@ -192,6 +193,38 @@ function MapScreen() {
   const temp = [];
   const markers = [];
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      // Watch the user's location
+      const locationSubscription = await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.High, // Use high accuracy
+          timeInterval: 1000, // Update every 1 second
+          distanceInterval: 1, // Update when the device moves 1 meter
+        },
+        (newLocation) => {
+          setLocation(newLocation.coords);
+        }
+      );
+
+      // Clean up the subscription when the component unmounts
+      return () => {
+        locationSubscription.remove();
+      };
+    })();
+  }, []);
+
+
 
 
   const openDirections = (latitude, longitude) => {
@@ -360,6 +393,20 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
         });
     }
 });
+const zoomToLocation = () => {
+  if (location && mapViewRef.current) {
+    mapViewRef.current.animateToRegion(
+      {
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      },
+      1000
+    );
+  }
+};
+
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
@@ -380,7 +427,17 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
       }}
       onPress={handleMapPress} // Reset the selected marker on map press
      >
-      
+      {location && (
+            <Marker
+              coordinate={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+              }}
+              title="My Location"
+              description="This is your current location"
+            />
+          )}
+
       {markers.map((marker) => (
             <Marker
               key={marker.id}
