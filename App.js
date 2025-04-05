@@ -189,6 +189,7 @@ function MapScreen() {
 
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [hasZoomedToUser, setHasZoomedToUser] = useState(false);
 
   const temp = [];
   const markers = [];
@@ -198,31 +199,39 @@ function MapScreen() {
 
 
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
+    let isMounted = true;
+    let locationInterval;
 
-      // Watch the user's location
-      const locationSubscription = await Location.watchPositionAsync(
-        {
-          accuracy: Location.Accuracy.High, // Use high accuracy
-          timeInterval: 1000, // Update every 1 second
-          distanceInterval: 1, // Update when the device moves 1 meter
-        },
-        (newLocation) => {
-          setLocation(newLocation.coords);
+    const fetchLocation = async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
         }
-      );
 
-      // Clean up the subscription when the component unmounts
-      return () => {
-        locationSubscription.remove();
-      };
-    })();
+        let loc = await Location.getCurrentPositionAsync({});
+        if (isMounted) {
+          setLocation(loc.coords);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // Fetch immediately on mount
+    fetchLocation();
+
+    // Then fetch every 30 seconds
+    locationInterval = setInterval(fetchLocation, 30000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(locationInterval);
+    };
   }, []);
+
+
 
 
 
@@ -429,13 +438,19 @@ const zoomToLocation = () => {
      >
       {location && (
             <Marker
-              coordinate={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-              }}
-              title="My Location"
-              description="This is your current location"
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            title="Your Location"
+            description="You are here!"
+          >
+            {/* Custom marker image */}
+            <Image
+              source={require('./assets/blue.png')}  // Path to your custom image
+              style={{ width: 40, height: 40 }}  // Set the size of your custom image
             />
+          </Marker>
           )}
 
       {markers.map((marker) => (
@@ -491,22 +506,44 @@ const zoomToLocation = () => {
     </TouchableOpacity>
 
     <TouchableOpacity
-        style={styles.resetButton}
-        onPress={() => {
-          zoomToRegion({
-            latitude: 40.504853287623135, 
-            longitude: -74.44761255910845, 
-            latitudeDelta: 0.057,
-            longitudeDelta: 0.057, 
-          });
-          setSelectedMarker(null); // Reset the selected marker
-        }}
-      >
-        <Image 
-            source={require('./assets/target.png')}  // Add your image path here
-            style={styles.targetImage}
-          />
-      </TouchableOpacity>
+  style={styles.resetButton}
+  onPress={() => {
+    if (!hasZoomedToUser && location) {
+      // Zoom to user location
+      mapViewRef.current.animateToRegion(
+        {
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        },
+        1000
+      );
+    } else {
+      // Zoom to initial location
+      mapViewRef.current.animateToRegion(
+        {
+          latitude: 40.504853287623135,
+          longitude: -74.44761255910845,
+          latitudeDelta: 0.057,
+          longitudeDelta: 0.057,
+        },
+        1000
+      );
+    }
+
+    // Toggle the zoom flag
+    setHasZoomedToUser(!hasZoomedToUser);
+
+    // Optionally deselect any marker
+    setSelectedMarker(null);
+  }}
+>
+  <Image 
+    source={require('./assets/target.png')}
+    style={styles.targetImage}
+  />
+</TouchableOpacity>
 
 
     <Modal
