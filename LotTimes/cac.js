@@ -114,10 +114,21 @@ const cacLots = [
             startTime: "6:00 PM",
             endTime: "8:00 AM"
         },
+        ,
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
 
@@ -129,10 +140,21 @@ const cacLots = [
             startTime: "6:00 PM",
             endTime: "8:00 AM"
         },
+        ,
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
     { name: "Lot 50", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
@@ -378,10 +400,21 @@ const cacLots = [
             startTime: "6:00 PM",
             endTime: "8:00 AM"
         },
+        ,
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
     { name: "Lot 94", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
@@ -458,10 +491,21 @@ const cacLots = [
             startTime: "6:00 PM",
             endTime: "8:00 AM"
         },
+        ,
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
-            startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            days: ["Friday"],
+            startTime: "4:00 PM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
     { name: "Lot 70", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
@@ -663,7 +707,7 @@ const cacLots = [
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            startTime: "6:00 PM",
+            startTime: "7:30 PM",
             endTime: "2:00 AM"
         },
         {
@@ -681,10 +725,21 @@ const cacLots = [
             startTime: "6:00 PM",
             endTime: "8:00 AM"
         },
+        ,
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "6:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ]},
     { name: "Lot 107", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",

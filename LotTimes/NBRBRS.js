@@ -392,9 +392,19 @@ const nbrbrsLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ]},
     { name: "Lot 20", time: "Monday - Thursday, 8PM - 8AM; Friday - Monday, 4PM - 8AM", 
@@ -405,9 +415,19 @@ const nbrbrsLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ]},
     { name: "Lot 505/ CAC Parking Deck", time: "Monday - Thursday, 8PM - 8AM; Friday - Monday, 4PM - 8AM", 
@@ -418,9 +438,19 @@ const nbrbrsLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ]},
    
@@ -433,9 +463,19 @@ const nbrbrsLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ]},
 
@@ -514,9 +554,19 @@ const nbrbrsLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ]},
 
@@ -719,24 +769,40 @@ const nbrbrsLots = [
     { name: "Gated Lot 79A", time: "Saturday - Sunday, 6AM - 2AM", 
     schedule: [
         {
-            days: ["Saturday", "Sunday"],
+            days: ["Saturday"],
             startTime: "6:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Sunday"],
+            startTime: "12:00 AM",
             endTime: "2:00 AM"
         }
     ]},
 
     //Livi
-    { name: "Lot 1010", time: "Monday - Thursday, 8PM - 8AM; Friday - Monday, 4PM - 8AM", 
+    { name: "Lot 101", time: "Monday - Thursday, 8PM - 8AM; Friday - Monday, 4PM - 8AM", 
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
             startTime: "8:00 PM",
             endTime: "8:00 AM"
         },
+        ,
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ]},
 

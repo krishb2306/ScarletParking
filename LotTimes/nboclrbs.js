@@ -438,13 +438,23 @@ const nboclrbsLots = [
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-            startTime: "8:00 PM",
+            startTime: "6:00 PM",
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
 
@@ -453,13 +463,23 @@ const nboclrbsLots = [
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-            startTime: "8:00 PM",
+            startTime: "6:00 PM",
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ]  },
     { name: "Lot 94", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
@@ -659,7 +679,7 @@ const nboclrbsLots = [
             endTime: "2:00 AM"
         }
     ]},
-    { name: "Lot 82", time: "Monday - Thursday, 8PM - 8AM\nFriday 4PM - Monday 8AM", 
+    { name: "Lot 82", time: "Monday - Thursday, 8PM - 8AM\nSaturday - Sunday, 6AM - 2AM", 
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
@@ -667,21 +687,26 @@ const nboclrbsLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
-            startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            days: ["Saturday"],
+            startTime: "6:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Sunday"],
+            startTime: "12:00 AM",
+            endTime: "2:00 AM"
         }
     ] },
     { name: "Gated Lot 79A", time: "Saturday - Sunday, 6AM - 2AM", 
     schedule: [
         {
-            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            startTime: "8:00 PM",
-            endTime: "2:00 AM"
+            days: ["Saturday"],
+            startTime: "6:00 AM",
+            endTime: "11:59 PM"
         },
         {
-            days: ["Saturday", "Sunday"],
-            startTime: "6:00 AM",
+            days: ["Sunday"],
+            startTime: "12:00 AM",
             endTime: "2:00 AM"
         }
     ] },
@@ -691,13 +716,23 @@ const nboclrbsLots = [
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-            startTime: "8:00 PM",
+            startTime: "6:00 PM",
             endTime: "8:00 AM"
         },
         {
-            days: ["Friday","Saturday", "Sunday","Monday"],
+            days: ["Friday"],
             startTime: "4:00 PM",
-            endTime: "8:00 AM"
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
         }
     ] },
     { name: "Lot 107", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
