@@ -11,6 +11,7 @@ import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Location from 'expo-location'; // For Expo Location
+import Ionicons from 'react-native-vector-icons/Ionicons'; 
 
 //import { useState, useEffect } from 'react';
 
@@ -235,6 +236,25 @@ function MapScreen() {
 
 
 
+  const handleClusterPress = (cluster) => {
+    const { geometry, properties } = cluster;
+    const coordinates = {
+      latitude: geometry.coordinates[1],
+      longitude: geometry.coordinates[0],
+    };
+  
+    // Custom zoom in (adjust delta for zoom level)
+    mapViewRef.current?.animateToRegion(
+      {
+        ...coordinates,
+        latitudeDelta: 0.005,      // 👈 control zoom here
+        longitudeDelta: 0.005,
+      },
+      500
+    );
+  };
+
+  
 
   const openDirections = (latitude, longitude) => {
     const url = `maps://?daddr=${latitude},${longitude}`;
@@ -249,9 +269,21 @@ function MapScreen() {
       clearTimeout(hideTimeout);
       setHideTimeout(null);
     }
+  
+    // Center the map on the selected marker
+    mapViewRef.current?.animateToRegion(
+      {
+        latitude: marker.coordinate.latitude,
+        longitude: marker.coordinate.longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      },
+      1000 // duration in ms
+    );
+  
     setSelectedMarker(marker);
   };
-
+  
   const handleMapPress = () => {
     // Set a delay to hide the button
     const timeout = setTimeout(() => {
@@ -313,7 +345,8 @@ function MapScreen() {
   // Zoom to the selected region
   const zoomToRegion = (region) => {
     mapViewRef.current.animateToRegion(region, 1000); // 1000 ms for smooth zooming
-    setModalVisible(false); // Close the modal after zooming
+    setModalVisible(false);
+    setSelectedMarker(null); // Close the modal after zooming
   };
 
   // const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
@@ -424,6 +457,7 @@ const zoomToLocation = () => {
       <MapView
       ref={mapViewRef}
       clusterColor='#D4301F'
+      onClusterPress={handleClusterPress}
       minPoints={2}
       minZoom = {1}
       userInterfaceStyle='dark'
@@ -437,52 +471,57 @@ const zoomToLocation = () => {
       onPress={handleMapPress} // Reset the selected marker on map press
      >
       {location && (
-            <Marker
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-            title="Your Location"
-            description="You are here!"
-          >
-            {/* Custom marker image */}
-            <Image
-              source={require('./assets/blue.png')}  // Path to your custom image
-              style={{ width: 40, height: 40 }}  // Set the size of your custom image
-            />
-          </Marker>
-          )}
+  <Marker
+    coordinate={{
+      latitude: location.latitude,
+      longitude: location.longitude,
+    }}
+    title="Your Location"
+    description="You are here!"
+  >
+    <Ionicons name="caret-up-circle-outline" size={30} color="#4A90E2" />
+  </Marker>
+)}
 
-      {markers.map((marker) => (
-            <Marker
-              key={marker.id}
-              coordinate={marker.coordinate}
-              title={marker.title}
-              description={""}
-              onPress={(e) => {
-                e.stopPropagation(); // Prevent the map's onPress from firing
-                handleMarkerPress(marker);
-              }}
-              
-            />
-          ))}
+{markers.map((marker) => (
+  <Marker
+    key={marker.id}
+    coordinate={marker.coordinate}
+    onPress={(e) => {
+      e.stopPropagation();
+      handleMarkerPress(marker);
+    }}
+  >
+    <View style={styles.customMarker}>
+      <Ionicons name="location-sharp" size={30} color="#FF3B30" />
+    </View>
+  </Marker>
+))}
+
 
      </MapView>
      {selectedMarker && (
-          <View style={styles.markerDetails}>
-            <Text style={styles.markerTitle}>{selectedMarker.title}</Text>
-            <Text style={styles.markerSubTitle}>{selectedMarker.description}</Text>
-            <TouchableOpacity
-              style={styles.directionsButton}
-              onPress={() => openDirections(
-                selectedMarker.coordinate.latitude,
-                selectedMarker.coordinate.longitude
-              )}
-            >
-              <Text style={styles.directionsButtonText}>Get Directions</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+  <View style={styles.markerDetails}>
+    <View style={styles.markerTextContainer}>
+      <Text style={styles.markerTitle}>{selectedMarker.title}</Text>
+      <Text style={styles.markerSubTitle}>{selectedMarker.description}</Text>
+    </View>
+
+    <TouchableOpacity
+  style={styles.directionsButton}
+  onPress={() =>
+    openDirections(
+      selectedMarker.coordinate.latitude,
+      selectedMarker.coordinate.longitude
+    )
+  }
+>
+  <Ionicons name="navigate-outline" size={18} color="#fff" />
+  <Text style={styles.directionsButtonText}>Directions</Text>
+</TouchableOpacity>
+  </View>
+)}
+
 
       <TouchableOpacity
                 style={styles.passView}
@@ -496,7 +535,7 @@ const zoomToLocation = () => {
 
      <TouchableOpacity
           style={styles.modalButton}
-          onPress={() => setModalVisible(true)}
+          onPress={() => {setModalVisible(true); setSelectedMarker(null)}}
         >
           <Image 
             source={require('./assets/legend2.png')}  // Add your image path here
@@ -546,93 +585,88 @@ const zoomToLocation = () => {
 </TouchableOpacity>
 
 
-    <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
+<Modal
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={() => setModalVisible(false)}
+>
+  <View style={styles.modalOverlay}>
+    <View style={styles.modalContent}>
+
+      {/* Close Button */}
+      <TouchableOpacity
+        style={styles.closeButton}
+        onPress={() => setModalVisible(false)}
+      >
+        <Text style={styles.closeButtonText}>✕</Text>
+      </TouchableOpacity>
+
+      {/* Radio Selector Row */}
+      <View style={styles.radioRow}>
+        <TouchableOpacity
+          style={[
+            styles.radioOption,
+            selectedOption === 'current' && styles.radioOptionActive,
+          ]}
+          onPress={() => handleSelection('current')}
         >
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
+          <Text style={styles.radioText}>Current Time</Text>
+        </TouchableOpacity>
 
-              <Text style={styles.modalText}></Text>
+        <TouchableOpacity
+          style={[
+            styles.radioOption,
+            selectedOption === 'set' && styles.radioOptionActive,
+          ]}
+          onPress={() => handleSelection('set')}
+        >
+          <Text style={styles.radioText}>Set Time</Text>
+        </TouchableOpacity>
+      </View>
 
-              {/* Radio Button for Current Time */}
-              <TouchableOpacity
-                style={styles.radioButtonContainer}
-                onPress={() => handleSelection('current')}
-              >
-                <View
-                  style={[
-                    styles.radioButton,
-                    selectedOption === 'current' && styles.selectedRadioButton,
-                  ]}
-                />
-                <Text style = {styles.radioText}>Current Time</Text>
-              </TouchableOpacity>
+      {/* Time Picker (Only shown if set) */}
+      {showTimePicker && (
+        <DateTimePicker
+          value={selectedTime}
+          mode="datetime"
+          display="compact"
+          onChange={onTimeChange}
+          style={{ marginVertical: 10 }}
+        />
+      )}
 
-              {/* Radio Button for Set Time */}
-              <TouchableOpacity
-                style={styles.radioButtonContainer}
-                onPress={() => {handleSelection('set') /*console.log(new Date())*/ }}
-              >
-                <View
-                  style={[
-                    styles.radioButton,
-                    selectedOption === 'set' && styles.selectedRadioButton,
-                  ]}
-                />
-                <Text style = {styles.radioText}>Set Time</Text>
+      {/* Zoom Region Grid */}
+      <View style={styles.zoomButtonGrid}>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region1)}
+        >
+          <Text style={styles.zoomButtonText}>Livingston</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region2)}
+        >
+          <Text style={styles.zoomButtonText}>Busch</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region3)}
+        >
+          <Text style={styles.zoomButtonText}>College Ave</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region4)}
+        >
+          <Text style={styles.zoomButtonText}>Cook/Doug</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+</Modal>
 
-              </TouchableOpacity>
-              {showTimePicker && (
-                <DateTimePicker
-                  value={selectedTime}
-                  mode="datetime"
-                  display="compact"
-                  onChange={onTimeChange}
-                />
-              )}
-          
-              <View style={styles.zoomButtonContainer}>
-                <TouchableOpacity
-                  style={styles.zoomButton}
-                  onPress={() => zoomToRegion(zoomRegions.region1)}
-                >
-                  <Text style={styles.zoomButtonText}>Livingston</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.zoomButton}
-                  onPress={() => zoomToRegion(zoomRegions.region2)}
-                >
-                  <Text style={styles.zoomButtonText}>Busch</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.zoomButton}
-                  onPress={() => zoomToRegion(zoomRegions.region3)}
-                >
-                  <Text style={styles.zoomButtonText}>College Ave</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.zoomButton}
-                  onPress={() => zoomToRegion(zoomRegions.region4)}
-                >
-                  <Text style={styles.zoomButtonText}>Cook/Doug</Text>
-                </TouchableOpacity>
-              </View>
-
-
-              
-              {/* Close Button */}
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={styles.closeButtonText}>X</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
 
     </View>
     </SafeAreaView>
@@ -724,7 +758,7 @@ function MyTabs() {
         screenOptions={({ route }) => ({
           tabBarShowLabel: true, // Show tab labels
           tabBarStyle: { 
-            backgroundColor: route.name === 'List' || route.name === 'Settings' ? 'black' : '#2B333E', // Change background color based on route
+            backgroundColor: route.name === 'List' || route.name === 'Settings' ? 'black' : '#27313F', // Change background color based on route
             opacity: 1,
             borderTopWidth: 0,
           }, 
@@ -902,212 +936,315 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1
-  },
-  listViewContainer: {
-      flex: 1,
-      backgroundColor: '#27313F',
-      alignItems: "center",
-      justifyContent: "center",
-      opacity: 1
+    justifyContent: 'center',
   },
 
-  mapStyle:{
-    width: "100%",
-    height: "120%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 150,
-    opacity: 0.85
+  listViewContainer: {
+    flex: 1,
+    backgroundColor: '#27313F',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+
   safeAreaContainer: {
-    flex: 1, 
+    flex: 1,
   },
+
+  mapStyle: {
+    width: '100%',
+    height: '120%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 150,
+    opacity: 0.8,
+  },
+
   modalButton: {
     position: 'absolute',
-    top: 10, // Adjust this to place it at the desired position
-    left: '98%',
-    marginLeft: -50, // Centers the button horizontally
-    backgroundColor: '#27313F',
-    padding: 10,
-    opacity: 0.9,
-    borderRadius: 25,
+    top: 15,
+    right: 15,
+    backgroundColor: '#1E1E1E',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
-      borderColor: "white"
-    //borderColor: "red",
-    //borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
+  buttonImage: {
+    width: 22,
+    height: 22,
+    tintColor: 'white',
+  },  
+
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: "10%"
-    //backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    //backgroundColor: 'rgba(0,0,0,0.5)',
   },
+
   modalContent: {
-    backgroundColor: '#27313F',
+    backgroundColor: '#1E1E1E',
     padding: 20,
-    borderRadius: 25,
-    width: '85%',
+    borderRadius: 20,
+    width: '90%',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 10,
+    position: 'relative',
   },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 20,
-    color: "white"
+
+  closeButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: '#1E1E1E',
+    borderColor: '#FF3B30',
+    borderWidth: 1.2,
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 6,
+    zIndex: 999, 
   },
   
+
   closeButtonText: {
-    color: 'white',
+    color: '#FF3B30',
     fontSize: 16,
+    fontWeight: 'bold',
   },
-  buttonImage: {
-    width: 25,  // Set the desired size for the image
-    height: 25, // Set the desired size for the image
-    },
-    markerDetails: {
-      position: 'absolute',
-      bottom: 20,
-      left: 50,
-      right: 10,
-      backgroundColor: '#27313F',
-      opacity: 0.9,
-      padding: 15,
-      borderRadius: 25,
-      width: "75%",
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: "white"
-    },
-    markerTitle: {
-      color: 'white',
-      fontSize: 18,
-      marginBottom: 10,
-    },
-    markerSubTitle: {
-      color: 'white',
-      fontSize: 12,
-      textAlign: "center",
-      marginBottom: 10,
-    },
-    directionsButton: {
-      backgroundColor: '#27313F',
-      padding: 12,
-      borderRadius: 25,
-      borderColor: "red",
-      borderWidth: 1
 
-    },
-    directionsButtonText: {
-      color: 'white',
-      fontSize: 16,
-    },
-    sText: {
-      color: 'white',
-      fontFamily: 'SF-Pro',
-      fontSize: 34
-    },
-    passView: {
-      position: 'absolute',
-      top: 10, // Adjust this to place it at the desired position
-      left: '15%',
-      width: "50%",
-      marginLeft: -50, // Centers the button horizontally
-      backgroundColor: '#27313F',
-      padding: 10,
-      opacity: 0.9,
-      borderRadius: 25,
-      //borderWidth: 1,
-      //borderColor: "white"
-      //borderColor: "red",
-      //borderWidth: 1,
-    },
-    passViewText: {
-      color: "white",
-      textAlign: "center",
+  modalText: {
+    fontSize: 20,
+    marginBottom: 16,
+    color: '#FFFFFF',
+    fontWeight: '600',
+    textAlign: 'center',
+    letterSpacing: 0.3,
+  },
 
-    },
-    radioButtonContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 10,
-    },
-    radioButton: {
-      width: 20,
-      height: 20,
-      borderRadius: 10,
-      borderWidth: 1,
-      borderColor: 'white',
-      marginRight: 10,
-      backgroundColor: 'transparent',
-    },
-    selectedRadioButton: {
-      backgroundColor: 'red',
-    },
-    closeButton: {
-      //marginTop: 20,
-      //padding: 10,
-      left: "48.5%",
-      bottom: "94%",
-      backgroundColor: '#27313F',
-      borderColor: "white",
-      borderWidth: 1,
-      borderRadius: 100,
-      width: 30,
-      height: 30,
-      alignItems: "center",
-      justifyContent: "center",
+  radioRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 12,
+  },
 
-    },
-    closeButtonText: {
-      color: 'red',
-    },
-    radioText: {
-      color: "white"
-    },
-    zoomButtonContainer: {
-      marginTop: 20,
-      width: '100%',
-      alignItems: 'center',
-    },
-    zoomButton: {
-      padding: 10,
-      margin: 5,
-      backgroundColor: '#27313F',
-      borderRadius: 5,
-      borderColor: "white",
-      borderWidth: 1,
-      width: '80%',
-    },
-    zoomButtonText: {
-      color: 'white',
-      textAlign: 'center',
-    },
-    resetButton: {
-      position: 'absolute',
-      bottom: 15, // Adjust this to place it at the desired position
-      right: '5%',
-      //marginLeft: 100, // Centers the button horizontally
-      backgroundColor: '#27313F',
-      padding: 10,
-      opacity: 0.9,
-      borderRadius: 25,
-      borderWidth: 1,
-      borderColor: "white"
-      //borderColor: "red",
-      //borderWidth: 1,
-    },
-    resetButtonText: {
-      color: 'white',
-      fontSize: 16,
-      textAlign: 'center',
-    },
-    targetImage: {
-      width: 25,  // Set the desired size for the image
-      height: 25, // Set the desired size for the image
-      },
- });
+  radioOption: {
+    flex: 1,
+    paddingVertical: 10,
+    marginHorizontal: 6,
+    backgroundColor: '#1A1A1A',
+    borderColor: '#2A2A2A',
+    borderWidth: 1,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+
+  radioOptionActive: {
+    backgroundColor: '#FF3B30',
+    borderColor: '#FF3B30',
+  },
+
+  radioText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+
+  radioButton: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 2,
+    borderColor: '#888',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+
+  selectedRadioButton: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#FF3B30',
+  },
+
+  zoomButtonGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 16,
+  },
+
+  zoomButton: {
+    backgroundColor: '#1E1E1E',
+    borderRadius: 10,
+    borderColor: '#2A2A2A',
+    borderWidth: 1.5,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    width: '47%',
+    marginBottom: 12,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+
+  zoomButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0.3,
+    textAlign: 'center',
+  },
+
+  resetButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 15,
+    backgroundColor: '#1E1E1E',
+    padding: 12,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+
+  targetImage: {
+    width: 22,
+    height: 22,
+    tintColor: 'white',
+  },
+
+  markerDetails: {
+    position: 'absolute',
+    bottom: 70,
+    left: 16,
+    right: 16,
+    backgroundColor: '#1E1E1E',
+    flexDirection: 'row', // compact horizontal layout
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  markerTextContainer: {
+    flex: 1,
+    paddingRight: 12,
+  },
+    
+
+  markerTitle: {
+    color: 'white',
+    fontSize: 17,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  
+  markerSubTitle: {
+    color: '#CCCCCC',
+    fontSize: 13,
+    lineHeight: 18,
+  },
+
+  directionsButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1E1E1E',          // darker background to match the modal/map
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#FF3B30',              // red accent border (matches your theme)
+    shadowColor: '#FF3B30',              // red-ish glow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  
+  directionsButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '500',
+    marginLeft: 8,
+  },
+  
+  
+
+  passView: {
+    position: 'absolute',
+    top: 15,
+    left: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    backgroundColor: '#1E1E1E',
+    borderRadius: 25,
+    borderColor: '#2A2A2A',
+    borderWidth: 1,
+  },
+
+  passViewText: {
+    color: 'white',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+
+  sText: {
+    color: 'white',
+    fontFamily: 'SF-Pro',
+    fontSize: 34,
+  },
+  customMarker: {
+    //backgroundColor: '#1E1E1E',
+    borderRadius: 25,
+    padding: 6,
+    //borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  
+});
+
 
  const settingsPageStyles = StyleSheet.create({
   container: {
