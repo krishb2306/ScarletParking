@@ -212,6 +212,8 @@ const allLots = [
   { id: 83, title: "Johnson Apartment Lot 605", coordinate: { latitude: 40.527669615990845, longitude: -74.46419729933996 } },
   { id: 84, title: "Johnson Apartment Lot 606", coordinate: { latitude: 40.52752310621009, longitude: -74.4661170018434 } },
   { id: 85, title: "Lot 623/Marvin Apts", coordinate: { latitude: 40.52078913699707, longitude: -74.45425282581704 } },
+  {id: 102, title: "Helyar House Lot", coordinate: { latitude: 40.47191428285376,longitude:  -74.4358748893275}},
+  {id: 103, title: "Lot 712/Katzenbach", coordinate: { latitude: 40.48307797248363,longitude:  -74.43160957167808}},
   ];
 
   module.exports = allLots;
