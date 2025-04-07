@@ -1,7 +1,7 @@
 //import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,StatusBar, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
+import { StyleSheet,Animated, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
 import { Marker } from "react-native-maps";
 import React, { createContext, useContext, useState, useEffect, useRef} from 'react';
@@ -628,7 +628,8 @@ const zoomToLocation = () => {
 function SettingsScreen() {
   const { currPass, updateParkingPass } = useContext(ParkingPassContext);
   const [open, setOpen] = useState(false);
-
+  const [locationStatus, setLocationStatus] = useState(null);
+  const [appState, setAppState] = useState(AppState.currentState);
   const [allParkingPasses, setAllParkingPasses] = useState([
     { label: 'Busch Commuter', value: 'Busch Commuter' },
     { label: 'Busch Off-Campus Living', value: 'Busch Off-Campus Living' },
@@ -650,6 +651,66 @@ function SettingsScreen() {
     { label: 'Nicholas Resident', value: 'Nicholas Resident' },
     { label: 'Woodbury Resident', value: 'Woodbury Resident' },
   ]);
+
+  const openEmail = () => {
+    const email = 'scarletparking@gmail.com';
+    const url = `mailto:${email}`;
+  
+    Linking.openURL(url).catch(err => {
+      console.error('Failed to open mail app:', err);
+    });
+  };
+
+  const openAppSettings = () => {
+    Linking.openSettings().catch(err => {
+      console.error('Unable to open app settings:', err);
+    });
+  };
+
+  const checkLocationPermission = async () => {
+    const { status } = await Location.getForegroundPermissionsAsync();
+    setLocationStatus(status);
+  };
+
+  useEffect(() => {
+    checkLocationPermission(); // First run
+    const appStateListener = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active' && appState.match(/inactive|background/)) {
+        //console.log('App came to the foreground, rechecking permission...');
+        checkLocationPermission(); // Recheck permission when app comes to the foreground
+      }
+      setAppState(nextAppState);
+    });
+
+    return () => {
+      appStateListener.remove();
+    };
+  }, [appState]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      //console.log('Screen focused, rechecking permission...');
+      checkLocationPermission();
+    }, [])
+  );
+
+  const locationStatusTextStyle = locationStatus === 'granted' 
+    ? { color: 'limegreen' }  // Green for granted
+    : locationStatus === 'denied' 
+    ? { color: 'red' }    // Red for denied
+    : { color: 'gray' };  // Default color for unknown status
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const openModal = () => {
+      setModalVisible(true);
+    };
+  
+    const closeModal = () => {
+      setModalVisible(false);
+    };
+
+    const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
     <ScrollView
@@ -711,24 +772,30 @@ function SettingsScreen() {
 
         <View style={settingsPageStyles.row}>
           <Text style={settingsPageStyles.label}>Dark Mode</Text>
-          <View style={settingsPageStyles.switchMockOn} />
-        </View>
-
-        <View style={settingsPageStyles.row}>
-          <Text style={settingsPageStyles.label}>Show Hints</Text>
-          <View style={settingsPageStyles.switchMockOff} />
+          <Switch
+          trackColor={{false: '#767577', true: 'limegreen'}}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+          />
         </View>
       </View>
 
       <View style={settingsPageStyles.section}>
   <Text style={settingsPageStyles.sectionTitle}>System Permissions</Text>
-  <TouchableOpacity style={settingsPageStyles.cardRow}>
+  <TouchableOpacity style={settingsPageStyles.cardRow} onPress={openAppSettings}>
     <Ionicons name="location-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
     <Text style={settingsPageStyles.cardLabel}>Location</Text>
-    <Text style={settingsPageStyles.cardStatus}>Granted</Text>
+    <Text style={[settingsPageStyles.cardStatus, locationStatusTextStyle]}>
+            {locationStatus === 'granted'
+            ? 'Granted'
+            : locationStatus === 'denied'
+            ? 'Denied'
+            : 'Unknown'}
+    </Text>
     <Ionicons name="chevron-forward-outline" size={20} color="gray" />
   </TouchableOpacity>
-  <Text style={settingsPageStyles.helperText}>Tap a permission to jump to device settings.</Text>
+  <Text style={settingsPageStyles.helperText}>Tap the permission to jump to device settings.</Text>
 </View>
 
 <View style={settingsPageStyles.section}>
@@ -738,7 +805,7 @@ function SettingsScreen() {
       Scarlet Parking helps students check valid parking lots based on their permit.
     </Text>
     <Text style={[settingsPageStyles.aboutText, { marginTop: 8 }]}>
-      If lot data is outdated or unavailable, please check Rutgers DOT.
+      If lot data is incorrect or unavailable, please send feedback through the option below.
     </Text>
   </View>
 </View>
@@ -754,12 +821,36 @@ function SettingsScreen() {
 
 <View style={settingsPageStyles.section}>
   <Text style={settingsPageStyles.sectionTitle}>Acknowledgements</Text>
-  <TouchableOpacity style={settingsPageStyles.cardRow}>
+  <TouchableOpacity style={settingsPageStyles.cardRow} onPress={openModal}>
     <Ionicons name="layers-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
-    <Text style={settingsPageStyles.cardLabel}>Frameworks used</Text>
-    <Ionicons name="chevron-forward-outline" size={20} color="gray" />
+    <Text style={settingsPageStyles.cardLabel}>Resources used</Text>
+    <Ionicons name="chevron-down-outline" size={20} color="gray" />
   </TouchableOpacity>
 </View>
+
+<Modal
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={closeModal}
+>
+  <View style={modalStyles.modalOverlay}>
+    <View style={modalStyles.bottomModal}>
+      <View style={settingsPageStyles.section}>
+        <Text style={settingsPageStyles.sectionTitle}>Acknowledgements</Text>
+        <View style={settingsPageStyles.aboutBox}>
+          <Text style={settingsPageStyles.aboutText}>
+            whatever we need here
+          </Text>
+        </View>
+      </View>
+
+      <TouchableOpacity onPress={closeModal} style={modalStyles.closeButton}>
+        <Ionicons name="close" size={24} color="white" />
+      </TouchableOpacity>
+    </View>
+  </View>
+</Modal>
 
 <View style={settingsPageStyles.section}>
   <Text style={settingsPageStyles.sectionTitle}>Feedback</Text>
@@ -768,17 +859,12 @@ function SettingsScreen() {
     <Text style={settingsPageStyles.cardLabel}>Leave a review</Text>
     <Ionicons name="chevron-forward-outline" size={20} color="gray" />
   </TouchableOpacity>
-  <TouchableOpacity style={settingsPageStyles.cardRow}>
+  <TouchableOpacity style={settingsPageStyles.cardRow} onPress={openEmail}>
     <Ionicons name="chatbubble-ellipses-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
     <Text style={settingsPageStyles.cardLabel}>Send feedback</Text>
     <Ionicons name="chevron-forward-outline" size={20} color="gray" />
   </TouchableOpacity>
 </View>
-
-
-
-
-
     </ScrollView>
   );
 }
@@ -1450,5 +1536,28 @@ const settingsPageStyles = StyleSheet.create({
   },
   
 });
+
+const modalStyles = {
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // optional dimmed background
+  },
+  bottomModal: {
+    height: '80%',
+    backgroundColor: '#1a1a1a',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: '#444',
+    borderRadius: 20,
+    padding: 6,
+  },
+};
 
 
