@@ -6,6 +6,8 @@ export const ParkingPassContext = createContext();
 
 export const ParkingPassProvider = ({ children }) => {
   const [currPass, setCurrPass] = useState("Busch Commuter");
+  const [currListViewInfo, setCurrListViewInfo] = useState(null);
+  const [currMapViewID, setCurrMapViewID] = useState(null);
   const [lotInfo, setLotInfo] = useState([
     {
       pass: "Busch Commuter",
@@ -1507,6 +1509,11 @@ export const ParkingPassProvider = ({ children }) => {
     try {
       await AsyncStorage.setItem('parkingPass', newPass);
       setCurrPass(newPass);
+      const match = lotInfo.find(info => info.pass === currPass);
+      setCurrListViewInfo(match);
+      if (match) {
+        setCurrMapViewID(match.id);
+      }
     } catch (e) {
       console.error("Error saving parking pass:", e);
     }
@@ -1518,7 +1525,7 @@ export const ParkingPassProvider = ({ children }) => {
       }, []);
 
   return (
-    <ParkingPassContext.Provider value={{ currPass, updateParkingPass }}>
+    <ParkingPassContext.Provider value ={{ currPass, currListViewInfo, currMapViewID, updateParkingPass }}>
       {children}
     </ParkingPassContext.Provider>
   );
