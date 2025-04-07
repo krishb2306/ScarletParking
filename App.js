@@ -289,7 +289,7 @@ function MapScreen() {
     //setShowTimePicker(false); // Hide the picker after selection
     if (selectedDate) {
       setSelectedTime(selectedDate);
-      console.log("Selected Time:", selectedDate.toLocaleTimeString());
+      //console.log("Selected Time:", selectedDate.toLocaleTimeString());
     }
   };
 
