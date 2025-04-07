@@ -655,7 +655,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
   ]);
 
   const openEmail = () => {
-    const email = 'scarletparking@gmail.com';
+    const email = 'krish2306@icloud.com';
     const url = `mailto:${email}`;
   
     Linking.openURL(url).catch(err => {
