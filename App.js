@@ -30,6 +30,13 @@ function ListScreen() {
     { label: 'Livingston', value: 'Livingston' },
   ]);
 
+  useEffect(() => {
+    const selectedInfo = currListViewInfo.find(info => info.campus === value);
+    if (selectedInfo) {
+      setListInfo(selectedInfo);
+    }
+  }, [currListViewInfo, value]);
+  
   return (
     <SafeAreaView style={listViewStyles.safeAreaContainer}>
       <View style={listViewStyles.container}>
@@ -85,14 +92,6 @@ function ListScreen() {
                   </View>
                 )}
               />
-              {/* <View style={listViewStyles.cardRow}>
-                <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
-                <Text style={listViewStyles.cardText}>{item.timeslots[0]}</Text>
-              </View>
-              <View style={listViewStyles.cardRow}>
-                <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
-                <Text style={listViewStyles.cardText}>{item.timeslots[1]}</Text>
-              </View> */}
             </View>
           )}
         />
@@ -655,7 +654,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
   ]);
 
   const openEmail = () => {
-    const email = 'scarletparking@gmail.com';
+    const email = 'krish2306@icloud.com';
     const url = `mailto:${email}`;
   
     Linking.openURL(url).catch(err => {
