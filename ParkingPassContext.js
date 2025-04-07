@@ -9,6 +9,7 @@ export const ParkingPassProvider = ({ children }) => {
   const [lotInfo, setLotInfo] = useState([
     {
       pass: "Busch Commuter",
+      id: "bccLots",
       campuses: [
         {
           campus: "Busch",
@@ -83,6 +84,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Busch Off-Campus Living",
+      id: "nboclrbsLots",
       campuses: [
         {
           campus: "Busch",
@@ -153,6 +155,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Busch Resident",
+      id: "nbrbrsLots",
       campuses: [
         {
           campus: "Busch",
@@ -223,6 +226,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "College Ave Commuter",
+      id: "cacLots",
       campuses: [
         {
           campus: "College Ave",
@@ -297,6 +301,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Cook Commuter",
+      id: "cccLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -375,6 +380,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Cook Off-Campus Living",
+      id: "nboclcLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -449,6 +455,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Cook Resident",
+      id: "nbr99Lots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -527,6 +534,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Douglass Commuter",
+      id: "dccLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -601,6 +609,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Gibbons Resident",
+      id: "nbrgibLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -671,6 +680,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Helyar Resident",
+      id: "nbrhelLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -749,6 +759,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Henderson Resident",
+      id: "nbrhndLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -819,6 +830,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Jameson Resident",
+      id: "nbrjamLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -889,6 +901,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Katzenbach Resident",
+      id: "nbrkatLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -959,6 +972,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Lippincott Resident",
+      id: "nbrlipLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -1029,6 +1043,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Livingston Commuter",
+      id: "lccLots",
       campuses: [
         {
           campus: "Livingston",
@@ -1103,6 +1118,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Livingston Off-Campus Living",
+      id: "nbrcllivLots",
       campuses: [
         {
           campus: "Livingston",
@@ -1177,6 +1193,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Livingston Resident",
+      id: "nbrlivLots",
       campuses: [
         {
           campus: "Livingston",
@@ -1255,6 +1272,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "New Brunswick Night Commuter",
+      id: "nbncLots",
       campuses: [
         {
           campus: "Busch",
@@ -1329,6 +1347,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Nicholas Resident",
+      id: "nbrnlsLots",
       campuses: [
         {
           campus: "Cook/Douglass",
@@ -1399,6 +1418,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Woodbury Resident",
+      id: "nbrwooLots",
       campuses: [
         {
           campus: "Cook/Douglass",
