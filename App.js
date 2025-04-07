@@ -1,7 +1,7 @@
 //import * as React from 'react';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,Animated, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
+import { StyleSheet,Animated,LogBox, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
 import { Marker } from "react-native-maps";
 import React, { createContext, useContext, useState, useEffect, useRef} from 'react';
@@ -431,7 +431,7 @@ const zoomToLocation = () => {
     title="Your Location"
     description="You are here!"
   >
-    <Ionicons name="person-circle-sharp" size={35} color="lightblue" />
+    <Ionicons name="person-circle-sharp" size={30} color="lightblue" />
   </Marker>
 )}
 
@@ -626,6 +626,8 @@ const zoomToLocation = () => {
 }
 
 function SettingsScreen() {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
   const { currPass, updateParkingPass } = useContext(ParkingPassContext);
   const [open, setOpen] = useState(false);
   const [locationStatus, setLocationStatus] = useState(null);
