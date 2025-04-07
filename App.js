@@ -110,10 +110,34 @@ function MapScreen() {
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
   const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
+  const lotTimesMap = {
+    bccLots: require('./LotTimes/bccLots'),
+    cacLots: require('./LotTimes/cacLots'),
+    cccLots: require('./LotTimes/cccLots'),
+    dccLots: require('./LotTimes/dccLots'),
+    lccLots: require('./LotTimes/lccLots'),
+    nbncLots: require('./LotTimes/nbncLots'),
+    nboclcLots: require('./LotTimes/nboclcLots'),
+    nbocllivLots: require('./LotTimes/nbocllivLots'),
+    nboclrbsLots: require('./LotTimes/nboclrbsLots'),
+    nbr99Lots: require('./LotTimes/nbr99Lots'),
+    nbrbrsLots: require('./LotTimes/nbrbrsLots'),
+    nbrgibLots: require('./LotTimes/nbrgibLots'),
+    nbrhelLots: require('./LotTimes/nbrhelLots'),
+    nbrhndLots: require('./LotTimes/nbrhndLots'),
+    nbrjamLots: require('./LotTimes/nbrjamLots'),
+    nbrkatLots: require('./LotTimes/nbrkatLots'),
+    nbrlipLots: require('./LotTimes/nbrlipLots'),
+    nbrlivLots: require('./LotTimes/nbrlivLots'),
+    nbrnlsLots: require('./LotTimes/nbrnlsLots'),
+    nbrwooLots: require('./LotTimes/nbrwooLots'),
+  };
+  
+  const cccLots = lotTimesMap[currMapViewID];
 
-  const bccLots = require('./LotTimes/' + currMapViewID);
-  const cccLots = require('./LotTimes/' + currMapViewID);
-  const allLots = require('./allLots');
+  //const bccLots = require('/LotTimes/' + currMapViewID);
+  //const cccLots = require('/LotTimes/' + currMapViewID);
+  const allLots = require('/allLots');
 
   const mapViewRef = useRef(null);
 
