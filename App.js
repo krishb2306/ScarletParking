@@ -801,11 +801,13 @@ function SettingsScreen() {
 
 <View style={settingsPageStyles.section}>
   <Text style={settingsPageStyles.sectionTitle}>Privacy</Text>
-  <TouchableOpacity style={settingsPageStyles.cardRow}>
-    <Ionicons name="document-text-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
-    <Text style={settingsPageStyles.cardLabel}>Privacy Policy</Text>
-    <Ionicons name="chevron-forward-outline" size={20} color="gray" />
-  </TouchableOpacity>
+  <TouchableOpacity
+  style={settingsPageStyles.cardRow}
+  onPress={() => Linking.openURL('https://www.privacypolicies.com/live/eeb7d028-159c-4b04-af92-9fea08b40624')}>
+  <Ionicons name="document-text-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
+  <Text style={settingsPageStyles.cardLabel}>Privacy Policy</Text>
+  <Ionicons name="chevron-forward-outline" size={20} color="gray" />
+</TouchableOpacity>
 </View>
 
 <View style={settingsPageStyles.section}>
