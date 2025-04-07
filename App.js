@@ -800,7 +800,7 @@ function MyTabs() {
           backgroundColor:
             route.name === 'List' || route.name === 'Settings'
               ? 'black'
-              : '#27313F',
+              : '#1C1C1E',
           opacity: 1,
           borderTopWidth: 0,
         },
@@ -831,10 +831,11 @@ function MyTabs() {
           tabBarIcon: ({ color, size }) => (
             <Icon name="map-outline" color={color} size={size} />
           ),
+          
           headerTitle: '',
           headerStyle: {
             height: 60,
-            backgroundColor: '#2B333E',
+            backgroundColor: '#222B37',
             opacity: 0.95,
           },
           headerTintColor: 'white',
