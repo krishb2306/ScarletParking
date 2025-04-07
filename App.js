@@ -9,12 +9,90 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ParkingPassProvider, ParkingPassContext } from '/ParkingPassContext';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import * as Location from 'expo-location'; // For Expo Location
+import Ionicons from 'react-native-vector-icons/Ionicons'; 
+
+//import { useState, useEffect } from 'react';
+
+import { ParkingPassProvider, ParkingPassContext } from './ParkingPassContext';
+
+
 
 function ListScreen() {
+  const currentPassInfo = [
+    {
+      campus: "Busch",
+      lots: [
+        {
+          name: "Lot 613/Stadium West",
+          timeslots: ["Monday - Friday, 6AM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 50, Lot 51, Lot 51B, Lot 53A, Lot 54, Lot 58, Lot 58A, Lot 59, Lot 60A, Lot 60B, Lot 61, Lot 63, Lot 63B, Lot 63C, Lot 64, Lot 66B, Gated Lot 55",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 67",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        }
+      ]
+    },
+    {
+      campus: "College Ave",
+      lots: [
+        {
+          name: "Lot 11 NB, Gated Lot 16, Lot 20, Lot 26, Lot 30, Lot 32, Lot 33, Lot 505/CAC Parking Deck",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Lot 13",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 4PM - Monday, 8AM"]
+        }
+      ]
+    },
+    {
+      campus: "Cook/Douglass",
+      lots: [
+        {
+          name: "Lot 97, Lot 82",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        },
+        {
+          name: "Lot 94, Lot 95, Lot 98A, Lot 98B, Lot 805/Lipman Drive, Lot 70, Lot 71A, Lot 74A, Lot 75, Lot 76, Lot 79, Lot 81, Lot 83, Lot 84, Lot 86, Lot 88, Lot 96, Lot 96A, Douglass Deck, Lot 709/Corwin",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        },
+        {
+          name: "Gated Lot 79A",
+          timeslots: ["Monday - Friday, 7:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    },
+    {
+      campus: "Livingston",
+      lots: [
+        {
+          name: "Lot 101",
+          timeslots: ["Monday - Thursday, 6PM - 8AM", "Friday 6PM - Monday, 8AM"]
+        },
+        {
+          name: "Lot 107, Lot 108, Lot 110, Lot 111, Lot 112, Lot 914/Scarlet Lot, Lot 916/Green Lot, Lot 915/Yellow Lot",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    },
+    {
+      campus: "RBHS-Piscataway",
+      lots: [
+        {
+          name: "Lot A, Lot B, Lot C",
+          timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+        }
+      ]
+    }
+];
 
-  const { currPass, currListViewInfo} = useContext(ParkingPassContext);
-  const currentPassInfo = currListViewInfo;
+  const { currPass } = useContext(ParkingPassContext);
   const [listInfo, setListInfo] = React.useState(currentPassInfo[0]);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("Busch");
@@ -99,24 +177,85 @@ function ListScreen() {
 }
 
 function MapScreen() {
-  const { currPass, currMapViewID } = useContext(ParkingPassContext);
+  const { currPass } = useContext(ParkingPassContext);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
   const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
 
-  const bccLots = require('./' + currMapViewID);
+  const bccLots = require('./LotTimes/bccLots');
+  const cccLots = require('./LotTimes/cccLots');
   const allLots = require('./allLots');
 
   const mapViewRef = useRef(null);
 
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [hasZoomedToUser, setHasZoomedToUser] = useState(false);
+
   const temp = [];
   const markers = [];
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+
+  useEffect(() => {
+    let isMounted = true;
+    let locationInterval;
+
+    const fetchLocation = async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+
+        let loc = await Location.getCurrentPositionAsync({});
+        if (isMounted) {
+          setLocation(loc.coords);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // Fetch immediately on mount
+    fetchLocation();
+
+    // Then fetch every 30 seconds
+    locationInterval = setInterval(fetchLocation, 30000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(locationInterval);
+    };
+  }, []);
 
 
 
 
+
+  const handleClusterPress = (cluster) => {
+    const { geometry, properties } = cluster;
+    const coordinates = {
+      latitude: geometry.coordinates[1],
+      longitude: geometry.coordinates[0],
+    };
+  
+    // Custom zoom in (adjust delta for zoom level)
+    mapViewRef.current?.animateToRegion(
+      {
+        ...coordinates,
+        latitudeDelta: 0.005,      // 👈 control zoom here
+        longitudeDelta: 0.005,
+      },
+      500
+    );
+  };
+
+  
 
   const openDirections = (latitude, longitude) => {
     const url = `maps://?daddr=${latitude},${longitude}`;
@@ -131,9 +270,21 @@ function MapScreen() {
       clearTimeout(hideTimeout);
       setHideTimeout(null);
     }
+  
+    // Center the map on the selected marker
+    mapViewRef.current?.animateToRegion(
+      {
+        latitude: marker.coordinate.latitude,
+        longitude: marker.coordinate.longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      },
+      1000 // duration in ms
+    );
+  
     setSelectedMarker(marker);
   };
-
+  
   const handleMapPress = () => {
     // Set a delay to hide the button
     const timeout = setTimeout(() => {
@@ -144,6 +295,12 @@ function MapScreen() {
 
   const handleSelection = (value) => {
     setSelectedOption(value);
+    if (value === 'set') {
+      setShowTimePicker(true);
+    }
+    else{
+      setShowTimePicker(false);
+    }
   };
 
   const [passName, setPassName] = useState("Busch Commuter (BCC)");
@@ -175,10 +332,22 @@ function MapScreen() {
     },
   };
 
+  const onTimeChange = (event, selectedDate) => {
+    //setShowTimePicker(false); // Hide the picker after selection
+    if (selectedDate) {
+      setSelectedTime(selectedDate);
+      console.log("Selected Time:", selectedDate.toLocaleTimeString());
+    }
+  };
+
+  
+
+
   // Zoom to the selected region
   const zoomToRegion = (region) => {
     mapViewRef.current.animateToRegion(region, 1000); // 1000 ms for smooth zooming
-    setModalVisible(false); // Close the modal after zooming
+    setModalVisible(false);
+    setSelectedMarker(null); // Close the modal after zooming
   };
 
   // const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
@@ -190,15 +359,15 @@ function MapScreen() {
 
   //   return () => clearInterval(intervalId); // Clear interval on unmount
   // }, []);
+ 
   
   function isWithinSchedule(schedule, date) {
     const timeZone = "America/New_York";
-  
+    const currentDate = selectedOption === 'current' ? new Date() : selectedTime;
     // Convert UTC date to local time
     //const options = { timeZone, weekday: "long", hour: "2-digit", minute: "2-digit" };
-    const localDate = moment().format('ddd MMM DD YYYY HH:mm:ss ZZ');
-
-const currentDay = new Date(localDate).toLocaleDateString("en-US", { weekday: "long" });
+    const localDate = moment(currentDate).format('ddd MMM DD YYYY HH:mm:ss ZZ');
+    const currentDay = new Date(localDate).toLocaleDateString("en-US", { weekday: "long" });
 
 // Extract hours and minutes from the localDate string
 const timeString = localDate.split(" ")[4]; // Extract the "HH:mm:ss" part
@@ -247,8 +416,15 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
   
   allLots.forEach(lot => {
     // Check if the current lot from allLots exists in bccLots
-    let foundLot = bccLots.find(bccLot => bccLot.name === lot.title);
-    
+    let foundLot = cccLots.find(cccLot => cccLot.name === lot.title);
+    // if (foundLot) {
+    //   markers.push({
+    //     id: lot.id,
+    //     title: lot.title,
+    //     coordinate: lot.coordinate,
+    //     description: foundLot.time
+    //   });
+    // }
     if (foundLot) {
       const isScheduleValid = isWithinSchedule(foundLot.schedule, new Date());
       if(isScheduleValid)
@@ -260,13 +436,29 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
         });
     }
 });
+const zoomToLocation = () => {
+  if (location && mapViewRef.current) {
+    mapViewRef.current.animateToRegion(
+      {
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      },
+      1000
+    );
+  }
+};
+
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
     <View style={styles.container}>
+    
       <MapView
       ref={mapViewRef}
       clusterColor='#D4301F'
+      onClusterPress={handleClusterPress}
       minPoints={2}
       minZoom = {1}
       userInterfaceStyle='dark'
@@ -279,36 +471,58 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
       }}
       onPress={handleMapPress} // Reset the selected marker on map press
      >
-      {markers.map((marker) => (
-            <Marker
-              key={marker.id}
-              coordinate={marker.coordinate}
-              title={marker.title}
-              description={""}
-              onPress={(e) => {
-                e.stopPropagation(); // Prevent the map's onPress from firing
-                handleMarkerPress(marker);
-              }}
-              
-            />
-          ))}
+      {location && (
+  <Marker
+    coordinate={{
+      latitude: location.latitude,
+      longitude: location.longitude,
+    }}
+    title="Your Location"
+    description="You are here!"
+  >
+    <Ionicons name="location-sharp" size={30} color="yellow" />
+  </Marker>
+)}
+
+{markers.map((marker) => (
+  <Marker
+    key={marker.id}
+    coordinate={marker.coordinate}
+    onPress={(e) => {
+      e.stopPropagation();
+      handleMarkerPress(marker);
+    }}
+  >
+    <View style={styles.customMarker}>
+      <Ionicons name="location-sharp" size={30} color="#FF3B30" />
+    </View>
+  </Marker>
+))}
+
 
      </MapView>
      {selectedMarker && (
-          <View style={styles.markerDetails}>
-            <Text style={styles.markerTitle}>{selectedMarker.title}</Text>
-            <Text style={styles.markerSubTitle}>{selectedMarker.description}</Text>
-            <TouchableOpacity
-              style={styles.directionsButton}
-              onPress={() => openDirections(
-                selectedMarker.coordinate.latitude,
-                selectedMarker.coordinate.longitude
-              )}
-            >
-              <Text style={styles.directionsButtonText}>Get Directions</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+  <View style={styles.markerDetails}>
+    <View style={styles.markerTextContainer}>
+      <Text style={styles.markerTitle}>{selectedMarker.title}</Text>
+      <Text style={styles.markerSubTitle}>{selectedMarker.description}</Text>
+    </View>
+
+    <TouchableOpacity
+  style={styles.directionsButton}
+  onPress={() =>
+    openDirections(
+      selectedMarker.coordinate.latitude,
+      selectedMarker.coordinate.longitude
+    )
+  }
+>
+  <Ionicons name="navigate-outline" size={18} color="#fff" />
+  <Text style={styles.directionsButtonText}>Directions</Text>
+</TouchableOpacity>
+  </View>
+)}
+
 
       <TouchableOpacity
                 style={styles.passView}
@@ -318,10 +532,11 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
 
       </TouchableOpacity>
 
+  
 
      <TouchableOpacity
           style={styles.modalButton}
-          onPress={() => setModalVisible(true)}
+          onPress={() => {setModalVisible(true); setSelectedMarker(null)}}
         >
           <Image 
             source={require('./assets/legend2.png')}  // Add your image path here
@@ -330,86 +545,130 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
 
     </TouchableOpacity>
 
+    <TouchableOpacity
+  style={styles.resetButton}
+  onPress={() => {
+    if (!hasZoomedToUser && location) {
+      // Zoom to user location
+      mapViewRef.current.animateToRegion(
+        {
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        },
+        1000
+      );
+    } else {
+      // Zoom to initial location
+      mapViewRef.current.animateToRegion(
+        {
+          latitude: 40.504853287623135,
+          longitude: -74.44761255910845,
+          latitudeDelta: 0.057,
+          longitudeDelta: 0.057,
+        },
+        1000
+      );
+    }
 
-    <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
+    // Toggle the zoom flag
+    setHasZoomedToUser(!hasZoomedToUser);
+
+    // Optionally deselect any marker
+    setSelectedMarker(null);
+  }}
+>
+  <Image 
+    source={require('./assets/target.png')}
+    style={styles.targetImage}
+  />
+</TouchableOpacity>
+
+
+<Modal
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={() => setModalVisible(false)}
+>
+  <View style={styles.modalOverlay}>
+    <View style={styles.modalContent}>
+
+      {/* Close Button */}
+      <TouchableOpacity
+        style={styles.closeButton}
+        onPress={() => setModalVisible(false)}
+      >
+        <Text style={styles.closeButtonText}>✕</Text>
+      </TouchableOpacity>
+
+      {/* Radio Selector Row */}
+      <View style={styles.radioRow}>
+        <TouchableOpacity
+          style={[
+            styles.radioOption,
+            selectedOption === 'current' && styles.radioOptionActive,
+          ]}
+          onPress={() => handleSelection('current')}
         >
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
+          <Text style={styles.radioText}>Current Time</Text>
+        </TouchableOpacity>
 
-              <Text style={styles.modalText}></Text>
+        <TouchableOpacity
+          style={[
+            styles.radioOption,
+            selectedOption === 'set' && styles.radioOptionActive,
+          ]}
+          onPress={() => handleSelection('set')}
+        >
+          <Text style={styles.radioText}>Set Time</Text>
+        </TouchableOpacity>
+      </View>
 
-              {/* Radio Button for Current Time */}
-              <TouchableOpacity
-                style={styles.radioButtonContainer}
-                onPress={() => handleSelection('current')}
-              >
-                <View
-                  style={[
-                    styles.radioButton,
-                    selectedOption === 'current' && styles.selectedRadioButton,
-                  ]}
-                />
-                <Text style = {styles.radioText}>Current Time</Text>
-              </TouchableOpacity>
+      {/* Time Picker (Only shown if set) */}
+      {showTimePicker && (
+        <DateTimePicker
+          value={selectedTime}
+          mode="datetime"
+          display="compact"
+          onChange={onTimeChange}
+          style={{ marginVertical: 10 }}
+        />
+      )}
 
-              {/* Radio Button for Set Time */}
-              <TouchableOpacity
-                style={styles.radioButtonContainer}
-                onPress={() => {handleSelection('set') /*console.log(new Date())*/ }}
-              >
-                <View
-                  style={[
-                    styles.radioButton,
-                    selectedOption === 'set' && styles.selectedRadioButton,
-                  ]}
-                />
-                <Text style = {styles.radioText}>Set Time</Text>
-              </TouchableOpacity>
-
-
-              <View style={styles.zoomButtonContainer}>
-                <TouchableOpacity
-                  style={styles.zoomButton}
-                  onPress={() => zoomToRegion(zoomRegions.region1)}
-                >
-                  <Text style={styles.zoomButtonText}>Livingston</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.zoomButton}
-                  onPress={() => zoomToRegion(zoomRegions.region2)}
-                >
-                  <Text style={styles.zoomButtonText}>Busch</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.zoomButton}
-                  onPress={() => zoomToRegion(zoomRegions.region3)}
-                >
-                  <Text style={styles.zoomButtonText}>College Ave</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.zoomButton}
-                  onPress={() => zoomToRegion(zoomRegions.region4)}
-                >
-                  <Text style={styles.zoomButtonText}>Cook/Doug</Text>
-                </TouchableOpacity>
-              </View>
+      {/* Zoom Region Grid */}
+      <View style={styles.zoomButtonGrid}>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region1)}
+        >
+          <Text style={styles.zoomButtonText}>Livingston</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region2)}
+        >
+          <Text style={styles.zoomButtonText}>Busch</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region3)}
+        >
+          <Text style={styles.zoomButtonText}>College Ave</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region4)}
+        >
+          <Text style={styles.zoomButtonText}>Cook/Doug</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+</Modal>
 
 
-              
-              {/* Close Button */}
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={styles.closeButtonText}>X</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
     </View>
     </SafeAreaView>
   );
@@ -477,7 +736,7 @@ function SettingsScreen() {
         value={currPass}
         items={allParkingPasses}
         setOpen={setOpen}
-        setValue={(value) => updateParkingPass(value)}
+        //setValue={(value) => updateParkingPass(value)}
         onSelectItem={(item) => {
           updateParkingPass(item.value);
         }}
@@ -486,7 +745,7 @@ function SettingsScreen() {
         style={{ width: 150, minHeight: 40 }}
         containerStyle={{ width: 150 }}
       />
-      <Text style={styles.sText}>Current pass: {currPass}</Text>
+      <Text style={styles.sText}>Current campus: {currPass}</Text>
     </View>
   );
 }
@@ -495,71 +754,75 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-      <Tab.Navigator
-        initialRouteName="Map"
-        screenOptions={({ route }) => ({
-          tabBarShowLabel: true, // Show tab labels
-          tabBarStyle: { 
-            backgroundColor: route.name === 'List' || route.name === 'Settings' ? 'black' : '#2B333E', // Change background color based on route
+    <Tab.Navigator
+      initialRouteName="Map"
+      screenOptions={({ route }) => ({
+        tabBarShowLabel: true,
+        tabBarStyle: {
+          backgroundColor:
+            route.name === 'List' || route.name === 'Settings'
+              ? 'black'
+              : '#27313F',
+          opacity: 1,
+          borderTopWidth: 0,
+        },
+        tabBarActiveTintColor: 'red',
+      })}
+    >
+      <Tab.Screen
+        name="List"
+        component={ListScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="list-outline" color={color} size={size} />
+          ),
+          headerTitle: '',
+          headerStyle: {
+            height: 60,
+            backgroundColor: 'black',
             opacity: 1,
-            borderTopWidth: 0,
-          }, 
-          tabBarActiveTintColor: 'red', // Active icon/text color
-        })}
-      >
-        <Tab.Screen
-          name="List"
-          component={ListScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="list" color={color} size={size} />
-            ),
-            headerTitle: '',
-            headerStyle: {
-              height: 60,
-              backgroundColor: 'black', 
-              opacity: 1// Header background color
-            },
-            headerTintColor: 'white', // Text color in the header
-          }}
-        />
+          },
+          headerTintColor: 'white',
+        }}
+      />
 
-        <Tab.Screen
-          name="Map"
-          component={MapScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="map" color={color} size={size} />
-            ),
-            headerTitle: '',
-            headerStyle: {
-              height: 60,
-              backgroundColor: '#2B333E', 
-              opacity: 0.95,
-            
-            },
-            headerTintColor: 'white', // Text color in the header
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="settings" color={color} size={size} />
-            ),
-            headerTitle: '',
-            headerStyle: {
-              height: 60,
-              backgroundColor: 'black', 
-              opacity: 1// Header background color
-            },
-            headerTintColor: 'white', // Text color in the header
-          }}
-        />
-      </Tab.Navigator>
+      <Tab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="map-outline" color={color} size={size} />
+          ),
+          headerTitle: '',
+          headerStyle: {
+            height: 60,
+            backgroundColor: '#2B333E',
+            opacity: 0.95,
+          },
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="cog-outline" color={color} size={size} />
+          ),
+          headerTitle: '',
+          headerStyle: {
+            height: 60,
+            backgroundColor: 'black',
+            opacity: 1,
+          },
+          headerTintColor: 'white',
+        }}
+      />
+    </Tab.Navigator>
   );
 }
+
 
 export default function App() {
   return (
@@ -678,189 +941,315 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1
-  },
-  listViewContainer: {
-      flex: 1,
-      backgroundColor: '#27313F',
-      alignItems: "center",
-      justifyContent: "center",
-      opacity: 1
+    justifyContent: 'center',
   },
 
-  mapStyle:{
-    width: "100%",
-    height: "120%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 150,
-    opacity: 0.85
+  listViewContainer: {
+    flex: 1,
+    backgroundColor: '#27313F',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+
   safeAreaContainer: {
-    flex: 1, 
+    flex: 1,
   },
+
+  mapStyle: {
+    width: '100%',
+    height: '120%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 150,
+    opacity: 0.8,
+  },
+
   modalButton: {
     position: 'absolute',
-    top: 10, // Adjust this to place it at the desired position
-    left: '98%',
-    marginLeft: -50, // Centers the button horizontally
-    backgroundColor: '#27313F',
-    padding: 10,
-    opacity: 0.9,
-    borderRadius: 25,
+    top: 15,
+    right: 15,
+    backgroundColor: '#1E1E1E',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
-      borderColor: "white"
-    //borderColor: "red",
-    //borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
+  buttonImage: {
+    width: 22,
+    height: 22,
+    tintColor: 'white',
+  },  
+
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: "50%"
-    //backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    //backgroundColor: 'rgba(0,0,0,0.5)',
   },
+
   modalContent: {
-    backgroundColor: '#27313F',
+    backgroundColor: '#1E1E1E',
     padding: 20,
-    borderRadius: 25,
-    width: '85%',
+    borderRadius: 20,
+    width: '90%',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 10,
+    position: 'relative',
   },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 20,
-    color: "white"
+
+  closeButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: '#1E1E1E',
+    borderColor: '#FF3B30',
+    borderWidth: 1.2,
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 6,
+    zIndex: 999, 
   },
   
+
   closeButtonText: {
-    color: 'white',
+    color: '#FF3B30',
     fontSize: 16,
+    fontWeight: 'bold',
   },
-  buttonImage: {
-    width: 25,  // Set the desired size for the image
-    height: 25, // Set the desired size for the image
-    },
-    markerDetails: {
-      position: 'absolute',
-      bottom: 20,
-      left: 50,
-      right: 10,
-      backgroundColor: '#27313F',
-      opacity: 0.9,
-      padding: 15,
-      borderRadius: 25,
-      width: "75%",
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: "white"
-    },
-    markerTitle: {
-      color: 'white',
-      fontSize: 18,
-      marginBottom: 10,
-    },
-    markerSubTitle: {
-      color: 'white',
-      fontSize: 12,
-      textAlign: "center",
-      marginBottom: 10,
-    },
-    directionsButton: {
-      backgroundColor: '#27313F',
-      padding: 12,
-      borderRadius: 25,
-      borderColor: "red",
-      borderWidth: 1
 
-    },
-    directionsButtonText: {
-      color: 'white',
-      fontSize: 16,
-    },
-    sText: {
-      color: 'white',
-      fontFamily: 'SF-Pro',
-      fontSize: 34
-    },
-    passView: {
-      position: 'absolute',
-      top: 10, // Adjust this to place it at the desired position
-      left: '15%',
-      width: "50%",
-      marginLeft: -50, // Centers the button horizontally
-      backgroundColor: '#27313F',
-      padding: 10,
-      opacity: 0.9,
-      borderRadius: 25,
-      //borderWidth: 1,
-      //borderColor: "white"
-      //borderColor: "red",
-      //borderWidth: 1,
-    },
-    passViewText: {
-      color: "white",
-      textAlign: "center",
+  modalText: {
+    fontSize: 20,
+    marginBottom: 16,
+    color: '#FFFFFF',
+    fontWeight: '600',
+    textAlign: 'center',
+    letterSpacing: 0.3,
+  },
 
-    },
-    radioButtonContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 10,
-    },
-    radioButton: {
-      width: 20,
-      height: 20,
-      borderRadius: 10,
-      borderWidth: 1,
-      borderColor: 'white',
-      marginRight: 10,
-      backgroundColor: 'transparent',
-    },
-    selectedRadioButton: {
-      backgroundColor: 'red',
-    },
-    closeButton: {
-      //marginTop: 20,
-      //padding: 10,
-      left: "48.5%",
-      bottom: "94%",
-      backgroundColor: '#27313F',
-      borderColor: "white",
-      borderWidth: 1,
-      borderRadius: 100,
-      width: 30,
-      height: 30,
-      alignItems: "center",
-      justifyContent: "center",
+  radioRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 12,
+  },
 
-    },
-    closeButtonText: {
-      color: 'red',
-    },
-    radioText: {
-      color: "white"
-    },
-    zoomButtonContainer: {
-      marginTop: 20,
-      width: '100%',
-      alignItems: 'center',
-    },
-    zoomButton: {
-      padding: 10,
-      margin: 5,
-      backgroundColor: '#27313F',
-      borderRadius: 5,
-      borderColor: "white",
-      borderWidth: 1,
-      width: '80%',
-    },
-    zoomButtonText: {
-      color: 'white',
-      textAlign: 'center',
-    },
- });
+  radioOption: {
+    flex: 1,
+    paddingVertical: 10,
+    marginHorizontal: 6,
+    backgroundColor: '#1A1A1A',
+    borderColor: '#2A2A2A',
+    borderWidth: 1,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+
+  radioOptionActive: {
+    backgroundColor: '#FF3B30',
+    borderColor: '#FF3B30',
+  },
+
+  radioText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+
+  radioButton: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 2,
+    borderColor: '#888',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+
+  selectedRadioButton: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#FF3B30',
+  },
+
+  zoomButtonGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 16,
+  },
+
+  zoomButton: {
+    backgroundColor: '#1E1E1E',
+    borderRadius: 10,
+    borderColor: '#2A2A2A',
+    borderWidth: 1.5,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    width: '47%',
+    marginBottom: 12,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+
+  zoomButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0.3,
+    textAlign: 'center',
+  },
+
+  resetButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 15,
+    backgroundColor: '#1E1E1E',
+    padding: 12,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+
+  targetImage: {
+    width: 22,
+    height: 22,
+    tintColor: 'white',
+  },
+
+  markerDetails: {
+    position: 'absolute',
+    bottom: 70,
+    left: 16,
+    right: 16,
+    backgroundColor: '#1E1E1E',
+    flexDirection: 'row', // compact horizontal layout
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  markerTextContainer: {
+    flex: 1,
+    paddingRight: 12,
+  },
+    
+
+  markerTitle: {
+    color: 'white',
+    fontSize: 17,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  
+  markerSubTitle: {
+    color: '#CCCCCC',
+    fontSize: 13,
+    lineHeight: 18,
+  },
+
+  directionsButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1E1E1E',          // darker background to match the modal/map
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#FF3B30',              // red accent border (matches your theme)
+    shadowColor: '#FF3B30',              // red-ish glow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  
+  directionsButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '500',
+    marginLeft: 8,
+  },
+  
+  
+
+  passView: {
+    position: 'absolute',
+    top: 15,
+    left: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    backgroundColor: '#1E1E1E',
+    borderRadius: 25,
+    borderColor: '#2A2A2A',
+    borderWidth: 1,
+  },
+
+  passViewText: {
+    color: 'white',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+
+  sText: {
+    color: 'white',
+    fontFamily: 'SF-Pro',
+    fontSize: 34,
+  },
+  customMarker: {
+    //backgroundColor: '#1E1E1E',
+    borderRadius: 25,
+    padding: 6,
+    //borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  
+});
+
 
  const settingsPageStyles = StyleSheet.create({
   container: {
@@ -870,5 +1259,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     opacity: 1
   },
+
 
  });
