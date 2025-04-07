@@ -1,5 +1,5 @@
 const nbrhndLots = [
-    [
+    
 // Douglass
 { name: "Lot 80", time: "24 hours, 7 days a week",
   schedule: [
@@ -764,6 +764,6 @@ const nbrhndLots = [
   ]
 }
 
-    ]
+    
 ];
 module.exports = nbrhndLots

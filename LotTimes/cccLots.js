@@ -1,5 +1,5 @@
 const cccLots = [
-[
+
 //Cook
 { name: "Lot 98A", time: "Monday - Friday, 6AM - 2AM; Saturday - Sunday, 6AM - 2AM",
   schedule: [
@@ -853,8 +853,5 @@ schedule: [
 
 
 
-
-
-]
 ];
 module.exports = cccLots;

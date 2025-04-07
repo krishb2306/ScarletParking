@@ -184,6 +184,7 @@ function MapScreen() {
   const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
 
   const bccLots = require('./LotTimes/bccLots');
+  const cccLots = require('./LotTimes/cccLots');
   const allLots = require('./allLots');
 
   const mapViewRef = useRef(null);
@@ -415,7 +416,7 @@ const currentTime = hours * 60 + minutes; // Calculate minutes since midnight
   
   allLots.forEach(lot => {
     // Check if the current lot from allLots exists in bccLots
-    let foundLot = bccLots.find(bccLot => bccLot.name === lot.title);
+    let foundLot = cccLots.find(cccLot => cccLot.name === lot.title);
     // if (foundLot) {
     //   markers.push({
     //     id: lot.id,
@@ -753,71 +754,75 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-      <Tab.Navigator
-        initialRouteName="Map"
-        screenOptions={({ route }) => ({
-          tabBarShowLabel: true, // Show tab labels
-          tabBarStyle: { 
-            backgroundColor: route.name === 'List' || route.name === 'Settings' ? 'black' : '#27313F', // Change background color based on route
+    <Tab.Navigator
+      initialRouteName="Map"
+      screenOptions={({ route }) => ({
+        tabBarShowLabel: true,
+        tabBarStyle: {
+          backgroundColor:
+            route.name === 'List' || route.name === 'Settings'
+              ? 'black'
+              : '#27313F',
+          opacity: 1,
+          borderTopWidth: 0,
+        },
+        tabBarActiveTintColor: 'red',
+      })}
+    >
+      <Tab.Screen
+        name="List"
+        component={ListScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="list-outline" color={color} size={size} />
+          ),
+          headerTitle: '',
+          headerStyle: {
+            height: 60,
+            backgroundColor: 'black',
             opacity: 1,
-            borderTopWidth: 0,
-          }, 
-          tabBarActiveTintColor: 'red', // Active icon/text color
-        })}
-      >
-        <Tab.Screen
-          name="List"
-          component={ListScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="list" color={color} size={size} />
-            ),
-            headerTitle: '',
-            headerStyle: {
-              height: 60,
-              backgroundColor: 'black', 
-              opacity: 1// Header background color
-            },
-            headerTintColor: 'white', // Text color in the header
-          }}
-        />
+          },
+          headerTintColor: 'white',
+        }}
+      />
 
-        <Tab.Screen
-          name="Map"
-          component={MapScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="map" color={color} size={size} />
-            ),
-            headerTitle: '',
-            headerStyle: {
-              height: 60,
-              backgroundColor: '#2B333E', 
-              opacity: 0.95,
-            
-            },
-            headerTintColor: 'white', // Text color in the header
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="settings" color={color} size={size} />
-            ),
-            headerTitle: '',
-            headerStyle: {
-              height: 60,
-              backgroundColor: 'black', 
-              opacity: 1// Header background color
-            },
-            headerTintColor: 'white', // Text color in the header
-          }}
-        />
-      </Tab.Navigator>
+      <Tab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="map-outline" color={color} size={size} />
+          ),
+          headerTitle: '',
+          headerStyle: {
+            height: 60,
+            backgroundColor: '#2B333E',
+            opacity: 0.95,
+          },
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="cog-outline" color={color} size={size} />
+          ),
+          headerTitle: '',
+          headerStyle: {
+            height: 60,
+            backgroundColor: 'black',
+            opacity: 1,
+          },
+          headerTintColor: 'white',
+        }}
+      />
+    </Tab.Navigator>
   );
 }
+
 
 export default function App() {
   return (

@@ -1,5 +1,5 @@
 const dccLots = [
-    [
+    
 //Douglass
 { name: "Lot 79", time: "Monday - Friday, 6AM - 2AM; Saturday - Sunday, 6AM - 2AM", 
   schedule: [
@@ -814,6 +814,6 @@ schedule: [
         endTime: "2:00 AM"
     }
 ] }
-    ]
+    
 ];
 module.exports = dccLots;

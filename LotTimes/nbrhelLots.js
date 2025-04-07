@@ -1,5 +1,5 @@
 const nbrhelLots = [
-    [
+    
 // Cook
 { name: "Helyar House Lot", time: "24 hours, 7 days a week",
   schedule: [
@@ -633,6 +633,6 @@ const nbrhelLots = [
       }
     ]
   },
-    ]
+    
 ];
 module.exports = nbrhelLots

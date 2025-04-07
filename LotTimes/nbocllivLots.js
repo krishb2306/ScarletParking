@@ -1,5 +1,5 @@
 const nbocllivLots = [
-    [
+    
 // Livingston
 { name: "Lot 103", time: "24 hours, 7 days a week",
   schedule: [
@@ -872,6 +872,6 @@ const nbocllivLots = [
   ]
 }
 
-    ]
+    
 ];
 module.exports = nbocllivLots

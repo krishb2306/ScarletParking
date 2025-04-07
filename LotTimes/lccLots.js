@@ -1,5 +1,5 @@
 const lccLots = [
-    [
+    
 // Livingston
 { name: "Lot 915/ Yellow Lot", time: "Monday - Friday, 6AM - 2AM; Saturday - Sunday, 6AM - 2AM",
   schedule: [
@@ -786,6 +786,6 @@ const lccLots = [
     }
   ]
 }
-    ]
+    
 ]
 module.exports = lccLots;

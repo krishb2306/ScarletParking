@@ -1,5 +1,5 @@
 const cacLots = [
-    [
+    
     //College Ave
     { name: "Lot 20", time: "Monday - Friday, 6AM - 2AM; Saturday - Sunday, 6AM - 2AM", 
     schedule: [
@@ -847,8 +847,7 @@ const cacLots = [
         }
     ] },
 
-    ]
-    
+
 
 ];
 module.exports = cacLots;

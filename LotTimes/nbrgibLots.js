@@ -1,5 +1,5 @@
 const nbrgibLots = [
-    [
+    
         { name: "Lot 99C", time: "24 hours, 7 days a week",
         schedule: [
           {
@@ -862,6 +862,6 @@ const nbrgibLots = [
     }
   ] },
 
-    ]
+    
 ];
 module.exports = nbrgibLots;

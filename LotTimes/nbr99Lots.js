@@ -1,5 +1,5 @@
 const nbr99Lots = [
-[
+
     //Cook
 { name: "Lot 99A", time: "24 hours, 7 days a week", 
 schedule: [
@@ -774,6 +774,6 @@ schedule: [
 
 
 
-]
+
 ];
 module.exports = nbr99Lots;

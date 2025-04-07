@@ -1,5 +1,5 @@
 const nbrjamLots = [
-    [
+    
         // Douglass
 { name: "Douglas Deck", time: "24 hours, 7 days a week",
 schedule: [
@@ -879,6 +879,6 @@ schedule: [
     }
   ]
 }
-    ]
+    
 ];
 module.exports = nbrjamLots

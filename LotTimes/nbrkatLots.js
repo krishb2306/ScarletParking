@@ -1,5 +1,5 @@
 const nbrkatLots = [
-    [
+    
 // Douglass
 { name: "Lot 712/Katzenbach", time: "24 hours, 7 days a week",
   schedule: [
@@ -882,6 +882,6 @@ schedule: [
 
 
 
-    ]
+    
 ];
 module.exports = nbrkatLots;
