@@ -1,7 +1,7 @@
 //import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,StatusBar, Image, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
+import { StyleSheet,StatusBar, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
 import { Marker } from "react-native-maps";
 import React, { createContext, useContext, useState, useEffect, useRef} from 'react';
@@ -629,8 +629,8 @@ const zoomToLocation = () => {
 
 function SettingsScreen() {
   const { currPass, updateParkingPass } = useContext(ParkingPassContext);
-
   const [open, setOpen] = useState(false);
+
   const [allParkingPasses, setAllParkingPasses] = useState([
     { label: 'Busch Commuter', value: 'Busch Commuter' },
     { label: 'Busch Off-Campus Living', value: 'Busch Off-Campus Living' },
@@ -651,57 +651,142 @@ function SettingsScreen() {
     { label: 'New Brunswick Night Commuter', value: 'New Brunswick Night Commuter' },
     { label: 'Nicholas Resident', value: 'Nicholas Resident' },
     { label: 'Woodbury Resident', value: 'Woodbury Resident' },
-]);
-
-
-  // // Store selected campus in AsyncStorage
-  // const storeData = async (selectedValue) => {
-  //   try {
-  //     await AsyncStorage.setItem('parkingPass', selectedValue);
-  //     setCurrPass(selectedValue); // Update state after storing data
-  //   } 
-  //   catch (e) {
-  //     console.error("Error getting parking pass:", e);
-  //   }
-  // };
-
-  // // Retrieve stored campus from AsyncStorage
-  // const getData = async () => {
-  //   try {
-  //     const storedValue = await AsyncStorage.getItem('parkingPass');
-  //     if (storedValue !== null) {
-  //       setCurrPass(storedValue);
-  //     }
-  //   } 
-  //   catch (e) {
-  //     console.error("Error getting parking pass:", e);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  ]);
 
   return (
-    <View style={settingsPageStyles.container}>
-      <DropDownPicker
-        open={open}
-        value={currPass}
-        items={allParkingPasses}
-        setOpen={setOpen}
-        //setValue={(value) => updateParkingPass(value)}
-        onSelectItem={(item) => {
-          updateParkingPass(item.value);
-        }}
-        
-        setItems={setAllParkingPasses}
-        style={{ width: 150, minHeight: 40 }}
-        containerStyle={{ width: 150 }}
-      />
-      <Text style={styles.sText}>Current campus: {currPass}</Text>
-    </View>
+    <ScrollView
+      style={settingsPageStyles.container}
+      contentContainerStyle={{ paddingBottom: 50 }}
+      nestedScrollEnabled={true} 
+    >
+      
+      <Text style={settingsPageStyles.header}>Settings</Text>
+
+       {/* TOP CARD SECTION */}
+       <View style={settingsPageStyles.topCard}>
+        <Image
+          source={require('./assets/app-logo.jpg')} 
+          style={settingsPageStyles.logo}
+        />
+        <View style={settingsPageStyles.cardTextContainer}>
+          <Text style={settingsPageStyles.appName}>Scarlet Parking</Text>
+          <Text style={settingsPageStyles.versionText}>Version 1.0.0</Text>
+          <Text style={settingsPageStyles.madeByText}>
+            Made by <Text style={settingsPageStyles.linkText}>Krishanth Babu & Eashan Patel</Text>
+          </Text>
+        </View>
+      </View>
+
+      {/* PARKING PASS DROPDOWN */}
+      <View style={settingsPageStyles.section}>
+        <Text style={settingsPageStyles.sectionTitle}>Parking Pass</Text>
+        <DropDownPicker
+          open={open}
+          value={currPass}
+          items={allParkingPasses}
+          setOpen={setOpen}
+          setValue={(cb) => {
+            const selected = cb(currPass);
+            updateParkingPass(selected);
+          }}
+          setItems={setAllParkingPasses}
+          style={settingsPageStyles.dropdown}
+          textStyle={settingsPageStyles.dropdownText}
+          dropDownContainerStyle={settingsPageStyles.dropdownContainer}
+          listItemLabelStyle={{ color: 'white' }}
+
+          // 👇 Make the arrow white
+          ArrowDownIconComponent={({ style }) => (
+            <Ionicons name="chevron-down" size={20} color="white" style={style} />
+          )}
+          ArrowUpIconComponent={({ style }) => (
+            <Ionicons name="chevron-up" size={20} color="white" style={style} />
+          )}
+        />
+
+        <Text style={settingsPageStyles.helperText}>You may need to refresh the app if changes do not reflect.</Text>
+      </View>
+
+      {/* GENERAL SETTINGS */}
+      <View style={settingsPageStyles.section}>
+        <Text style={settingsPageStyles.sectionTitle}>General</Text>
+
+        <View style={settingsPageStyles.row}>
+          <Text style={settingsPageStyles.label}>Dark Mode</Text>
+          <View style={settingsPageStyles.switchMockOn} />
+        </View>
+
+        <View style={settingsPageStyles.row}>
+          <Text style={settingsPageStyles.label}>Show Hints</Text>
+          <View style={settingsPageStyles.switchMockOff} />
+        </View>
+      </View>
+
+      <View style={settingsPageStyles.section}>
+  <Text style={settingsPageStyles.sectionTitle}>System Permissions</Text>
+  <TouchableOpacity style={settingsPageStyles.cardRow}>
+    <Ionicons name="location-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
+    <Text style={settingsPageStyles.cardLabel}>Location</Text>
+    <Text style={settingsPageStyles.cardStatus}>Granted</Text>
+    <Ionicons name="chevron-forward-outline" size={20} color="gray" />
+  </TouchableOpacity>
+  <Text style={settingsPageStyles.helperText}>Tap a permission to jump to device settings.</Text>
+</View>
+
+<View style={settingsPageStyles.section}>
+  <Text style={settingsPageStyles.sectionTitle}>About</Text>
+  <View style={settingsPageStyles.aboutBox}>
+    <Text style={settingsPageStyles.aboutText}>
+      Scarlet Parking helps students check valid parking lots based on their permit.
+    </Text>
+    <Text style={[settingsPageStyles.aboutText, { marginTop: 8 }]}>
+      If lot data is outdated or unavailable, please check Rutgers DOT.
+    </Text>
+  </View>
+</View>
+
+<View style={settingsPageStyles.section}>
+  <Text style={settingsPageStyles.sectionTitle}>Privacy</Text>
+  <TouchableOpacity style={settingsPageStyles.cardRow}>
+    <Ionicons name="document-text-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
+    <Text style={settingsPageStyles.cardLabel}>Privacy Policy</Text>
+    <Ionicons name="chevron-forward-outline" size={20} color="gray" />
+  </TouchableOpacity>
+</View>
+
+<View style={settingsPageStyles.section}>
+  <Text style={settingsPageStyles.sectionTitle}>Acknowledgements</Text>
+  <TouchableOpacity style={settingsPageStyles.cardRow}>
+    <Ionicons name="layers-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
+    <Text style={settingsPageStyles.cardLabel}>Frameworks used</Text>
+    <Ionicons name="chevron-forward-outline" size={20} color="gray" />
+  </TouchableOpacity>
+</View>
+
+<View style={settingsPageStyles.section}>
+  <Text style={settingsPageStyles.sectionTitle}>Feedback</Text>
+  <TouchableOpacity style={settingsPageStyles.cardRow}>
+    <Ionicons name="heart-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
+    <Text style={settingsPageStyles.cardLabel}>Leave a review</Text>
+    <Ionicons name="chevron-forward-outline" size={20} color="gray" />
+  </TouchableOpacity>
+  <TouchableOpacity style={settingsPageStyles.cardRow}>
+    <Ionicons name="chatbubble-ellipses-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
+    <Text style={settingsPageStyles.cardLabel}>Send feedback</Text>
+    <Ionicons name="chevron-forward-outline" size={20} color="gray" />
+  </TouchableOpacity>
+</View>
+
+
+
+
+
+    </ScrollView>
   );
 }
+
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -1204,14 +1289,167 @@ const styles = StyleSheet.create({
 });
 
 
- const settingsPageStyles = StyleSheet.create({
+const settingsPageStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1
+    backgroundColor: '#000', // dark theme
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
 
+  header: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 20,
+    textAlign: 'left',
+  },
 
- });
+  topCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1E1E1E',
+    padding: 16,
+    borderRadius: 16,
+    marginBottom: 25,
+    borderColor: '#2A2A2A',
+    borderWidth: 1,
+  },
+
+  logo: {
+    width: 60,
+    height: 60,
+    borderRadius: 12,
+    marginRight: 16,
+  },
+
+  cardTextContainer: {
+    flex: 1,
+  },
+
+  appName: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: 'white',
+  },
+
+  versionText: {
+    color: '#888',
+    fontSize: 14,
+    marginTop: 2,
+  },
+
+  madeByText: {
+    color: '#aaa',
+    fontSize: 14,
+    marginTop: 2,
+  },
+
+  linkText: {
+    color: '#FF3B30', // red accent
+    fontWeight: '500',
+  },
+
+  section: {
+    marginBottom: 30,
+  },
+
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: 'white',
+    marginBottom: 10,
+  },
+
+  dropdown: {
+    backgroundColor: '#1E1E1E',
+    borderColor: '#333',
+    minHeight: 45,
+  },
+
+  dropdownText: {
+    color: 'white',
+    fontSize: 14,
+  },
+
+  dropdownContainer: {
+    backgroundColor: '#1E1E1E',
+    borderColor: '#333',
+  },
+
+  helperText: {
+    color: '#999',
+    fontSize: 12,
+    marginTop: 6,
+  },
+
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+
+  label: {
+    color: 'white',
+    fontSize: 16,
+  },
+
+  switchMockOn: {
+    width: 40,
+    height: 22,
+    borderRadius: 12,
+    backgroundColor: '#FF3B30',
+  },
+
+  switchMockOff: {
+    width: 40,
+    height: 22,
+    borderRadius: 12,
+    backgroundColor: '#555',
+  },
+  cardRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1E1E1E',
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    marginTop: 10,
+    marginBottom: 4,
+  },
+  
+  cardLabel: {
+    flex: 1,
+    fontSize: 16,
+    color: 'white',
+    marginLeft: 10,
+  },
+  
+  cardStatus: {
+    color: 'limegreen',
+    fontSize: 14,
+    marginRight: 8,
+    fontWeight: '500',
+  },
+  
+  cardIcon: {
+    width: 24,
+  },
+  
+  aboutBox: {
+    backgroundColor: '#1E1E1E',
+    padding: 16,
+    borderRadius: 12,
+    marginTop: 10,
+  },
+  
+  aboutText: {
+    fontSize: 14,
+    color: '#CCCCCC',
+    lineHeight: 20,
+  },
+  
+});
+
+
