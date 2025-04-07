@@ -76,12 +76,12 @@ function ListScreen() {
               </View>
               <FlatList
                 data={item.timeslots}
-                keyExtractor={(item2, index2) => index2.toString()}
-                contentContainerStyle={{ paddingBottom: 16 }}
-                renderItem={({ item2 }) => (
+                keyExtractor={(item, index2) => index2.toString()}
+                contentContainerStyle={{ paddingBottom: 5 }}
+                renderItem={({ item }) => (
                   <View style={listViewStyles.cardRow}>
                     <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
-                    <Text style={listViewStyles.cardText}>{item2}</Text>
+                    <Text style={listViewStyles.cardText}> {item} </Text>
                   </View>
                 )}
               />
@@ -1057,7 +1057,7 @@ const listViewStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 2,
-    marginLeft: 3,
+    marginLeft: 2,
   },
   
   headerTitle: {
