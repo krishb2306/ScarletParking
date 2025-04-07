@@ -664,7 +664,7 @@ function SettingsScreen() {
        {/* TOP CARD SECTION */}
        <View style={settingsPageStyles.topCard}>
         <Image
-          source={require('./assets/app-logo.jpg')} 
+          source={require('./assets/app-1.png')} 
           style={settingsPageStyles.logo}
         />
         <View style={settingsPageStyles.cardTextContainer}>
