@@ -18,89 +18,77 @@ import { ParkingPassProvider, ParkingPassContext } from './ParkingPassContext';
 
 
 function ListScreen() {
-
   const { currPass, currListViewInfo } = useContext(ParkingPassContext);
-  console.log(currListViewInfo)
-  const [listInfo, setListInfo] = React.useState(currListViewInfo[0] || {});
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("Busch");
-  const [items, setItems] = React.useState([
-    {label: 'Busch', value: 'Busch'}, 
-    {label: 'College Ave', value: 'College Ave'},
-    {label: 'Cook/Douglass', value: 'Cook/Douglass'},
-    {label: 'Livingston', value: 'Livingston'},
+  const [listInfo, setListInfo] = useState(currListViewInfo[0] || {});
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("Busch");
+  const [items, setItems] = useState([
+    { label: 'Busch', value: 'Busch' },
+    { label: 'College Ave', value: 'College Ave' },
+    { label: 'Cook/Douglass', value: 'Cook/Douglass' },
+    { label: 'Livingston', value: 'Livingston' },
   ]);
 
   return (
     <SafeAreaView style={listViewStyles.safeAreaContainer}>
-      <View style = {listViewStyles.container}>
-        <View style = {listViewStyles.topListView}> 
-          <Text style = {listViewStyles.headerText}> Info for {currPass} </Text>
-        </View>
+      <View style={listViewStyles.container}>
+      <View style={listViewStyles.headerContainer}>
+        <Text style={listViewStyles.headerLabel}>Info for</Text>
+        <Text style={listViewStyles.headerTitle}>{currPass}</Text>
+      </View>
 
-        <View style = {listViewStyles.middleListView}>
-          <Text> Pick what campus lots to view </Text>
-          
+        <View style={listViewStyles.dropdownRow}>
           <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setItems={setItems}
-              onSelectItem={(selectedItem) => {
-                const selectedCampus = selectedItem.value;
-                const selectedInfo = currListViewInfo.find(info => info.campus === selectedCampus);
-              
-                if (selectedInfo) {
-                  setListInfo(selectedInfo);
-                }
-              }}
-              style = {{width: 150, minHeight: 40}}
-              containerStyle = {{width: 150}}
-            />
-        </View>
-
-        <View style = {listViewStyles.bottomListView}> 
-          <FlatList
-            horizontal={false}
-            data={listInfo.lots}
-            renderItem={({ item }) => (
-              <View style={listViewStyles.listViewBox}>
-                <View style = {listViewStyles.thirdListViewBox1}>
-                <Image
-                  style={{width: 35, height: 35, resizeMode: 'contain'}}
-                  source={require('./images/pinpoint.png')}
-                />
-                <Text style = {{fontWeight: "bold"}}> {item.name} </Text>
-                </View>
-
-                <View style = {listViewStyles.thirdListViewBox2}>
-                <Image
-                  style={{width: 35, height: 35, resizeMode: 'contain'}}
-                  source={require('./images/clock-icon.png')}
-                />
-                <Text style = {{fontWeight: "bold"}}> {item.timeslots[0]} </Text>
-                </View>
-
-                <View style = {listViewStyles.thirdListViewBox}>
-                <Image
-                  style={{width: 35, height: 35, resizeMode: 'contain'}}
-                  source={require('./images/clock-icon.png')}
-                />
-                <Text style = {{fontWeight: "bold"}}> {item.timeslots[1]} {value} </Text>
-                </View>
-                
-                
-                
-              </View>
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            onSelectItem={(selectedItem) => {
+              const selectedCampus = selectedItem.value;
+              const selectedInfo = currListViewInfo.find(info => info.campus === selectedCampus);
+              if (selectedInfo) setListInfo(selectedInfo);
+            }}
+            style={listViewStyles.dropdown}
+            dropDownContainerStyle={listViewStyles.dropdownContainer}
+            
+            textStyle={{ color: 'white' }}
+            ArrowDownIconComponent={({ style }) => (
+              <Ionicons name="chevron-down" size={18} color="white" style={style} />
             )}
-            keyExtractor={(item, index) => index.toString()}
+            ArrowUpIconComponent={({ style }) => (
+              <Ionicons name="chevron-up" size={18} color="white" style={style} />
+            )}
           />
         </View>
+
+        <FlatList
+          data={listInfo.lots}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={{ paddingBottom: 16 }}
+          renderItem={({ item }) => (
+            <View style={listViewStyles.card}>
+              <View style={listViewStyles.cardRow}>
+                <Ionicons name="location-outline" size={20} color="red" style={listViewStyles.icon} />
+                <Text style={listViewStyles.lotName}>{item.name}</Text>
+              </View>
+              <View style={listViewStyles.cardRow}>
+                <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
+                <Text style={listViewStyles.cardText}>{item.timeslots[0]}</Text>
+              </View>
+              <View style={listViewStyles.cardRow}>
+                <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
+                <Text style={listViewStyles.cardText}>{item.timeslots[1]} {value}</Text>
+              </View>
+            </View>
+          )}
+        />
       </View>
     </SafeAreaView>
   );
 }
+
 
 function MapScreen() {
   const { currPass, currMapViewID } = useContext(ParkingPassContext);
@@ -961,103 +949,110 @@ export default function App() {
 
 const listViewStyles = StyleSheet.create({
   safeAreaContainer: {
-    flex: 1, 
+    flex: 1,
+    backgroundColor: '#1C1C1E',
   },
-
   container: {
-      flex: 1,
-      backgroundColor: '#27313F',
-      alignItems: "center",
-      justifyContent: "center",
-      opacity: 1
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    backgroundColor: 'black',
   },
-
-  topListView:{
-    flex: 0.1,
-    //backgroundColor: 'blue',
+  headerText: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  dropdownRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1,
-
+    marginBottom: 20,
+    gap: 10,
+    justifyContent: 'center',
   },
-
-  headerText:{
-    fontSize: 30,
-    color: "white",
-    fontWeight: "bold",
-    paddingTop: 20
+  dropdownLabel: {
+    color: '#ccc',
+    fontSize: 16,
   },
-
-  middleListView:{
-    flex: 0.1,
-    //backgroundColor: 'orange',
-    alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1,
-    flexDirection: "row"
+  dropdown: {
+    width: 180,
+    backgroundColor: '#2C2C2E',
+    borderColor: '#444',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    minHeight: 45,
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
     
   },
-
-  bottomListView:{
-    flex: 0.8,
-    //backgroundColor: 'green',
-    alignItems: 'center',
-    justifyContent: "center",
-    opacity: 1,
-  },
-
-  listViewBox: {
-    flexDirection: "column",
-    backgroundColor: "white",
-    width: "93%",
-    justifyContent: "center",
-    alignItems: "center", 
-    margin: 10,
+  
+  dropdownContainer: {
+    backgroundColor: '#2C2C2E',
+    borderColor: '#444',
     borderRadius: 10,
-    // borderColor: "white",
-    // borderWidth: 2,
-
-    elevation: 20,
-    shadowColor: "black",
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.7,
-    shadowRadius: 3,
+    //marginTop: 6,
+    width: 180,
+    zIndex: 999, // fixes overlap issues
   },
-
-  thirdListViewBox: {
-    //flex: 0.33,
-    flexGrow: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexDirection: "row",
-    width: "95%",
-    //backgroundColor: "red",
+  card: {
+    backgroundColor: '#2C2C2E',
+    borderRadius: 14,
+    padding: 16,
+    marginVertical: 8,
+    
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+    elevation: 5,
   },
-
-  thirdListViewBox1: {
-    //flex: 0.33,
-    flexGrow: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    textAlign: "center",
-    textAlignVertical: "center",
-    flexDirection: "row",
-    width: "95%",
-    paddingRight: "20%",
-    //backgroundColor: "green"
+  cardRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginVertical: 6,
   },
+  icon: {
+    marginRight: 8,
+    marginTop: 2,
+  },
+  lotName: {
+    flex: 1,
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#fff',
+    flexWrap: 'wrap',
+  },
+  cardText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#ccc',
+    flexWrap: 'wrap',
+  },
+  headerContainer: {
+    width: '100%',
+    paddingHorizontal: 0,
+    paddingTop: 5,
+    marginBottom: 10,
+  },
+  
+  headerLabel: {
+    color: '#A0A0A0',
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 2,
+  },
+  
+  headerTitle: {
+    color: '#FFFFFF',
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  
+});
 
-  thirdListViewBox2: {
-    //flex: 0.33,
-    flexGrow: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexDirection: "row",
-    width: "95%",
-    //backgroundColor: "blue"
-  }
-
-})
 
 const styles = StyleSheet.create({
   container: {
