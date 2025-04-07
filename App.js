@@ -29,7 +29,6 @@ function ListScreen() {
     {label: 'College Ave', value: 'College Ave'},
     {label: 'Cook/Douglass', value: 'Cook/Douglass'},
     {label: 'Livingston', value: 'Livingston'},
-    {label: 'RBHS', value: 'RBHS'},
   ]);
 
   return (
