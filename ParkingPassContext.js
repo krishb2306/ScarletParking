@@ -1514,7 +1514,7 @@ export const ParkingPassProvider = ({ children }) => {
     try {
       await AsyncStorage.setItem('parkingPass', newPass);
       setCurrPass(newPass);
-      const match = lotInfo.find(info => info.pass === currPass);
+      const match = lotInfo.find(info => info.pass === newPass);
       setCurrListViewInfo(match);
       if (match) {
         setCurrMapViewID(match.id);
