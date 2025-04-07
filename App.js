@@ -74,14 +74,25 @@ function ListScreen() {
                 <Ionicons name="location-outline" size={20} color="red" style={listViewStyles.icon} />
                 <Text style={listViewStyles.lotName}>{item.name}</Text>
               </View>
-              <View style={listViewStyles.cardRow}>
+              <FlatList
+                data={item.timeslots}
+                keyExtractor={(item2, index2) => index2.toString()}
+                contentContainerStyle={{ paddingBottom: 16 }}
+                renderItem={({ item2 }) => (
+                  <View style={listViewStyles.cardRow}>
+                    <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
+                    <Text style={listViewStyles.cardText}>{item2}</Text>
+                  </View>
+                )}
+              />
+              {/* <View style={listViewStyles.cardRow}>
                 <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
                 <Text style={listViewStyles.cardText}>{item.timeslots[0]}</Text>
               </View>
               <View style={listViewStyles.cardRow}>
                 <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
                 <Text style={listViewStyles.cardText}>{item.timeslots[1]}</Text>
-              </View>
+              </View> */}
             </View>
           )}
         />
