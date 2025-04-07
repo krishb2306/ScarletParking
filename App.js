@@ -730,7 +730,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
           style={settingsPageStyles.logo}
         />
         <View style={settingsPageStyles.cardTextContainer}>
-          <Text style={settingsPageStyles.appName}>Scarlet Parking</Text>
+          <Text style={settingsPageStyles.appName}>ScarletParking</Text>
           <Text style={settingsPageStyles.versionText}>Version 1.0.0</Text>
           <Text style={settingsPageStyles.madeByText}>
             Made by <Text style={settingsPageStyles.linkText}>Krishanth Babu & Eashan Patel</Text>
@@ -768,7 +768,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
         <Text style={settingsPageStyles.helperText}>You may need to refresh the app if changes do not reflect.</Text>
       </View>
 
-      {/* GENERAL SETTINGS */}
+      {/* GENERAL SETTINGS
       <View style={settingsPageStyles.section}>
         <Text style={settingsPageStyles.sectionTitle}>General</Text>
 
@@ -781,7 +781,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
           value={isEnabled}
           />
         </View>
-      </View>
+      </View> */}
 
       <View style={settingsPageStyles.section}>
   <Text style={settingsPageStyles.sectionTitle}>System Permissions</Text>
@@ -804,7 +804,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
   <Text style={settingsPageStyles.sectionTitle}>About</Text>
   <View style={settingsPageStyles.aboutBox}>
     <Text style={settingsPageStyles.aboutText}>
-      Scarlet Parking helps students check valid parking lots based on their permit.
+      ScarletParking helps students check valid parking lots based on their permit.
     </Text>
     <Text style={[settingsPageStyles.aboutText, { marginTop: 8 }]}>
       If lot data is incorrect or unavailable, please send feedback through the option below.
@@ -858,11 +858,11 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
 <View style={settingsPageStyles.section}>
   <Text style={settingsPageStyles.sectionTitle}>Feedback</Text>
-  <TouchableOpacity style={settingsPageStyles.cardRow}>
+  {/* <TouchableOpacity style={settingsPageStyles.cardRow}>
     <Ionicons name="heart-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
     <Text style={settingsPageStyles.cardLabel}>Leave a review</Text>
     <Ionicons name="chevron-forward-outline" size={20} color="gray" />
-  </TouchableOpacity>
+  </TouchableOpacity> */}
   <TouchableOpacity style={settingsPageStyles.cardRow} onPress={openEmail}>
     <Ionicons name="chatbubble-ellipses-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
     <Text style={settingsPageStyles.cardLabel}>Send feedback</Text>
