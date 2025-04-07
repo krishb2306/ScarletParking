@@ -1120,7 +1120,7 @@ export const ParkingPassProvider = ({ children }) => {
     },
     {
       pass: "Livingston Off-Campus Living",
-      id: "nbrcllivLots",
+      id: "nbocllivLots",
       campuses: [
         {
           campus: "Livingston",
@@ -1514,7 +1514,7 @@ export const ParkingPassProvider = ({ children }) => {
     try {
       await AsyncStorage.setItem('parkingPass', newPass);
       setCurrPass(newPass);
-      const match = lotInfo.find(info => info.pass === newPass);
+      const match = lotInfo.find(info => info.pass === newPass); // ✅ Use newPass here
       setCurrListViewInfo(match);
       if (match) {
         setCurrMapViewID(match.id);
@@ -1523,6 +1523,7 @@ export const ParkingPassProvider = ({ children }) => {
       console.error("Error saving parking pass:", e);
     }
   };
+  
 
     // Retrieve parking pass from AsyncStorage when the app loads
     useEffect(() => {
