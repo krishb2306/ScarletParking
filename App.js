@@ -479,7 +479,7 @@ const zoomToLocation = () => {
     title="Your Location"
     description="You are here!"
   >
-    <Ionicons name="caret-up-circle-outline" size={30} color="#4A90E2" />
+    <Ionicons name="location-sharp" size={30} color="yellow" />
   </Marker>
 )}
 
