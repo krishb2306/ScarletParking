@@ -14,6 +14,7 @@ import * as Location from 'expo-location'; // For Expo Location
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 //import { useState, useEffect } from 'react';\
 import { ParkingPassProvider, ParkingPassContext } from './ParkingPassContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 
@@ -33,7 +34,7 @@ function ListScreen() {
     <SafeAreaView style={listViewStyles.safeAreaContainer}>
       <View style={listViewStyles.container}>
       <View style={listViewStyles.headerContainer}>
-        <Text style={listViewStyles.headerLabel}>Info for</Text>
+        <Text style={listViewStyles.headerLabel}>Information for</Text>
         <Text style={listViewStyles.headerTitle}>{currPass}</Text>
       </View>
 
@@ -79,7 +80,7 @@ function ListScreen() {
               </View>
               <View style={listViewStyles.cardRow}>
                 <Ionicons name="time-outline" size={18} color="#aaa" style={listViewStyles.icon} />
-                <Text style={listViewStyles.cardText}>{item.timeslots[1]} {value}</Text>
+                <Text style={listViewStyles.cardText}>{item.timeslots[1]}</Text>
               </View>
             </View>
           )}
@@ -688,22 +689,22 @@ function SettingsScreen() {
     ? { color: 'red' }    // Red for denied
     : { color: 'gray' };  // Default color for unknown status
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const openModal = () => {
-      setModalVisible(true);
-    };
-  
-    const closeModal = () => {
-      setModalVisible(false);
-    };
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
 
-    const [isEnabled, setIsEnabled] = useState(false);
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
     <ScrollView
       style={settingsPageStyles.container}
-      contentContainerStyle={{ paddingBottom: 50 }}
+      contentContainerStyle={{ paddingBottom: 20 }}
       nestedScrollEnabled={true} 
     >
       
@@ -1043,6 +1044,7 @@ const listViewStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 2,
+    marginLeft: 3,
   },
   
   headerTitle: {

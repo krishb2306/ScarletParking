@@ -26,6 +26,7 @@
     "react-dom": "18.3.1",
     "react-native": "0.76.8",
     "react-native-dropdown-picker": "^5.4.6",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-map-clustering": "^3.4.2",
     "react-native-maps": "1.18.0",
     "react-native-reanimated": "^3.16.6",
