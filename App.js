@@ -20,12 +20,12 @@ import { ParkingPassProvider, ParkingPassContext } from './ParkingPassContext';
 function ListScreen() {
 
   const { currPass, currListViewInfo } = useContext(ParkingPassContext);
-  currentPassInfo = currListViewInfo;
-  const [listInfo, setListInfo] = React.useState(currentPassInfo[0]);
+  console.log(currListViewInfo)
+  const [listInfo, setListInfo] = React.useState(currListViewInfo[0] || {});
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("Busch");
   const [items, setItems] = React.useState([
-    {label: 'Busch', value: 'Busch'},
+    {label: 'Busch', value: 'Busch'}, 
     {label: 'College Ave', value: 'College Ave'},
     {label: 'Cook/Douglass', value: 'Cook/Douglass'},
     {label: 'Livingston', value: 'Livingston'},
@@ -47,11 +47,10 @@ function ListScreen() {
               value={value}
               items={items}
               setOpen={setOpen}
-              setValue={setValue}
               setItems={setItems}
               onSelectItem={(selectedItem) => {
                 const selectedCampus = selectedItem.value;
-                const selectedInfo = currentPassInfo.find(info => info.campus === selectedCampus);
+                const selectedInfo = currListViewInfo.find(info => info.campus === selectedCampus);
               
                 if (selectedInfo) {
                   setListInfo(selectedInfo);
@@ -133,7 +132,7 @@ function MapScreen() {
     nbrwooLots: require('./LotTimes/nbrwooLots'),
   };
   
-  console.log(currMapViewID)
+  //console.log(currMapViewID)
   const cccLots = lotTimesMap[currMapViewID] || [];
 
   //const bccLots = require('/LotTimes/' + currMapViewID);
