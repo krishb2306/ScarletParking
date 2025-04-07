@@ -841,8 +841,20 @@ function SettingsScreen() {
       <View style={settingsPageStyles.section}>
         <Text style={settingsPageStyles.sectionTitle}>Acknowledgements</Text>
         <View style={settingsPageStyles.aboutBox}>
-          <Text style={settingsPageStyles.aboutText}>
-            whatever we need here
+          <Text style={[settingsPageStyles.aboutText, {fontSize: 16}]}>
+            ScarletParking was built using several open-source libraries for React Native, and 
+            we'd like to acknowledge them.
+          </Text>
+          <Text style={[settingsPageStyles.aboutText]}>
+          {'\nreact-navigation/native\n' +
+            'react-navigation/bottom-tabs\n' +
+            'react-native-map-clustering\n' +
+            'react-native-maps\n' +
+            'react-native-vector-icons/Ionicons\n' +
+            'react-native-dropdown-picker\n' +
+            'react-native-async-storage/async-storage\n' +
+            'react-native-community/datetimepicker\n' +
+          'expo-location'}
           </Text>
         </View>
       </View>

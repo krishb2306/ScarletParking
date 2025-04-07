@@ -1497,12 +1497,18 @@ export const ParkingPassProvider = ({ children }) => {
       const storedValue = await AsyncStorage.getItem('parkingPass');
       if (storedValue !== null) {
         setCurrPass(storedValue);
+        const match = lotInfo.find(info => info.pass === storedValue);
+        setCurrListViewInfo(match.campuses);
+        if (match) {
+          setCurrMapViewID(match.id);
+        }
       }
-      const match = lotInfo.find(info => info.pass === storedValue);
-      setCurrListViewInfo(match.campuses);
-      if (match) {
-        setCurrMapViewID(match.id);
+      else{
+        setCurrPass("Busch Commuter")
+        setCurrMapViewID("bccLots")
+        setCurrListViewInfo(lotInfo[0].campuses)
       }
+      
     } 
     catch (e) {
       console.error("Error retrieving parking pass:", e);
