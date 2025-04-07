@@ -1498,6 +1498,11 @@ export const ParkingPassProvider = ({ children }) => {
       if (storedValue !== null) {
         setCurrPass(storedValue);
       }
+      const match = lotInfo.find(info => info.pass === storedValue);
+      setCurrListViewInfo(match);
+      if (match) {
+        setCurrMapViewID(match.id);
+      }
     } 
     catch (e) {
       console.error("Error retrieving parking pass:", e);
@@ -1521,8 +1526,8 @@ export const ParkingPassProvider = ({ children }) => {
 
     // Retrieve parking pass from AsyncStorage when the app loads
     useEffect(() => {
-        getData();
-      }, []);
+      getData();
+    }, []);
 
   return (
     <ParkingPassContext.Provider value ={{ currPass, currListViewInfo, currMapViewID, updateParkingPass }}>

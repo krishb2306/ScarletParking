@@ -13,7 +13,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Location from 'expo-location'; // For Expo Location
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 //import { useState, useEffect } from 'react';\
-import { ParkingPassProvider, ParkingPassContext } from '/ParkingPassContext';
+import { ParkingPassProvider, ParkingPassContext } from './ParkingPassContext';
 
 
 
@@ -133,11 +133,12 @@ function MapScreen() {
     nbrwooLots: require('./LotTimes/nbrwooLots'),
   };
   
-  const cccLots = lotTimesMap[currMapViewID];
+  console.log(currMapViewID)
+  const cccLots = lotTimesMap[currMapViewID] || [];
 
   //const bccLots = require('/LotTimes/' + currMapViewID);
   //const cccLots = require('/LotTimes/' + currMapViewID);
-  const allLots = require('/allLots');
+  const allLots = require('./allLots');
 
   const mapViewRef = useRef(null);
 
