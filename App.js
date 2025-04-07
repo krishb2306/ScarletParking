@@ -14,7 +14,7 @@ import * as Location from 'expo-location'; // For Expo Location
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 //import { useState, useEffect } from 'react';\
 import { ParkingPassProvider, ParkingPassContext } from './ParkingPassContext';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+//import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 
