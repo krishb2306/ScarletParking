@@ -1,7 +1,7 @@
 //import * as React from 'react';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,Animated,LogBox, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
+import { StyleSheet,Animated,Platform, LogBox, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
 import { Marker } from "react-native-maps";
 import React, { createContext, useContext, useState, useEffect, useRef} from 'react';
@@ -284,6 +284,9 @@ function MapScreen() {
 
   const onTimeChange = (event, selectedDate) => {
     //setShowTimePicker(false); // Hide the picker after selection
+    if (Platform.OS === 'android') {
+      setShowTimePicker(false); // 🔒 explicitly hide the picker on Android
+    }
     if (selectedDate) {
       setSelectedTime(selectedDate);
       //console.log("Selected Time:", selectedDate.toLocaleTimeString());
@@ -580,8 +583,8 @@ const zoomToLocation = () => {
       {showTimePicker && (
         <DateTimePicker
           value={selectedTime}
-          mode="datetime"
-          display="compact"
+          mode={Platform.OS === 'ios' ? 'datetime' : 'time'} // Use 'default' for Android
+          display={Platform.OS === 'ios' ? 'compact' : 'default'} // Use 'default' for Android
           onChange={onTimeChange}
           style={{ marginVertical: 10 }}
         />
