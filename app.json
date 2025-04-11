@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "testing",
-    "slug": "testing",
+    "name": "scarletparking",
+    "slug": "scarletparking",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,11 +29,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "owner": "kingk2306",
     "extra": {
       "eas": {
-        "projectId": "f836a049-8438-4e06-8685-359332bc0568"
+        "projectId": "ab2f950a-d537-465b-80d0-a2f71af88a5c"
       }
-    },
-    "owner": "kingk2306"
+    }
   }
 }
