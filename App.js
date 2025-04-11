@@ -431,8 +431,7 @@ const zoomToLocation = () => {
       longitude: location.longitude,
     }}
     title="Your Location"
-    description="You are here!"
-  >
+    >
     <Ionicons name="person-circle-sharp" size={30} color="lightblue" />
   </Marker>
 )}
