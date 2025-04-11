@@ -18,7 +18,7 @@
         "NSLocationWhenInUseUsageDescription": "We need your location to show your position on the map",
         "NSLocationAlwaysUsageDescription": "We need your location to show your position on the map"
       },
-      "bundleIdentifier": "com.anonymous.scarletparking"
+      "bundleIdentifier": "com.krish.scarletparking"
     },
     "android": {
       "adaptiveIcon": {
@@ -33,6 +33,7 @@
       "eas": {
         "projectId": "f836a049-8438-4e06-8685-359332bc0568"
       }
-    }
+    },
+    "owner": "kingk2306"
   }
 }
