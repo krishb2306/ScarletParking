@@ -4,7 +4,7 @@
     "slug": "scarletparking",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/appstore1.jpg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -16,7 +16,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We need your location to show your position on the map",
-        "NSLocationAlwaysUsageDescription": "We need your location to show your position on the map"
+        "NSLocationAlwaysUsageDescription": "We need your location to show your position on the map",
+        "ITSAppUsesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.krish.scarletparking"
     },
@@ -32,7 +33,7 @@
     "owner": "kingk2306",
     "extra": {
       "eas": {
-        "projectId": "ab2f950a-d537-465b-80d0-a2f71af88a5c"
+        "projectId": "7b5a78fd-d4d8-40ce-b140-9dbefc4dd292"
       }
     }
   }
