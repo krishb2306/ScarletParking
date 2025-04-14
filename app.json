@@ -2,21 +2,21 @@
   "expo": {
     "name": "ScarletParking",
     "slug": "scarletparking",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/appstore1.jpg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash.jpg",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1E1E1E"
     },
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "We need your location to show your position on the map",
-        "NSLocationAlwaysUsageDescription": "We need your location to show your position on the map",
+        "NSLocationWhenInUseUsageDescription": "We use your location to show your position on the map to view nearby parking lots available with your Rutgers permit.",
+        "NSLocationAlwaysUsageDescription": "We use your location to show your position on the map to view nearby parking lots available with your Rutgers permit.",
         "ITSAppUsesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.krish.scarletparking"

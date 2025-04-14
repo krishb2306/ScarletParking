@@ -106,6 +106,7 @@ function MapScreen() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
+  
   const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
   const lotTimesMap = {
     bccLots: require('./LotTimes/bccLots'),
@@ -732,7 +733,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
         />
         <View style={settingsPageStyles.cardTextContainer}>
           <Text style={settingsPageStyles.appName}>ScarletParking</Text>
-          <Text style={settingsPageStyles.versionText}>Version 1.0.0</Text>
+          <Text style={settingsPageStyles.versionText}>Version 1.0.2</Text>
           <Text style={settingsPageStyles.madeByText}>
             Made by <Text style={settingsPageStyles.linkText}>Krishanth Babu & Eashan Patel</Text>
           </Text>
