@@ -100,7 +100,6 @@ function ListScreen() {
   );
 }
 
-
 function MapScreen() {
   const { currPass, currMapViewID } = useContext(ParkingPassContext);
   const [modalVisible, setModalVisible] = React.useState(false);
