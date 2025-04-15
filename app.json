@@ -1,23 +1,25 @@
 {
   "expo": {
-    "name": "testing",
-    "slug": "testing",
-    "version": "1.0.0",
+    "name": "ScarletParking",
+    "slug": "scarletparking",
+    "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/appstore1.jpg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash.jpg",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1E1E1E"
     },
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "We need your location to show your position on the map",
-        "NSLocationAlwaysUsageDescription": "We need your location to show your position on the map"
-      }
+        "NSLocationWhenInUseUsageDescription": "We use your location to show your position on the map to view nearby parking lots available with your Rutgers permit.",
+        "NSLocationAlwaysUsageDescription": "We use your location to show your position on the map to view nearby parking lots available with your Rutgers permit.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.krish.scarletparking"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +29,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "owner": "kingk2306",
+    "extra": {
+      "eas": {
+        "projectId": "7b5a78fd-d4d8-40ce-b140-9dbefc4dd292"
+      }
     }
   }
 }

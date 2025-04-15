@@ -1,7 +1,7 @@
 //import * as React from 'react';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,Animated,LogBox, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
+import { StyleSheet,Animated,Platform, LogBox, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
 import { Marker } from "react-native-maps";
 import React, { createContext, useContext, useState, useEffect, useRef} from 'react';
@@ -105,6 +105,7 @@ function MapScreen() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
+  
   const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
   const lotTimesMap = {
     bccLots: require('./LotTimes/bccLots'),
@@ -283,6 +284,9 @@ function MapScreen() {
 
   const onTimeChange = (event, selectedDate) => {
     //setShowTimePicker(false); // Hide the picker after selection
+    if (Platform.OS === 'android') {
+      setShowTimePicker(false); // 🔒 explicitly hide the picker on Android
+    }
     if (selectedDate) {
       setSelectedTime(selectedDate);
       //console.log("Selected Time:", selectedDate.toLocaleTimeString());
@@ -427,8 +431,7 @@ const zoomToLocation = () => {
       longitude: location.longitude,
     }}
     title="Your Location"
-    description="You are here!"
-  >
+    >
     <Ionicons name="person-circle-sharp" size={30} color="lightblue" />
   </Marker>
 )}
@@ -579,8 +582,8 @@ const zoomToLocation = () => {
       {showTimePicker && (
         <DateTimePicker
           value={selectedTime}
-          mode="datetime"
-          display="compact"
+          mode={Platform.OS === 'ios' ? 'datetime' : 'time'} // Use 'default' for Android
+          display={Platform.OS === 'ios' ? 'compact' : 'default'} // Use 'default' for Android
           onChange={onTimeChange}
           style={{ marginVertical: 10 }}
         />
@@ -729,7 +732,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
         />
         <View style={settingsPageStyles.cardTextContainer}>
           <Text style={settingsPageStyles.appName}>ScarletParking</Text>
-          <Text style={settingsPageStyles.versionText}>Version 1.0.0</Text>
+          <Text style={settingsPageStyles.versionText}>Version 1.0.2</Text>
           <Text style={settingsPageStyles.madeByText}>
             Made by <Text style={settingsPageStyles.linkText}>Krishanth Babu & Eashan Patel</Text>
           </Text>
