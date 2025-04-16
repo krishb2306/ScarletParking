@@ -100,7 +100,6 @@ function ListScreen() {
   );
 }
 
-
 function MapScreen() {
   const { currPass, currMapViewID } = useContext(ParkingPassContext);
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -184,6 +183,29 @@ function MapScreen() {
     };
   }, []);
 
+  const [validMarkers, setValidMarkers] = useState([]);
+
+useEffect(() => {
+  if (!cccLots || cccLots.length === 0) return;
+
+  const tempMarkers = [];
+  allLots.forEach(lot => {
+    let foundLot = cccLots.find(cccLot => cccLot.name === lot.title);
+    if (foundLot) {
+      const isScheduleValid = isWithinSchedule(foundLot.schedule, new Date());
+      if (isScheduleValid) {
+        tempMarkers.push({
+          id: lot.id,
+          title: lot.title,
+          coordinate: lot.coordinate,
+          description: foundLot.time,
+        });
+      }
+    }
+  });
+
+  setValidMarkers(tempMarkers);
+}, [cccLots, selectedTime, selectedOption]);
 
 
 
@@ -437,7 +459,7 @@ const zoomToLocation = () => {
   </Marker>
 )}
 
-{markers.map((marker) => (
+{validMarkers.map((marker) => (
   <Marker
     key={marker.id}
     coordinate={marker.coordinate}
@@ -587,6 +609,8 @@ const zoomToLocation = () => {
           display={Platform.OS === 'ios' ? 'compact' : 'default'} // Use 'default' for Android
           onChange={onTimeChange}
           style={{ marginVertical: 10 }}
+          textColor='red'
+          //{...(Platform.OS === 'ios' ? { textColor: "red"} : {})}
         />
       )}
 
