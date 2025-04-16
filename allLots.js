@@ -1,7 +1,7 @@
 const allLots = [
     {
       id: '1',
-      title: 'Lot 915/ Yellow Lot',
+      title: 'Lot 915/Yellow Lot',
       coordinate: { latitude: 40.527792210579, longitude: -74.43824939017959 },
     },
     {

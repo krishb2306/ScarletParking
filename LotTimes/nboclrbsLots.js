@@ -421,7 +421,7 @@ const nboclrbsLots = [
             endTime: "2:00 AM"
         }
     ] },
-    { name: "Lot 505/CAC Parking Deck", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
+    { name: "Lot 505/ CAC Parking Deck", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -679,6 +679,71 @@ const nboclrbsLots = [
             endTime: "2:00 AM"
         }
     ]},
+    { name: "Lot 88", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "8:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+    { name: "Lot 96", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "8:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+    { name: "Lot 96A", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "8:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+    { name: "Douglas Deck", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "8:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+    { name: "Lot 709/Corwin", time: "Monday - Friday, 8PM - 2AM\nSaturday - Sunday, 6AM - 2AM", 
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "8:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
     { name: "Lot 82", time: "Monday - Thursday, 8PM - 8AM\nSaturday - Sunday, 6AM - 2AM", 
     schedule: [
         {
@@ -687,26 +752,17 @@ const nboclrbsLots = [
             endTime: "8:00 AM"
         },
         {
-            days: ["Saturday"],
+            days: ["Saturday", "Sunday"],
             startTime: "6:00 AM",
-            endTime: "11:59 PM"
-        },
-        {
-            days: ["Sunday"],
-            startTime: "12:00 AM",
             endTime: "2:00 AM"
         }
     ] },
+    
     { name: "Gated Lot 79A", time: "Saturday - Sunday, 6AM - 2AM", 
     schedule: [
         {
-            days: ["Saturday"],
+            days: ["Saturday", "Sunday"],
             startTime: "6:00 AM",
-            endTime: "11:59 PM"
-        },
-        {
-            days: ["Sunday"],
-            startTime: "12:00 AM",
             endTime: "2:00 AM"
         }
     ] },
