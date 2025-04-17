@@ -103,6 +103,13 @@ const nbncLots = [
           { days: ["Saturday", "Sunday"], startTime: "6:00 AM", endTime: "2:00 AM" }
         ]
       },
+      { name: "Lot 50", time: "Mon - Fri, 4PM - 2AM; Sat - Sun, 6AM - 2AM",
+        schedule: [
+          { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], startTime: "4:00 PM", endTime: "2:00 AM" },
+          { days: ["Saturday", "Sunday"], startTime: "6:00 AM", endTime: "2:00 AM" }
+        ]
+      },
+
       { name: "Lot 13", time: "Mon - Thu, 4PM - 8AM; Fri 4PM - Mon 8AM",
         schedule: [
           { days: ["Monday", "Tuesday", "Wednesday", "Thursday"], startTime: "4:00 PM", endTime: "8:00 AM" },

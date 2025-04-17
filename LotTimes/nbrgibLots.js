@@ -139,19 +139,6 @@ const nbrgibLots = [
       endTime: "2:00 AM"
     }
   ] },
-{ name: "Lot 74A", time: "Monday - Friday, 8PM - 2AM; Saturday - Sunday, 6AM - 2AM",
-  schedule: [
-    {
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      startTime: "8:00 PM",
-      endTime: "2:00 AM"
-    },
-    {
-      days: ["Saturday", "Sunday"],
-      startTime: "6:00 AM",
-      endTime: "2:00 AM"
-    }
-  ] },
 { name: "Lot 75", time: "Monday - Friday, 8PM - 2AM; Saturday - Sunday, 6AM - 2AM",
   schedule: [
     {
@@ -702,7 +689,7 @@ const nbrgibLots = [
         endTime: "8:00AM"
     }
   ] },
-{ name: "Lot 505/CAC Parking Deck", time: "Monday - Thursday, 8PM - 8AM; Friday 6PM - Monday 8AM",
+{ name: "Lot 505/ CAC Parking Deck", time: "Monday - Thursday, 8PM - 8AM; Friday 6PM - Monday 8AM",
   schedule: [
     {
       days: ["Monday", "Tuesday", "Wednesday", "Thursday"],

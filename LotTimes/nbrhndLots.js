@@ -762,7 +762,143 @@ const nbrhndLots = [
       endTime: "2:00 AM"
     }
   ]
-}
+},
+{ name: "Lot 11 NB", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "6:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+    { name: "Gated Lot 16", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "6:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+    { name: "Lot 20", time: "Monday - Thursday, 6PM - 8AM; Friday 4PM - Monday 8AM",
+    schedule: [
+      {
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        startTime: "6:00 PM",
+        endTime: "8:00 AM"
+    },
+    {
+        days: ["Friday"],
+        startTime: "4:00 PM",
+        endTime: "11:59 PM"
+    },
+    {
+        days: ["Saturday","Sunday"],
+        startTime: "12:00 AM",
+        endTime: "11:59 PM"
+    },
+    {
+        days: ["Monday"],
+        startTime: "12:00 AM",
+        endTime: "8:00AM"
+    }
+    ] },
+    { name: "Lot 26", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "6:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+    { name: "Lot 30", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "6:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+
+    { name: "Lot 33", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            startTime: "6:00 PM",
+            endTime: "2:00 AM"
+        },
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
+    { name: "Lot 505/ CAC Parking Deck", time: "Monday - Thursday, 6PM - 8AM; Friday 4PM - Monday 8AM",
+    schedule: [
+      {
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        startTime: "6:00 PM",
+        endTime: "8:00 AM"
+    },
+    {
+        days: ["Friday"],
+        startTime: "4:00 PM",
+        endTime: "11:59 PM"
+    },
+    {
+        days: ["Saturday","Sunday"],
+        startTime: "12:00 AM",
+        endTime: "11:59 PM"
+    },
+    {
+        days: ["Monday"],
+        startTime: "12:00 AM",
+        endTime: "8:00AM"
+    }
+    ] },
+    { name: "Lot 13", time: "Monday - Thursday, 6PM - 8AM; Friday 4PM - Monday 8AM",
+    schedule: [
+        {
+            days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+            startTime: "6:00 PM",
+            endTime: "8:00 AM"
+        },
+        {
+            days: ["Friday"],
+            startTime: "4:00 PM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Saturday","Sunday"],
+            startTime: "12:00 AM",
+            endTime: "11:59 PM"
+        },
+        {
+            days: ["Monday"],
+            startTime: "12:00 AM",
+            endTime: "8:00AM"
+        }
+    ] },
+
 
     
 ];
