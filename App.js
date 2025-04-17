@@ -626,7 +626,7 @@ const zoomToLocation = () => {
 
 function SettingsScreen() {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();//Ignore all log notifications
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const { currPass, updateParkingPass } = useContext(ParkingPassContext);
   const [open, setOpen] = useState(false);
   const [locationStatus, setLocationStatus] = useState(null);
@@ -641,6 +641,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
     { label: 'Cook Resident', value: 'Cook Resident' },
     { label: 'Douglass Commuter', value: 'Douglass Commuter' },
     { label: 'Gibbons Resident', value: 'Gibbons Resident' },
+    { label: 'Helyar Resident', value: 'Helyar Resident' },
     { label: 'Henderson Resident', value: 'Henderson Resident' },
     { label: 'Jameson Resident', value: 'Jameson Resident' },
     { label: 'Katzenbach Resident', value: 'Katzenbach Resident' },
@@ -712,6 +713,14 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  function linkToAppStore(){
+    const APP_STORE_LINK = 'https://apps.apple.com/app/id6744491108?action=write-review';
+    const PLAY_STORE_LINK = 'market://details?id=myandroidappid';
+    Linking.openURL(APP_STORE_LINK).catch(err => console.error('An error occurred', err));
+    //Linking.openURL(PLAY_STORE_LINK).catch(err => console.error('An error occurred', err));
+
+}
 
   return (
     <ScrollView
@@ -869,11 +878,11 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
 <View style={settingsPageStyles.section}>
   <Text style={settingsPageStyles.sectionTitle}>Feedback</Text>
-  {/* <TouchableOpacity style={settingsPageStyles.cardRow}>
+  <TouchableOpacity style={settingsPageStyles.cardRow} onPress = {linkToAppStore}>
     <Ionicons name="heart-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
     <Text style={settingsPageStyles.cardLabel}>Leave a review</Text>
     <Ionicons name="chevron-forward-outline" size={20} color="gray" />
-  </TouchableOpacity> */}
+  </TouchableOpacity>
   <TouchableOpacity style={settingsPageStyles.cardRow} onPress={openEmail}>
     <Ionicons name="chatbubble-ellipses-outline" size={22} color="white" style={settingsPageStyles.cardIcon} />
     <Text style={settingsPageStyles.cardLabel}>Send feedback</Text>
