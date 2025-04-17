@@ -741,7 +741,7 @@ function SettingsScreen() {
           <Text style={settingsPageStyles.appName}>ScarletParking</Text>
           <Text style={settingsPageStyles.versionText}>Version 1.0.2</Text>
           <Text style={settingsPageStyles.madeByText}>
-            Made by <Text style={settingsPageStyles.linkText} onPress={() => Linking.openURL('https://krishanthbabu.com/')}> Krishanth Babu </Text>
+            Made by <Text style={settingsPageStyles.linkText} onPress={() => Linking.openURL('https://krishanthbabu.com/')}>Krishanth Babu</Text> <Text style={[settingsPageStyles.linkText, {textDecorationLine: "none"}]}>& </Text><Text style={settingsPageStyles.linkText} onPress={() => Linking.openURL('https://www.linkedin.com/in/eashanpatel/')}>Eashan Patel</Text>
           </Text>
         </View>
       </View>
@@ -1115,7 +1115,6 @@ const styles = StyleSheet.create({
     height: '120%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 150,
     opacity: 0.8,
   },
 
