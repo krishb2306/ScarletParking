@@ -845,7 +845,7 @@ const nbrlipLots = [
     }
   ]
 },
-{ name: "Lot 915/ Yellow Lot", time: "Monday - Friday, 8PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+{ name: "Lot 915/Yellow Lot", time: "Monday - Friday, 8PM - 2AM; Saturday - Sunday, 6AM - 2AM",
   schedule: [
     {
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],

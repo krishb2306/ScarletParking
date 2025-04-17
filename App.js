@@ -579,10 +579,10 @@ const zoomToLocation = () => {
         <DateTimePicker
           value={selectedTime}
           mode={Platform.OS === 'ios' ? 'datetime' : 'time'} // Use 'default' for Android
-          display={Platform.OS === 'ios' ? 'compact' : 'default'} // Use 'default' for Android
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'} // Use 'default' for Android
           onChange={onTimeChange}
           style={{ marginVertical: 10 }}
-          textColor='red'
+          textColor='white'
           //{...(Platform.OS === 'ios' ? { textColor: "red"} : {})}
         />
       )}
@@ -739,7 +739,7 @@ function SettingsScreen() {
         />
         <View style={settingsPageStyles.cardTextContainer}>
           <Text style={settingsPageStyles.appName}>ScarletParking</Text>
-          <Text style={settingsPageStyles.versionText}>Version 1.0.2</Text>
+          <Text style={settingsPageStyles.versionText}>Version 1.1.0</Text>
           <Text style={settingsPageStyles.madeByText}>
             Made by <Text style={settingsPageStyles.linkText} onPress={() => Linking.openURL('https://krishanthbabu.com/')}>Krishanth Babu</Text> <Text style={[settingsPageStyles.linkText, {textDecorationLine: "none"}]}>& </Text><Text style={settingsPageStyles.linkText} onPress={() => Linking.openURL('https://www.linkedin.com/in/eashanpatel/')}>Eashan Patel</Text>
           </Text>
