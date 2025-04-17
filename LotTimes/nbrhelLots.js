@@ -6,7 +6,7 @@ const nbrhelLots = [
     {
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
       startTime: "12:00 AM",
-      endTime: "12:00 AM"
+      endTime: "11:59 PM"
     }
   ] },
 
@@ -30,8 +30,18 @@ const nbrhelLots = [
     {
       days: ["Friday"],
       startTime: "4:00 PM",
-      endTime: "8:00 AM"
-    }
+      endTime: "11:59 PM"
+  },
+  {
+      days: ["Saturday","Sunday"],
+      startTime: "12:00 AM",
+      endTime: "11:59 PM"
+  },
+  {
+      days: ["Monday"],
+      startTime: "12:00 AM",
+      endTime: "8:00AM"
+  }
   ] },
 
 { name: "Lot 70", time: "Monday - Friday, 8PM - 2AM; Saturday - Sunday, 6AM - 2AM",
