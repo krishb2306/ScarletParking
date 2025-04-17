@@ -986,7 +986,7 @@ export default function App() {
 const listViewStyles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: '#1C1C1E',
+    backgroundColor: 'black',
   },
   container: {
     flex: 1,
