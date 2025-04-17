@@ -1108,6 +1108,7 @@ const styles = StyleSheet.create({
 
   safeAreaContainer: {
     flex: 1,
+    backgroundColor: 'black'
   },
 
   mapStyle: {
@@ -1115,7 +1116,7 @@ const styles = StyleSheet.create({
     height: '120%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 150,
+    //marginBottom: 150,
     opacity: 0.8,
   },
 
