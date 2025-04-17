@@ -183,33 +183,6 @@ function MapScreen() {
     };
   }, []);
 
-  const [validMarkers, setValidMarkers] = useState([]);
-
-useEffect(() => {
-  if (!cccLots || cccLots.length === 0) return;
-
-  const tempMarkers = [];
-  allLots.forEach(lot => {
-    let foundLot = cccLots.find(cccLot => cccLot.name === lot.title);
-    if (foundLot) {
-      const isScheduleValid = isWithinSchedule(foundLot.schedule, new Date());
-      if (isScheduleValid) {
-        tempMarkers.push({
-          id: lot.id,
-          title: lot.title,
-          coordinate: lot.coordinate,
-          description: foundLot.time,
-        });
-      }
-    }
-  });
-
-  setValidMarkers(tempMarkers);
-}, [cccLots, selectedTime, selectedOption]);
-
-
-
-
   const handleClusterPress = (cluster) => {
     const { geometry, properties } = cluster;
     const coordinates = {
@@ -459,7 +432,7 @@ const zoomToLocation = () => {
   </Marker>
 )}
 
-{validMarkers.map((marker) => (
+{markers.map((marker) => (
   <Marker
     key={marker.id}
     coordinate={marker.coordinate}
@@ -759,7 +732,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
           <Text style={settingsPageStyles.appName}>ScarletParking</Text>
           <Text style={settingsPageStyles.versionText}>Version 1.0.2</Text>
           <Text style={settingsPageStyles.madeByText}>
-            Made by <Text style={settingsPageStyles.linkText}>Krishanth Babu & Eashan Patel</Text>
+            Made by <Text style={settingsPageStyles.linkText} onPress={() => Linking.openURL('https://krishanthbabu.com/')}> Krishanth Babu </Text>
           </Text>
         </View>
       </View>
@@ -1483,6 +1456,7 @@ const settingsPageStyles = StyleSheet.create({
   linkText: {
     color: '#FF3B30', // red accent
     fontWeight: '500',
+    textDecorationLine: "underline"
   },
 
   section: {
