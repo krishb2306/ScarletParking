@@ -335,6 +335,14 @@ const cccLots = [
           endTime: "2:00 AM"
       }
   ] },
+  { name: "Gated Lot 79A", time: "Saturday - Sunday, 6AM - 2AM", 
+    schedule: [
+        {
+            days: ["Saturday", "Sunday"],
+            startTime: "6:00 AM",
+            endTime: "2:00 AM"
+        }
+    ] },
   //Busch
 { name: "Lot 67", time: "Monday - Thursday, 6PM - 8AM; Friday 6PM - Monday 8AM",
 schedule: [
@@ -685,7 +693,7 @@ schedule: [
           endTime: "2:00 AM"
       }
   ] },
-{ name: "Lot 505/CAC Parking Deck", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+{ name: "Lot 505/ CAC Parking Deck", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
   schedule: [
       {
           days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],

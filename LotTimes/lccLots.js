@@ -785,7 +785,127 @@ const lccLots = [
       endTime: "2:00 AM"
     }
   ]
-}
+},
+{ name: "Lot 84", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ name: "Lot 86", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ name: "Lot 88", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ name: "Lot 96", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ name: "Lot 96A", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ name: "Douglas Deck", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ name: "Lot 709/Corwin", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ name: "Gated Lot 79A", time: "Monday - Friday, 6PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+
+
+
+
+
+
+
+
     
 ]
 module.exports = lccLots;

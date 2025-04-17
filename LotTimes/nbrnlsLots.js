@@ -577,7 +577,7 @@ const nbrnlsLots = [
           { days: ["Saturday", "Sunday"], startTime: "6:00 AM", endTime: "2:00 AM" }
         ]
       },
-      { name: "Lot 915/ Yellow Lot", time: "Mon - Fri, 8PM - 2AM; Sat - Sun, 6AM - 2AM",
+      { name: "Lot 915/Yellow Lot", time: "Mon - Fri, 8PM - 2AM; Sat - Sun, 6AM - 2AM",
         schedule: [
           { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], startTime: "8:00 PM", endTime: "2:00 AM" },
           { days: ["Saturday", "Sunday"], startTime: "6:00 AM", endTime: "2:00 AM" }

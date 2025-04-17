@@ -40,7 +40,7 @@ const cacLots = [
             endTime: "2:00 AM"
         }
     ] },
-    { name: "Lot 505/CAC Parking Deck", time: "Monday - Friday, 6AM - 2AM; Saturday - Sunday, 6AM - 2AM", 
+    { name: "Lot 505/ CAC Parking Deck", time: "Monday - Friday, 6AM - 2AM; Saturday - Sunday, 6AM - 2AM", 
     schedule: [
         {
             days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],

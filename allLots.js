@@ -1,7 +1,7 @@
 const allLots = [
     {
       id: '1',
-      title: 'Lot 915/ Yellow Lot',
+      title: 'Lot 915/Yellow Lot',
       coordinate: { latitude: 40.527792210579, longitude: -74.43824939017959 },
     },
     {
@@ -214,6 +214,9 @@ const allLots = [
   { id: 85, title: "Lot 623/Marvin Apts", coordinate: { latitude: 40.52078913699707, longitude: -74.45425282581704 } },
   {id: 102, title: "Helyar House Lot", coordinate: { latitude: 40.47191428285376,longitude:  -74.4358748893275}},
   {id: 103, title: "Lot 712/Katzenbach", coordinate: { latitude: 40.48307797248363,longitude:  -74.43160957167808}},
+  {id: 104, title: "Lot 711/Lippincott", coordinate: { latitude: 40.48175958660948,longitude:  -74.43037387701393}},
+  {id: 105, title: "Rodkin Center Lot", coordinate: { latitude: 40.51775853888679,longitude:  -74.46336557737857}},
+  {id: 106, title: "Lot 109", coordinate: { latitude: 40.517724618946175,longitude:  -74.43092936004787}},
   ];
 
   module.exports = allLots;

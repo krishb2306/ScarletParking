@@ -586,15 +586,20 @@ schedule: [
       endTime: "8:00 AM"
     },
     {
-      days: ["Friday"],
-      startTime: "4:00 PM",
+      days: ["Friday"], 
+      startTime: "4:00 PM", 
+      endTime: "11:59 PM"
+  },
+  {
+      days: ["Saturday", "Sunday"], 
+      startTime: "12:00 AM", 
+      endTime: "11:59 PM"
+  },
+  {
+      days: ["Monday"], 
+      startTime: "12:00 AM", 
       endTime: "8:00 AM"
-    },
-    {
-      days: ["Saturday", "Sunday"],
-      startTime: "12:00 AM",
-      endTime: "8:00 AM"
-    }
+  }
   ]
 },
 
