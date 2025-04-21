@@ -1,7 +1,7 @@
 //import * as React from 'react';
 import { NavigationContainer, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet,Animated,Platform, LogBox, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
+import { StyleSheet,Animated,Alert,Platform, LogBox, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
 import { Marker } from "react-native-maps";
 import React, { createContext, useContext, useState, useEffect, useRef} from 'react';
@@ -115,7 +115,7 @@ function MapScreen() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
-  
+  const APP_STORE_ID = '6744491108';
   const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
   const lotTimesMap = {
     bccLots: require('./LotTimes/bccLots'),
@@ -152,12 +152,48 @@ function MapScreen() {
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [hasZoomedToUser, setHasZoomedToUser] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 
   const temp = [];
   const markers = [];
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [latestVersion, setLatestVersion] = useState(null);
+
+useEffect(() => {
+  const checkForAppUpdate = async () => {
+    try {
+      const response = await fetch(`https://itunes.apple.com/lookup?id=${APP_STORE_ID}`);
+      const data = await response.json();
+      const appStoreVersion = data.results[0]?.version;
+      const currentVersion = Application.nativeApplicationVersion;
+      //const currentVersion = '1.0.0'; // 👈 fake an old version for testing
+
+
+      if (appStoreVersion && isNewerVersion(appStoreVersion, currentVersion)) {
+        setLatestVersion(appStoreVersion);
+        setShowUpdateModal(true);
+      }
+    } catch (error) {
+    
+    }
+  };
+
+  checkForAppUpdate();
+}, []);
+
+function isNewerVersion(latest, current) {
+  const latestParts = latest.split('.').map(Number);
+  const currentParts = current.split('.').map(Number);
+  for (let i = 0; i < latestParts.length; i++) {
+    if ((latestParts[i] ?? 0) > (currentParts[i] ?? 0)) return true;
+    if ((latestParts[i] ?? 0) < (currentParts[i] ?? 0)) return false;
+  }
+  return false;
+}
+
 
   const route = useRoute(); // Get route params
   const {pressedLotName, pressedLotTimes} = route.params || {}; // Extract the params
@@ -186,8 +222,8 @@ function MapScreen() {
     // Fetch immediately on mount
     fetchLocation();
 
-    // Then fetch every 30 seconds
-    locationInterval = setInterval(fetchLocation, 30000);
+    // Then fetch every 10 seconds
+    locationInterval = setInterval(fetchLocation, 10000);
 
     return () => {
       isMounted = false;
@@ -195,6 +231,22 @@ function MapScreen() {
     };
   }, []);
 
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      try {
+        const hasLaunched = await AsyncStorage.getItem('hasLaunched');
+        if (hasLaunched === null) {
+          await AsyncStorage.setItem('hasLaunched', 'true');
+          setShowWelcomeModal(true);
+        }
+      } catch (err) {
+        console.error('Error checking first launch:', err);
+      }
+    };
+  
+    checkFirstLaunch();
+  }, []);
+  
   const handleClusterPress = (cluster) => {
     const { geometry, properties } = cluster;
     const coordinates = {
@@ -212,8 +264,7 @@ function MapScreen() {
       500
     );
   };
-
-  
+const [shouldRenderMap, setShouldRenderMap] = useState(false);
 
   const openDirections = (latitude, longitude) => {
     const url = `maps://?daddr=${latitude},${longitude}`;
@@ -247,7 +298,7 @@ function MapScreen() {
     // Set a delay to hide the button
     const timeout = setTimeout(() => {
       setSelectedMarker(null);
-    }, 150); // 1000ms = 1 second delay
+    },150); // 1000ms = 1 second delay
     setHideTimeout(timeout);
   };
 
@@ -261,7 +312,6 @@ function MapScreen() {
     }
   };
 
-  const [passName, setPassName] = useState("Busch Commuter (BCC)");
 
   const zoomRegions = {
     region1: {
@@ -544,7 +594,56 @@ const zoomToLocation = () => {
     style={styles.targetImage}
   />
 </TouchableOpacity>
+{showUpdateModal && (
+  <Modal transparent animationType="fade" visible={showUpdateModal}>
+    <View style={updateModalStyles.overlay}>
+      <View style={updateModalStyles.container}>
+        <Text style={updateModalStyles.title}>🔔 Update Available</Text>
+        <Text style={updateModalStyles.message}>
+          A newer version ({latestVersion}) of ScarletParking is available on the App Store.
+        </Text>
+        <TouchableOpacity
+          style={updateModalStyles.button}
+          onPress={() => {
+            Linking.openURL(`https://apps.apple.com/app/id6744491108`);
+            setShowUpdateModal(false);
+          }}
+        >
+          <Text style={updateModalStyles.buttonText}>Update Now</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setShowUpdateModal(false)}>
+          <Text style={updateModalStyles.skipText}>Not now</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </Modal>
+)}
 
+
+{showWelcomeModal && (
+  <Modal
+    animationType="fade"
+    transparent={true}
+    visible={showWelcomeModal}
+    onRequestClose={() => setShowWelcomeModal(false)}
+  >
+    <View style={welcomeModalStyles.overlay}>
+      <View style={welcomeModalStyles.container}>
+        <Text style={welcomeModalStyles.title}>🎉 Welcome to ScarletParking 🎉</Text>
+        <Text style={welcomeModalStyles.message}>
+          We're glad you're here. Use the map to view available lots based on your parking pass, and select your pass in the settings page!
+        </Text>
+
+        <TouchableOpacity
+          style={welcomeModalStyles.button}
+          onPress={() => setShowWelcomeModal(false)}
+        >
+          <Text style={welcomeModalStyles.buttonText}>Let's Go!</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </Modal>
+)}
 
 <Modal
   animationType="slide"
@@ -591,10 +690,10 @@ const zoomToLocation = () => {
         <DateTimePicker
           value={selectedTime}
           mode={Platform.OS === 'ios' ? 'datetime' : 'time'} // Use 'default' for Android
-          display={Platform.OS === 'ios' ? 'compact' : 'default'} // Use 'default' for Android
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'} // Use 'default' for Android
           onChange={onTimeChange}
           style={{ marginVertical: 10 }}
-          textColor='red'
+          textColor='white'
           //{...(Platform.OS === 'ios' ? { textColor: "red"} : {})}
         />
       )}
@@ -629,8 +728,6 @@ const zoomToLocation = () => {
     </View>
   </View>
 </Modal>
-
-
     </View>
     </SafeAreaView>
   );
@@ -751,7 +848,7 @@ function SettingsScreen() {
         />
         <View style={settingsPageStyles.cardTextContainer}>
           <Text style={settingsPageStyles.appName}>ScarletParking</Text>
-          <Text style={settingsPageStyles.versionText}>Version 1.0.2</Text>
+          <Text style={settingsPageStyles.versionText}>Version 1.1.1</Text>
           <Text style={settingsPageStyles.madeByText}>
             Made by <Text style={settingsPageStyles.linkText} onPress={() => Linking.openURL('https://krishanthbabu.com/')}>Krishanth Babu</Text> <Text style={[settingsPageStyles.linkText, {textDecorationLine: "none"}]}>& </Text><Text style={settingsPageStyles.linkText} onPress={() => Linking.openURL('https://www.linkedin.com/in/eashanpatel/')}>Eashan Patel</Text>
           </Text>
@@ -1605,5 +1702,113 @@ const modalStyles = {
     padding: 6,
   },
 };
+const updateModalStyles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    backgroundColor: '#1E1E1E',
+    padding: 24,
+    borderRadius: 20,
+    width: '85%',
+    alignItems: 'center',
+    borderColor: '#2A2A2A',
+    borderWidth: 1.5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 12,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FF3B30',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  message: {
+    fontSize: 15,
+    color: '#ccc',
+    textAlign: 'center',
+    marginBottom: 24,
+    lineHeight: 22,
+  },
+  button: {
+    backgroundColor: '#FF3B30',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 25,
+    marginBottom: 10,
+    elevation: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  skipText: {
+    color: '#999',
+    fontSize: 14,
+    textDecorationLine: 'underline',
+    marginTop: 4,
+  },
+});
 
+
+const welcomeModalStyles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  container: {
+    backgroundColor: '#1E1E1E',
+    padding: 24,
+    margin: 20,
+    borderRadius: 20,
+    borderColor: '#2A2A2A',
+    borderWidth: 1.2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 10,
+    alignItems: 'center',
+  },
+  title: {
+    color: '#FF3B30',
+    fontSize: 22,
+    fontWeight: '700',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  message: {
+    color: '#ccc',
+    fontSize: 15,
+    lineHeight: 22,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#FF3B30',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    shadowColor: '#FF3B30',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
 

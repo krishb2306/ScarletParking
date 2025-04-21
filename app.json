@@ -2,13 +2,13 @@
   "expo": {
     "name": "ScarletParking",
     "slug": "scarletparking",
-    "version": "1.0.2",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/appstore1.jpg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash.jpg",
+      "image": "./assets/finalsplash.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#1E1E1E"
     },
