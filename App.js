@@ -1,5 +1,5 @@
 //import * as React from 'react';
-import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet,Animated,Platform, LogBox, StatusBar, AppState, Switch, Image,ScrollView, FlatList, ImageBackground, SafeAreaView,Dimensions,Modal, Text, TouchableOpacity, View,Linking} from 'react-native';
 import MapView from "react-native-map-clustering";
@@ -30,20 +30,30 @@ function ListScreen() {
     { label: 'Livingston', value: 'Livingston' },
   ]);
 
+  const navigation = useNavigation();  // For navigation
+
   useEffect(() => {
     const selectedInfo = currListViewInfo.find(info => info.campus === value);
     if (selectedInfo) {
       setListInfo(selectedInfo);
     }
   }, [currListViewInfo, value]);
-  
+
+  const handleLotPress = (pressedLotName, pressedLotTimes) => {
+    // Navigate to MapScreen and pass the lot info
+    navigation.navigate('Map', {
+      pressedLotName: pressedLotName,
+      pressedLotTimes: pressedLotTimes, 
+    });
+  };
+
   return (
     <SafeAreaView style={listViewStyles.safeAreaContainer}>
       <View style={listViewStyles.container}>
-      <View style={listViewStyles.headerContainer}>
-        <Text style={listViewStyles.headerLabel}>Information for</Text>
-        <Text style={listViewStyles.headerTitle}>{currPass}</Text>
-      </View>
+        <View style={listViewStyles.headerContainer}>
+          <Text style={listViewStyles.headerLabel}>Information for</Text>
+          <Text style={listViewStyles.headerTitle}>{currPass}</Text>
+        </View>
 
         <View style={listViewStyles.dropdownRow}>
           <DropDownPicker
@@ -60,7 +70,6 @@ function ListScreen() {
             }}
             style={listViewStyles.dropdown}
             dropDownContainerStyle={listViewStyles.dropdownContainer}
-            
             textStyle={{ color: 'white' }}
             ArrowDownIconComponent={({ style }) => (
               <Ionicons name="chevron-down" size={18} color="white" style={style} />
@@ -77,10 +86,11 @@ function ListScreen() {
           contentContainerStyle={{ paddingBottom: 16 }}
           renderItem={({ item }) => (
             <View style={listViewStyles.card}>
-              <View style={listViewStyles.cardRow}>
-                <Ionicons name="location-outline" size={20} color="red" style={listViewStyles.icon} />
-                <Text style={listViewStyles.lotName}>{item.name}</Text>
-              </View>
+                <View style={listViewStyles.cardRow}>
+                  <Ionicons name="location-outline" size={20} color="red" style={listViewStyles.icon} />
+                  <Text style={listViewStyles.lotName} onPress={() => console.log(item)}>{item.name}</Text>
+                </View>
+ 
               <FlatList
                 data={item.timeslots}
                 keyExtractor={(item, index2) => index2.toString()}
@@ -149,6 +159,8 @@ function MapScreen() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
+  const route = useRoute(); // Get route params
+  const {pressedLotName, pressedLotTimes} = route.params || {}; // Extract the params
 
   useEffect(() => {
     let isMounted = true;
