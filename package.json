@@ -19,6 +19,7 @@
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/stack": "^7.2.10",
     "expo": "~52.0.42",
+    "expo-application": "~6.0.2",
     "expo-location": "~18.0.10",
     "expo-status-bar": "~2.0.1",
     "moment": "^2.30.1",
@@ -35,8 +36,7 @@
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "^0.19.13",
     "undici": "^7.8.0",
-    "web-streams-polyfill": "^4.1.0",
-    "expo-application": "~6.0.2"
+    "web-streams-polyfill": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",

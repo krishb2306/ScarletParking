@@ -6,6 +6,7 @@ export const ParkingPassContext = createContext();
 
 export const ParkingPassProvider = ({ children }) => {
   const [currPass, setCurrPass] = useState("Busch Commuter");
+  const [currCity, setCurrCity] = useState("New Brunswick");
   const [currListViewInfo, setCurrListViewInfo] = useState(null);
   const [currMapViewID, setCurrMapViewID] = useState(null);
   const [lotInfo, setLotInfo] = useState([
@@ -1494,16 +1495,19 @@ export const ParkingPassProvider = ({ children }) => {
 
   const getData = async () => {
     try {
-      const storedValue = await AsyncStorage.getItem('parkingPass');
-      if (storedValue !== null) {
-        setCurrPass(storedValue);
-        const match = lotInfo.find(info => info.pass === storedValue);
+      const parkingPass = await AsyncStorage.getItem('parkingPass');
+      const city = await AsyncStorage.getItem('city');
+      if (parkingPass !== null) {
+        setCurrCity(city);
+        setCurrPass(parkingPass);
+        const match = lotInfo.find(info => info.pass === parkingPass);
         setCurrListViewInfo(match.campuses);
         if (match) {
           setCurrMapViewID(match.id);
         }
       }
       else{
+        setCurrCity("New Brunswick")
         setCurrPass("Busch Commuter")
         setCurrMapViewID("bccLots")
         setCurrListViewInfo(lotInfo[0].campuses)
@@ -1529,6 +1533,16 @@ export const ParkingPassProvider = ({ children }) => {
       console.error("Error saving parking pass:", e);
     }
   };
+
+  // Function to update the city and store it in AsyncStorage
+  const updateCity = async (newCity) => {
+    try {
+      await AsyncStorage.setItem('city', newCity);
+      setCurrCity(newCity);
+    } catch (e) {
+      console.error("Error saving new city:", e);
+    }
+  };
   
 
     // Retrieve parking pass from AsyncStorage when the app loads
@@ -1537,7 +1551,7 @@ export const ParkingPassProvider = ({ children }) => {
     }, []);
 
   return (
-    <ParkingPassContext.Provider value ={{ currPass, currListViewInfo, currMapViewID, updateParkingPass }}>
+    <ParkingPassContext.Provider value ={{ currPass, currCity, currListViewInfo, currMapViewID, updateParkingPass, updateCity}}>
       {children}
     </ParkingPassContext.Provider>
   );

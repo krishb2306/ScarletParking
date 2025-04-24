@@ -736,32 +736,67 @@ const zoomToLocation = () => {
 function SettingsScreen() {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
-  const { currPass, updateParkingPass } = useContext(ParkingPassContext);
-  const [open, setOpen] = useState(false);
-  const [locationStatus, setLocationStatus] = useState(null);
-  const [appState, setAppState] = useState(AppState.currentState);
-  const [allParkingPasses, setAllParkingPasses] = useState([
-    { label: 'Busch Commuter', value: 'Busch Commuter' },
-    { label: 'Busch Off-Campus Living', value: 'Busch Off-Campus Living' },
-    { label: 'Busch Resident', value: 'Busch Resident' },
-    { label: 'College Ave Commuter', value: 'College Ave Commuter' },
-    { label: 'Cook Commuter', value: 'Cook Commuter' },
-    { label: 'Cook Off-Campus Living', value: 'Cook Off-Campus Living' },
-    { label: 'Cook Resident', value: 'Cook Resident' },
-    { label: 'Douglass Commuter', value: 'Douglass Commuter' },
-    { label: 'Gibbons Resident', value: 'Gibbons Resident' },
-    { label: 'Helyar Resident', value: 'Helyar Resident' },
-    { label: 'Henderson Resident', value: 'Henderson Resident' },
-    { label: 'Jameson Resident', value: 'Jameson Resident' },
-    { label: 'Katzenbach Resident', value: 'Katzenbach Resident' },
-    { label: 'Lippincott Resident', value: 'Lippincott Resident' },
-    { label: 'Livingston Commuter', value: 'Livingston Commuter' },
-    { label: 'Livingston Off-Campus Living', value: 'Livingston Off-Campus Living' },
-    { label: 'Livingston Resident', value: 'Livingston Resident' },
-    { label: 'New Brunswick Night Commuter', value: 'New Brunswick Night Commuter' },
-    { label: 'Nicholas Resident', value: 'Nicholas Resident' },
-    { label: 'Woodbury Resident', value: 'Woodbury Resident' },
+
+  const { currPass, currCity, updateParkingPass, updateCity } = useContext(ParkingPassContext);
+
+
+  const [citiesDropdownOpen, setCitiesDropdownOpen] = useState(false);
+  const [allCities, setAllCities] = useState([
+    { label: 'New Brunswick', value: 'NewBrunswick' },
+    { label: 'Newark', value: 'Newark' },
+    { label: 'Camden', value: 'Camden' },
+    { label: 'Rutgers Health', value: 'RutgersHealth' },
   ]);
+
+
+  const [open, setOpen] = useState(false);
+  const [allParkingPasses, setAllParkingPasses] = useState({
+    NewBrunswick: [
+      { label: 'Busch Commuter', value: 'Busch Commuter' },
+      { label: 'Busch Off-Campus Living', value: 'Busch Off-Campus Living' },
+      { label: 'Busch Resident', value: 'Busch Resident' },
+      { label: 'College Ave Commuter', value: 'College Ave Commuter' },
+      { label: 'Cook Commuter', value: 'Cook Commuter' },
+      { label: 'Cook Off-Campus Living', value: 'Cook Off-Campus Living' },
+      { label: 'Cook Resident', value: 'Cook Resident' },
+      { label: 'Douglass Commuter', value: 'Douglass Commuter' },
+      { label: 'Gibbons Resident', value: 'Gibbons Resident' },
+      { label: 'Helyar Resident', value: 'Helyar Resident' },
+      { label: 'Henderson Resident', value: 'Henderson Resident' },
+      { label: 'Jameson Resident', value: 'Jameson Resident' },
+      { label: 'Katzenbach Resident', value: 'Katzenbach Resident' },
+      { label: 'Lippincott Resident', value: 'Lippincott Resident' },
+      { label: 'Livingston Commuter', value: 'Livingston Commuter' },
+      { label: 'Livingston Off-Campus Living', value: 'Livingston Off-Campus Living' },
+      { label: 'Livingston Resident', value: 'Livingston Resident' },
+      { label: 'New Brunswick Night Commuter', value: 'New Brunswick Night Commuter' },
+      { label: 'Nicholas Resident', value: 'Nicholas Resident' },
+      { label: 'Woodbury Resident', value: 'Woodbury Resident' },
+    ],
+    Newark: [
+      { label: 'Newark Economy Commuter', value: 'Newark Economy Commuter' },
+      { label: 'Newark Off-Campus Living', value: 'Newark Off-Campus Living' },
+      { label: 'Newark Premium Commuter', value: 'Newark Premium Commuter' },
+      { label: 'Newark Resident', value: 'Newark Resident' },
+    ],
+    Camden: [
+      { label: 'Camden Commuter', value: 'Camden Commuter' },
+      { label: 'Camden Night Commuter', value: 'Camden Night Commuter' },
+      { label: 'Camden Off-Campus Living', value: 'Camden Off-Campus Living' },
+      { label: 'Camden Resident', value: 'Camden Resident' },
+    ],
+    RutgersHealth: [
+      { label: 'Rutgers Health Commuter', value: 'Rutgers Health Commuter' },
+      { label: 'Rutgers Health Resident', value: 'Rutgers Health Resident' },
+    ],
+  });
+  const [displayedPasses, setDisplayedPasses] = useState([]);
+
+  useEffect(() => {
+    if (currCity) {
+      setDisplayedPasses(allParkingPasses[currCity] || []);
+    }
+  }, [currCity]);
 
   const openEmail = () => {
     const email = 'krish2306@icloud.com';
@@ -772,6 +807,8 @@ function SettingsScreen() {
     });
   };
 
+  const [locationStatus, setLocationStatus] = useState(null);
+  const [appState, setAppState] = useState(AppState.currentState);
   const openAppSettings = () => {
     Linking.openSettings().catch(err => {
       console.error('Unable to open app settings:', err);
@@ -820,9 +857,6 @@ function SettingsScreen() {
     setModalVisible(false);
   };
 
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
   function linkToAppStore(){
     const APP_STORE_LINK = 'https://apps.apple.com/app/id6744491108?action=write-review';
     const PLAY_STORE_LINK = 'market://details?id=myandroidappid';
@@ -858,10 +892,39 @@ function SettingsScreen() {
       {/* PARKING PASS DROPDOWN */}
       <View style={settingsPageStyles.section}>
         <Text style={settingsPageStyles.sectionTitle}>Parking Pass</Text>
+        
+        <Text style={settingsPageStyles.helperTextAbove}>City</Text>
+        <DropDownPicker
+          open={citiesDropdownOpen}
+          value={currCity}
+          items={allCities}
+          setOpen={setCitiesDropdownOpen}
+          setValue={(cb) => {
+            const selected = cb(currCity);
+            updateCity(selected);
+          }}
+          setItems={setAllCities}
+          style={settingsPageStyles.dropdown}
+          textStyle={settingsPageStyles.dropdownText}
+          dropDownContainerStyle={settingsPageStyles.dropdownContainer}
+          listItemLabelStyle={{ color: 'white' }}
+          zIndex={2000}
+          zIndexInverse={1000}
+
+          // 👇 Make the arrow white
+          ArrowDownIconComponent={({ style }) => (
+            <Ionicons name="chevron-down" size={20} color="white" style={style} />
+          )}
+          ArrowUpIconComponent={({ style }) => (
+            <Ionicons name="chevron-up" size={20} color="white" style={style} />
+          )}
+        />
+
+        <Text style={[settingsPageStyles.helperTextAbove, {marginTop: 6}]}>Permit</Text>
         <DropDownPicker
           open={open}
           value={currPass}
-          items={allParkingPasses}
+          items={displayedPasses}
           setOpen={setOpen}
           setValue={(cb) => {
             const selected = cb(currPass);
@@ -872,6 +935,8 @@ function SettingsScreen() {
           textStyle={settingsPageStyles.dropdownText}
           dropDownContainerStyle={settingsPageStyles.dropdownContainer}
           listItemLabelStyle={{ color: 'white' }}
+          zIndex={1000}
+          zIndexInverse={2000}
 
           // 👇 Make the arrow white
           ArrowDownIconComponent={({ style }) => (
@@ -928,6 +993,20 @@ function SettingsScreen() {
     </Text>
   </View>
 </View>
+
+<View style={settingsPageStyles.section}>
+  <Text style={settingsPageStyles.sectionTitle}>Disclaimer</Text>
+  <View style={settingsPageStyles.aboutBox}>
+    <Text style={settingsPageStyles.aboutText}>
+      ScarletParking uses parking lot data provided from a Rutgers University website.
+      We cannot be held liable for tickets/problems caused as we are simply displaying
+      the same information Rutgers University presents.
+    </Text>
+    <Text style={[settingsPageStyles.aboutText, { marginTop: 8 }]}>
+      Lot information was last checked on 4/23/25
+    </Text>
+  </View>
+  </View>
 
 <View style={settingsPageStyles.section}>
   <Text style={settingsPageStyles.sectionTitle}>Privacy</Text>
@@ -1048,10 +1127,9 @@ function MyTabs() {
           tabBarIcon: ({ color, size }) => (
             <Icon name="map-outline" color={color} size={size} />
           ),
-          
           headerTitle: '',
           headerStyle: {
-            height: 60,
+            height: Platform.OS === 'ios' ? 60 : 1,
             backgroundColor: '#222B37',
             opacity: 0.95,
           },
@@ -1609,6 +1687,12 @@ const settingsPageStyles = StyleSheet.create({
     color: '#999',
     fontSize: 12,
     marginTop: 6,
+  },
+
+  helperTextAbove: {
+    color: '#999',
+    fontSize: 12,
+    marginBottom: 6,
   },
 
   row: {
