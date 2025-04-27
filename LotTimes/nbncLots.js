@@ -363,7 +363,100 @@ const nbncLots = [
     { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], startTime: "4:00 PM", endTime: "2:00 AM" },
     { days: ["Saturday", "Sunday"], startTime: "6:00 AM", endTime: "2:00 AM" }
   ]
+},
+{ 
+  name: "Lot A",
+  time: "Monday - Friday, 4PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "4:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot B",
+  time: "Monday - Friday, 4PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "4:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot C",
+  time: "Monday - Friday, 4PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "4:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot 509B Eagle West",
+  time: "Monday - Friday, 4PM - 12AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "4:00 PM",
+      endTime: "12:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot 506 Essex",
+  time: "Monday - Friday, 4PM - 12AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "4:00 PM",
+      endTime: "12:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Golden Dome Lot 507",
+  time: "Monday - Friday, 4PM - 12AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "4:00 PM",
+      endTime: "12:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot 508",
+  time: "Monday - Friday, 4PM - 12AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "4:00 PM",
+      endTime: "12:00 AM"
+    }
+  ]
 }
+
 ]
 
 

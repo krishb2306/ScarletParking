@@ -82,6 +82,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -153,6 +183,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -222,6 +282,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }
@@ -297,6 +387,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }
@@ -378,6 +498,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -451,6 +601,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }
@@ -532,6 +712,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -607,6 +817,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -676,6 +916,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }
@@ -757,6 +1027,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -826,6 +1126,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }
@@ -899,6 +1229,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -970,6 +1330,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -1039,6 +1429,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }
@@ -1116,6 +1536,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 6PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -1189,6 +1639,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }
@@ -1270,6 +1750,36 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
+            }
+          ]
         }
       ]
     },
@@ -1345,7 +1855,22 @@ export const ParkingPassProvider = ({ children }) => {
               timeslots: ["Monday - Friday, 4PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
             }
           ]
-        }
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Lot 509B Eagle West, Lot 506 Essex, Golden Dome Lot 507, Lot 508",
+              timeslots: ["Monday - Friday, 4PM - 12AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {}
+          ]
+        }         
       ]
     },
     {
@@ -1414,6 +1939,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }
@@ -1485,6 +2040,36 @@ export const ParkingPassProvider = ({ children }) => {
             {
               name: "Lot A, Lot B, Lot C",
               timeslots: ["Monday - Friday, 8PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            }
+          ]
+        },
+        {
+          campus: "Newark",
+          lots: [
+            {
+              name: "Deck 3, P1 Norfolk Parking Deck",
+              timeslots: ["Monday - Friday, 6AM - 12AM"]
+            },
+            {
+              name: "Lot 506 Essex, Golden Dome Lot 507",
+              timeslots: ["Monday - Friday, 3:30PM - 2AM", "Saturday - Sunday, 6AM - 2AM"]
+            },
+            {
+              name: "Lot 508",
+              timeslots: ["Monday - Thursday, 3:30PM - 8AM", "Friday 3:30PM - Monday 8AM"]
+            }
+          ]
+        },
+        {
+          campus: "Camden",
+          lots: [
+            {
+              name: "Lot C15, Lot C16",
+              timeslots: ["Monday - Friday, 7AM - 9:30PM"]
+            },
+            {
+              name: "Lot C1, Lot C2, Lot C3, Lot C14",
+              timeslots: ["Friday 3:30PM - Monday 8AM"]
             }
           ]
         }

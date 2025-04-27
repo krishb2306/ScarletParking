@@ -882,7 +882,242 @@ const nbrlipLots = [
       endTime: "8:00 AM"
     }
   ]
+},
+{ 
+  name: "Lot 506 Essex",
+  time: "Monday - Friday, 3:30PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "3:30 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Golden Dome Lot 507",
+  time: "Monday - Friday, 3:30PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "3:30 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Deck 3",
+  time: "Monday - Friday, 6AM - 12AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 AM",
+      endTime: "12:00 AM"
+    }
+  ]
+},
+{ 
+  name: "P1 Norfolk Parking Deck",
+  time: "Monday - Friday, 6AM - 12AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "6:00 AM",
+      endTime: "12:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot 508",
+  time: "Monday - Thursday 3:30PM - 8AM; Friday 3:30PM - Monday 8AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      startTime: "3:30 PM",
+      endTime: "8:00 AM"
+    },
+    {
+      days: ["Friday"],
+      startTime: "3:30 PM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "12:00 AM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Monday"],
+      startTime: "12:00 AM",
+      endTime: "8:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot C1",
+  time: "Friday 3:30PM - Monday 8AM",
+  schedule: [
+    {
+      days: ["Friday"],
+      startTime: "3:30 PM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "12:00 AM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Monday"],
+      startTime: "12:00 AM",
+      endTime: "8:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot C2",
+  time: "Friday 3:30PM - Monday 8AM",
+  schedule: [
+    {
+      days: ["Friday"],
+      startTime: "3:30 PM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "12:00 AM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Monday"],
+      startTime: "12:00 AM",
+      endTime: "8:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot C3",
+  time: "Friday 3:30PM - Monday 8AM",
+  schedule: [
+    {
+      days: ["Friday"],
+      startTime: "3:30 PM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "12:00 AM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Monday"],
+      startTime: "12:00 AM",
+      endTime: "8:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot C14",
+  time: "Friday 3:30PM - Monday 8AM",
+  schedule: [
+    {
+      days: ["Friday"],
+      startTime: "3:30 PM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "12:00 AM",
+      endTime: "11:59 PM"
+    },
+    {
+      days: ["Monday"],
+      startTime: "12:00 AM",
+      endTime: "8:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot C15",
+  time: "Monday - Friday, 7AM - 9:30PM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "7:00 AM",
+      endTime: "9:30 PM"
+    }
+  ]
+},
+{ 
+  name: "Lot C16",
+  time: "Monday - Friday, 7AM - 9:30PM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "7:00 AM",
+      endTime: "9:30 PM"
+    }
+  ]
+},
+{ 
+  name: "Lot A",
+  time: "Monday - Friday, 8PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "8:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot B",
+  time: "Monday - Friday, 8PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "8:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
+},
+{ 
+  name: "Lot C",
+  time: "Monday - Friday, 8PM - 2AM; Saturday - Sunday, 6AM - 2AM",
+  schedule: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      startTime: "8:00 PM",
+      endTime: "2:00 AM"
+    },
+    {
+      days: ["Saturday", "Sunday"],
+      startTime: "6:00 AM",
+      endTime: "2:00 AM"
+    }
+  ]
 }
+
     
 ];
 module.exports = nbrlipLots

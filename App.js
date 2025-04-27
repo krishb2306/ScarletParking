@@ -28,6 +28,9 @@ function ListScreen() {
     { label: 'College Ave', value: 'College Ave' },
     { label: 'Cook/Douglass', value: 'Cook/Douglass' },
     { label: 'Livingston', value: 'Livingston' },
+    { label: 'Newark', value: 'Newark' },
+    { label: 'Camden', value: 'Camden' },
+    { label: 'RBHS', value: 'Health - Piscataway' }
   ]);
 
   const navigation = useNavigation();  // For navigation
@@ -338,6 +341,18 @@ const [shouldRenderMap, setShouldRenderMap] = useState(false);
       latitudeDelta: 0.02,
       longitudeDelta: 0.02,
     },
+    region5: {
+      latitude: 40.742050472702175,
+      longitude: -74.17392133620385, 
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    },
+    region6: {
+      latitude: 39.94860257044758,
+      longitude: -75.12142556761985, 
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    }
   };
 
   const onTimeChange = (event, selectedDate) => {
@@ -723,6 +738,18 @@ const zoomToLocation = () => {
           onPress={() => zoomToRegion(zoomRegions.region4)}
         >
           <Text style={styles.zoomButtonText}>Cook/Doug</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region5)}
+        >
+          <Text style={styles.zoomButtonText}>Newark</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.zoomButton}
+          onPress={() => zoomToRegion(zoomRegions.region6)}
+        >
+          <Text style={styles.zoomButtonText}>Camden</Text>
         </TouchableOpacity>
       </View>
     </View>
