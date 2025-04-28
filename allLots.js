@@ -220,27 +220,26 @@ const allLots = [
 
 
   //Newark
-  {id: 107, title: "Deck 3", coordinate: { latitude: 40.73881573833237,longitude:  -74.17363576203714}},
-  {id: 108, title: "P1 Norfolk Parking Deck", coordinate: { latitude: 40.740253765126035,longitude:  -74.18607360978072}},
-  {id: 109, title: "Lot 506 Essex", coordinate: { latitude: 40.74511047075569,longitude:  -74.17166110426564}},
-  {id: 110, title: "Golden Dome Lot 507", coordinate: { latitude: 40.74509337087402,longitude:  -74.1772040206058}},
-  {id: 111, title: "Lot 509A Eagle East", coordinate: { latitude: 40.75491914596799,longitude:  -74.17305764581351}},
-  {id: 112, title: "Lot 508", coordinate: { latitude: 40.75074014804839,longitude:  -74.17715382493373}},
-  {id: 113, title: "Deck 1", coordinate: { latitude: 40.75348865951749,longitude:  -74.1771538247894}},
-  {id: 114, title: "Deck 2", coordinate: { latitude: 40.74682165333431,longitude:  -74.17377079325182}},
-  {id: 115, title: "Lot 509B Eagle West", coordinate: { latitude: 40.75699967381206,longitude:  -74.17099770942286}},
+  {id: 107, title: "Deck 3", coordinate: { latitude: 40.738609066356254,longitude: -74.17360029584157}},
+  {id: 108, title: "P1 Norfolk Parking Deck", coordinate: { latitude: 40.74010633805774,longitude:  -74.18604058509604}},
+  {id: 109, title: "Lot 506 Essex", coordinate: { latitude: 40.74488086812703,longitude:  -74.17157553803285}},
+  {id: 110, title: "Golden Dome Lot 507", coordinate: { latitude: 40.73874186319546,longitude:  -74.17369544788401}},
+  {id: 111, title: "Lot 509A Eagle East", coordinate: { latitude: 40.74622084344843,longitude:  -74.17248385799003}},
+  {id: 112, title: "Lot 508", coordinate: { latitude: 40.74039367343076,longitude:  -74.17672453613756}},
+  {id: 113, title: "Deck 1", coordinate: { latitude: 40.740685373332845,longitude:  -74.17427497390081}},
+  {id: 114, title: "Deck 2", coordinate: { latitude: 40.73913517297953,longitude:  -74.17341708495195}},
+  {id: 115, title: "Lot 509B Eagle West", coordinate: { latitude: 40.74634112904321,longitude: -74.17259035230049}},
   
   //Camden
-  {id: 116, title: "Lot C15", coordinate: { latitude: 39.95498671369899,longitude:  -75.1253246070584}},
-  {id: 117, title: "Lot C16", coordinate: { latitude: 39.994860469547184,longitude:  -75.12116656748357}},
-  {id: 118, title: "Lot C1", coordinate: { latitude: 39.954907461418564,longitude:  -75.1214369354092}},
-  {id: 119, title: "Lot C2", coordinate: { latitude: 39.986443302047675,longitude:  -75.11841998562937}},
-  {id: 120, title: "Lot C3", coordinate: { latitude: 39.97592038409982,longitude:  -75.12116656748357}},
-  {id: 121, title: "Lot C14", coordinate: { latitude: 39.98223432933996,longitude:  -75.129406313046136}},
-
-  {id: 122, title: "Lot C10", coordinate: { latitude: 39.978025097335895,longitude:  -75.12665973119195}},
-  {id: 123, title: "Lot C12", coordinate: { latitude: 39.97592038409982,longitude: -75.12940631304613}},
-  {id: 123, title: "Lot C13", coordinate: { latitude: 39.986443302047675,longitude:  -75.12665973119195}},
+  {id: 116, title: "Lot C15", coordinate: { latitude: 39.95228820987015,longitude: -75.12603928327766}},
+  {id: 117, title: "Lot C16", coordinate: { latitude: 39.953554546785305,longitude:  -75.12528161438063}},
+  {id: 118, title: "Lot C1", coordinate: { latitude: 39.949425155325365,longitude:  -75.12072483242099}},
+  {id: 119, title: "Lot C2", coordinate: { latitude: 39.94843666526027,longitude:  -75.11997821278311}},
+  {id: 120, title: "Lot C3", coordinate: { latitude: 39.94765864553437,longitude:  -75.11916593864277}},
+  {id: 121, title: "Lot C14", coordinate: { latitude: 39.950243096241906,longitude:  -75.12318082475483}},
+  {id: 122, title: "Lot C10", coordinate: { latitude: 39.94652055094725,longitude:  -75.12232872524196}},
+  {id: 123, title: "Lot C12", coordinate: { latitude: 39.948071703685805,longitude: -75.12324847977702}},
+  {id: 123, title: "Lot C13", coordinate: { latitude: 39.9495401075089,longitude:  -75.1235098215273}},
   ];
 
   module.exports = allLots;
