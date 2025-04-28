@@ -217,6 +217,30 @@ const allLots = [
   {id: 104, title: "Lot 711/Lippincott", coordinate: { latitude: 40.48175958660948,longitude:  -74.43037387701393}},
   {id: 105, title: "Rodkin Center Lot", coordinate: { latitude: 40.51775853888679,longitude:  -74.46336557737857}},
   {id: 106, title: "Lot 109", coordinate: { latitude: 40.517724618946175,longitude:  -74.43092936004787}},
+
+
+  //Newark
+  {id: 107, title: "Deck 3", coordinate: { latitude: 40.73881573833237,longitude:  -74.17363576203714}},
+  {id: 108, title: "P1 Norfolk Parking Deck", coordinate: { latitude: 40.740253765126035,longitude:  -74.18607360978072}},
+  {id: 109, title: "Lot 506 Essex", coordinate: { latitude: 40.74511047075569,longitude:  -74.17166110426564}},
+  {id: 110, title: "Golden Dome Lot 507", coordinate: { latitude: 40.74509337087402,longitude:  -74.1772040206058}},
+  {id: 111, title: "Lot 509A Eagle East", coordinate: { latitude: 40.75491914596799,longitude:  -74.17305764581351}},
+  {id: 112, title: "Lot 508", coordinate: { latitude: 40.75074014804839,longitude:  -74.17715382493373}},
+  {id: 113, title: "Deck 1", coordinate: { latitude: 40.75348865951749,longitude:  -74.1771538247894}},
+  {id: 114, title: "Deck 2", coordinate: { latitude: 40.74682165333431,longitude:  -74.17377079325182}},
+  {id: 115, title: "Lot 509B Eagle West", coordinate: { latitude: 40.75699967381206,longitude:  -74.17099770942286}},
+  
+  //Camden
+  {id: 116, title: "Lot C15", coordinate: { latitude: 39.95498671369899,longitude:  -75.1253246070584}},
+  {id: 117, title: "Lot C16", coordinate: { latitude: 39.994860469547184,longitude:  -75.12116656748357}},
+  {id: 118, title: "Lot C1", coordinate: { latitude: 39.954907461418564,longitude:  -75.1214369354092}},
+  {id: 119, title: "Lot C2", coordinate: { latitude: 39.986443302047675,longitude:  -75.11841998562937}},
+  {id: 120, title: "Lot C3", coordinate: { latitude: 39.97592038409982,longitude:  -75.12116656748357}},
+  {id: 121, title: "Lot C14", coordinate: { latitude: 39.98223432933996,longitude:  -75.129406313046136}},
+
+  {id: 122, title: "Lot C10", coordinate: { latitude: 39.978025097335895,longitude:  -75.12665973119195}},
+  {id: 123, title: "Lot C12", coordinate: { latitude: 39.97592038409982,longitude: -75.12940631304613}},
+  {id: 123, title: "Lot C13", coordinate: { latitude: 39.986443302047675,longitude:  -75.12665973119195}},
   ];
 
   module.exports = allLots;
