@@ -239,7 +239,32 @@ const allLots = [
   {id: 121, title: "Lot C14", coordinate: { latitude: 39.950243096241906,longitude:  -75.12318082475483}},
   {id: 122, title: "Lot C10", coordinate: { latitude: 39.94652055094725,longitude:  -75.12232872524196}},
   {id: 123, title: "Lot C12", coordinate: { latitude: 39.948071703685805,longitude: -75.12324847977702}},
-  {id: 123, title: "Lot C13", coordinate: { latitude: 39.9495401075089,longitude:  -75.1235098215273}},
+  {id: 124, title: "Lot C13", coordinate: { latitude: 39.9495401075089,longitude:  -75.1235098215273}},
+
+
+
+  //Rutgers Health 
+  {id: 125, title: "Lot 1 NWK", coordinate: { latitude: 40.73864016056516,longitude: -74.18956664098971}},
+  {id: 126, title: "Lot 1A NWK", coordinate: { latitude: 40.73831412862256,longitude: -74.18878595702861}},
+  {id: 127, title: "Lot 1B NWK", coordinate: { latitude: 40.73830667274174,longitude: -74.18877670402587}},
+  {id: 128, title: "Lot 2 NWK,", coordinate: { latitude: 40.740420393269524,longitude: -74.19232785627231}},
+  {id: 129, title: "Lot 4A NWK", coordinate: { latitude: 40.741479100513395,longitude:  -74.18752698975179}},
+  {id: 130, title: "Lot 5 NWK", coordinate: { latitude: 40.743521581429505,longitude:  -74.1925619168744}},
+  {id: 131, title: "Lot 6 NWK", coordinate: { latitude: 40.74277581048428,longitude:  -74.19144762282878}},
+  {id: 132, title: "Lot 7 NWK", coordinate: { latitude: 40.74411562104185,longitude:  -74.19154127506296}},
+  {id: 133, title: "Lot 8 NWK", coordinate: { latitude: 40.74259675900466,longitude:  -74.19028816740757}},
+  {id: 134, title: "Lot 9 NWK", coordinate: { latitude: 40.74410178314973,longitude:  -74.19041584902546}},
+  {id: 135, title: "Lot 10 NWK", coordinate: { latitude: 40.74309771847322,longitude:  -74.18900681636718}},
+  {id: 136, title: "Lot 10 NWK", coordinate: { latitude: 40.74309771847322,longitude:  -74.18900681636718}},
+  {id: 137, title: "Lot 11 NWK", coordinate: { latitude: 40.74362379354286,longitude:  -74.1878942625283}},
+  {id: 138, title: "Lot 12 NWK", coordinate: { latitude: 40.74280531863719,longitude:  -74.1922775539654}},
+
+  {id: 138, title: "Lot A", coordinate: { latitude: 40.52448915177143,longitude:  -74.47205954790445}},
+  {id: 139, title: "Lot B", coordinate: { latitude: 40.52574187500708,longitude:  -74.47174586470003}},
+  {id: 140, title: "Lot C", coordinate: { latitude: 40.524546902379406,longitude:  -74.47124393475644}},
+
+  {id: 141, title: "Joyce Kilmer Lot", coordinate: { latitude: 40.49440316503868,longitude:  -74.44797784460657}},
+
   ];
 
   module.exports = allLots;
