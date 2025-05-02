@@ -119,6 +119,7 @@ function MapScreen() {
   const [selectedMarker, setSelectedMarker] = React.useState(null);
   const [hideTimeout, setHideTimeout] = useState(null);
   const APP_STORE_ID = '6744491108';
+  const [mapType, setMapType] = useState('standard'); // or 'standard' by default
   const [selectedOption, setSelectedOption] = useState('current'); // Default to 'Current Time'
   const lotTimesMap = {
     bccLots: require('./LotTimes/bccLots'),
@@ -484,6 +485,7 @@ const zoomToLocation = () => {
       <MapView
       ref={mapViewRef}
       clusterColor='#D4301F'
+      mapType={mapType}
       onClusterPress={handleClusterPress}
       minPoints={2}
       minZoom = {1}
@@ -567,6 +569,17 @@ const zoomToLocation = () => {
             source={require('./assets/legend2.png')}  // Add your image path here
             style={styles.buttonImage}
           />
+
+    </TouchableOpacity>
+    <TouchableOpacity
+          style={styles.modalButton2}
+          onPress={() => {
+            setMapType(prev =>
+              prev === 'standard' ? 'satellite' : 'standard'
+            );
+          }}
+        >
+          <Ionicons name="layers-outline" size={22} color="white" />
 
     </TouchableOpacity>
 
@@ -1157,7 +1170,7 @@ function MyTabs() {
           headerTitle: '',
           headerStyle: {
             height: Platform.OS === 'ios' ? 60 : 1,
-            backgroundColor: '#222B37',
+            backgroundColor: {mapType} === 'standard' ? '#222B37' : '#313329',
             opacity: 0.95,
           },
           headerTintColor: 'white',
@@ -1337,6 +1350,24 @@ const styles = StyleSheet.create({
   modalButton: {
     position: 'absolute',
     top: 15,
+    right: 15,
+    backgroundColor: '#1E1E1E',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#2A2A2A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalButton2: {
+    position: 'absolute',
+    top: 67,
     right: 15,
     backgroundColor: '#1E1E1E',
     width: 40,
