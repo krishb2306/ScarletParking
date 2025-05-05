@@ -1170,7 +1170,7 @@ function MyTabs() {
           headerTitle: '',
           headerStyle: {
             height: Platform.OS === 'ios' ? 60 : 1,
-            backgroundColor: {mapType} === 'standard' ? '#222B37' : '#313329',
+            //backgroundColor: {mapType} === 'standard' ? '#222B37' : '#313329',
             opacity: 0.95,
           },
           headerTintColor: 'white',
