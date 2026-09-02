@@ -19,7 +19,7 @@
 
 Rutgers publishes parking eligibility as a sprawl of PDFs: dozens of permit types, five campuses, hundreds of numbered lots, and per-lot time windows that shift by day of week. Figuring out whether you can legally park in Lot 60B at 4:45 PM on a Tuesday means cross-referencing several documents while sitting in your car.
 
-ScarletParking collapses that into one answer. Pick your permit once, and the app shows only the lots you're allowed to park in — on an interactive map and in a searchable list — filtered against the current day and time.
+ScarletParking solves this in one app. Pick your permit once, and the app shows only the lots you're allowed to park in — on an interactive map and in a searchable list — filtered against the current day and time.
 
 **Live on the App Store:** [apps.apple.com/us/app/scarletparking](https://apps.apple.com/us/app/scarletparking/id6744491108)
 
@@ -40,17 +40,17 @@ ScarletParking collapses that into one answer. Pick your permit once, and the ap
 
 ## Features
 
-**Permit-aware filtering** — Choose from 30+ permit types across New Brunswick, Newark, Camden, and Rutgers Health. Every screen in the app reflects that choice.
+**Permit-aware filtering**: Choose from 30+ permit types across New Brunswick, Newark, Camden, and Rutgers Health. Every screen in the app reflects that choice.
 
-**Time-aware map** — A lot only shows up as a pin when your permit is actually valid there at that moment. Lot 60B disappears from the map at 5:59 PM and appears at 6:00.
+**Time-aware map**: A lot only shows up as a pin when your permit is actually valid there at that moment. Lot 60B disappears from the map at 5:59 PM and appears at 6:00 AM.
 
-**"Set Time" planning mode** — Check eligibility for a future time instead of the current one. Useful before an evening class or a weekend event.
+**"Set Time" planning mode**: Check eligibility for a future time instead of the current one. Useful before an evening class or a weekend event.
 
-**Marker clustering** — All of Rutgers' lots on one map would be an unreadable mess of pins, so nearby markers collapse into counted clusters and expand as you zoom.
+**Marker clustering**: All of Rutgers' lots on one map would be an unreadable mess of pins, so nearby markers collapse into counted clusters and expand as you zoom.
 
-**One-tap directions** — Selecting a lot hands its coordinates straight to Apple Maps.
+**One-tap directions**: Selecting a lot hands its coordinates straight to Apple Maps.
 
-**Location awareness** — Your live position is drawn on the map so you can judge which valid lot is actually closest.
+**Location awareness**: Your live position is drawn on the map so you can judge which valid lot is actually closest.
 
 ---
 
